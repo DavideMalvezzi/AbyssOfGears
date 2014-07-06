@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.Scissor;
 import com.cappuccino.aog.game.ParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
 import com.cappuccino.aog.scene.actors.ChainedContetxMenuContainer;
@@ -22,7 +26,7 @@ public class MainMenuScene extends Scene {
 	
 	private Stage stage;
 	private MainMenuLevel level;
-	private ParallaxLayer bg1,bg2;
+	private ParallaxLayer bg0,bg1,bg2;
 	
 	
 	private ChainedContetxMenuContainer contextMenu;
@@ -70,12 +74,28 @@ public class MainMenuScene extends Scene {
 		});
 		
 		LabelStyle playStyle = new LabelStyle(Assets.font100, Color.BLACK);
-		Label play = new Label("Play", playStyle);
+		final Label play = new Label("Play", playStyle);
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * SCENE_H);
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
+				
 				level.activePress();
-				AOGGame.changeScene(new GameScene());
+				play.addAction(Actions.forever(Actions.run(new Runnable() {
+					boolean isStarted = false;
+					public void run() {
+						if(level.pressFinish() && !isStarted){
+							isStarted = true;
+							level.disactivePress();
+							stage.addAction(
+									Actions.sequence(
+											Actions.fadeOut(0.5f),
+											Actions.delay(0.3f),
+											Actions.moveBy(0, -stage.getWidth(), 1.5f)
+									));
+							
+						}
+					}
+				})));
 			}
 		});
 		
@@ -107,6 +127,7 @@ public class MainMenuScene extends Scene {
 		
 		level = new MainMenuLevel(world);
 		
+		bg0 = new ParallaxLayer(Assets.layer0Background, 160);
 		bg1 = new ParallaxLayer(Assets.layer1Background, 160);
 		bg2 = new ParallaxLayer(Assets.layer2Background, 160);
 		
@@ -118,7 +139,7 @@ public class MainMenuScene extends Scene {
 		beginDraw();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-				batch.draw(Assets.layer0Background, 0, -160);
+				bg0.render(batch, camera);
 				bg1.render(batch, camera);
 				bg2.render(batch, camera);
 				
@@ -129,7 +150,7 @@ public class MainMenuScene extends Scene {
 			
 		endDraw();
 		
-		box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
+		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
 		/*
@@ -153,12 +174,19 @@ public class MainMenuScene extends Scene {
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		
-		bg1.update(delta, 0.5f);
-		bg2.update(delta, 0.25f);
+		
 		level.update(delta);
 		world.step(1f/60f, 8, 3);
 		stage.act(delta);
 		
+		camera.position.y = stage.getRoot().getY() * BOX_TO_WORLD + camera.viewportHeight/2;
+
+		float speedY = (camera.position.y-camera.viewportHeight/2)-Scissor.getArea().y;
+		
+		if(speedY!=0){
+			bg1.update(delta, -speedY*2);
+			bg2.update(delta, -speedY);
+		}
 	}
 	
 	

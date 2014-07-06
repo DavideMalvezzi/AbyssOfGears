@@ -21,7 +21,7 @@ public class ParallaxLayer {
 		batch.setProjectionMatrix(camera.projection);
 		
 		
-			batch.draw(texture, offX, 0, 
+			batch.draw(texture, offX-camera.viewportWidth/2*Scene.WORLD_TO_BOX, -camera.viewportHeight/2*Scene.WORLD_TO_BOX, 
 					0, (int)posY, 
 					texture.getWidth(), (int)(camera.viewportHeight*Scene.WORLD_TO_BOX));
 			

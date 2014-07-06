@@ -16,6 +16,7 @@ public class Press extends Entity{
 	private float minLen, maxLen, vel;
 	private final Vector2 startPos = new Vector2();
 	private Entity tube;
+	
 
 	
 	public Press(World world, float x, float y, float minLen, float maxLen, float vel, float angle, float scale) {
@@ -68,10 +69,11 @@ public class Press extends Entity{
 	}
 
 	public void update(float delta) {
-		float dst = startPos.dst(getCenter());
+		float dst = MathUtils.round(startPos.dst(getCenter()));
 		//current scale = maxScale * scale%
 		float scale = (maxLen/tube.getRealWidth()) * dst/maxLen;
 		float trasl = maxLen - dst;
+		
 		
 		tube.setScaleX(scale);
 		tube.setTraslX(trasl*MathUtils.cos(getAngle()));
@@ -80,9 +82,14 @@ public class Press extends Entity{
 		if((dst<minLen && dir == -1) || (dst>maxLen && dir == 1)){
 			dir *= -1;
 		}
-		tube.setLinearVelocity(vel*dir*MathUtils.cos(getAngle()), (float)(vel*dir*Math.sin(getAngle())));
 		
-		System.out.println(Math.sin(Math.));
+		
+		float velX = vel*dir*MathUtils.cos(getAngle());
+		float velY = vel*dir*MathUtils.sin(getAngle());
+		velX = MathUtils.isZero(velX, 0.00001f)? 0 : velX;
+		velY = MathUtils.isZero(velY, 0.00001f)? 0 : velY;
+		tube.setLinearVelocity(velX, velY);
+		
 	}
 
 	public boolean isClosed(){

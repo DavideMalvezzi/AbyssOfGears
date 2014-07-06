@@ -50,14 +50,14 @@ public class Scene extends ScreenAdapter {
 		Rectangle view = new Rectangle(
 				camera.position.x-camera.viewportWidth/2f, 
 				camera.position.y-camera.viewportHeight/2f, 
-				camera.viewportWidth, camera.viewportHeight+5*BOX_TO_WORLD);
+				camera.viewportWidth, camera.viewportHeight+15*BOX_TO_WORLD);
 		
 		Rectangle scissor = new Rectangle();
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
 		Scissor.setArea(view, scissor);
 		
 		camera.combined.scl(BOX_TO_WORLD);
-		camera.projection.translate(-camera.viewportWidth/2, -camera.viewportHeight/2, 0).scl(BOX_TO_WORLD);
+		camera.projection.scl(BOX_TO_WORLD);
 		
 	}
 	
