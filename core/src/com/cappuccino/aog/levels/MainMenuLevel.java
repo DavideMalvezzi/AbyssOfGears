@@ -11,16 +11,19 @@ import com.cappuccino.aog.entities.Wall;
 
 public class MainMenuLevel extends Level {
 
+	private Press p,p2;
+	
+	
 	public MainMenuLevel(World world) {
 		init(world, false);
 		
 		Wall wallL = new Wall("lvl0wallLeft", world, -50, 0);
 		Wall wallR = new Wall("lvl0wallRight", world, 556, 0);
 		
-		Press p = new Press(world, 0, 250, 75, 290, 30, 0, 0.65f);
+		p = new Press(world, 0, 250, 75, 290, 2, 0, 0.65f);
 		p.open();
 		p.disactive();
-		Press p2 = new Press(world, 642, 250, 75, 290, 30, 180*MathUtils.degRad, 0.65f);
+		p2 = new Press(world, 642, 250, 75, 290, 2, 180*MathUtils.degRad, 0.65f);
 		p2.open();
 		p2.disactive();
 		
@@ -32,13 +35,11 @@ public class MainMenuLevel extends Level {
 		Gear gear2 = new Gear(world, 7, 615, 550, 1, 0.75f);
 		Gear gear3 = new Gear(world, 6, 630, 75, -1.3f, 0.55f);
 		
-		
 		active_entities.add(wallL);
 		active_entities.add(wallR);
 		
 		
-		active_entities.add(p);
-		active_entities.add(p2);
+		
 		
 		active_entities.add(smoke1);
 		active_entities.add(smoke2);
@@ -47,8 +48,20 @@ public class MainMenuLevel extends Level {
 		active_entities.add(gear2);
 		active_entities.add(gear3);
 		
+		active_entities.add(p);
+		active_entities.add(p2);
 		
 	}
+	
+	public void activePress(){
+		p.active();
+		p2.active();
+	}
+	
+	public boolean pressFinish(){
+		return p.isClosed() && p2.isClosed();
+	}
+	
 	
 	@Override
 	public void render(SpriteBatch batch) {

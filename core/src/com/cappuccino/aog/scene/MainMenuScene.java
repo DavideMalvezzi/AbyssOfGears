@@ -29,11 +29,9 @@ public class MainMenuScene extends Scene {
 	
 	public MainMenuScene() {
 		super();
-		camera.position.y = SCENE_H/2*BOX_TO_WORLD;
-		
 		OrthographicCamera cam = new OrthographicCamera(Scene.SCENE_W, Scene.SCENE_H);
 		ExtendViewport view = new ExtendViewport(Scene.SCENE_W, Scene.SCENE_H, cam);
-		
+		camera.position.y = camera.viewportHeight/2;
 		stage = new Stage(view);
 		Gdx.input.setInputProcessor(stage);
 		
@@ -73,9 +71,10 @@ public class MainMenuScene extends Scene {
 		
 		LabelStyle playStyle = new LabelStyle(Assets.font100, Color.BLACK);
 		Label play = new Label("Play", playStyle);
-		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * stage.getHeight());
+		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * SCENE_H);
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
+				level.activePress();
 				AOGGame.changeScene(new GameScene());
 			}
 		});
@@ -130,7 +129,7 @@ public class MainMenuScene extends Scene {
 			
 		endDraw();
 		
-//		box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
+		box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
 		/*
@@ -152,13 +151,14 @@ public class MainMenuScene extends Scene {
 	
 	public void update(float delta) {
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 		
 		bg1.update(delta, 0.5f);
 		bg2.update(delta, 0.25f);
 		level.update(delta);
 		world.step(1f/60f, 8, 3);
 		stage.act(delta);
+		
 	}
 	
 	

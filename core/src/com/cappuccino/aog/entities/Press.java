@@ -42,7 +42,7 @@ public class Press extends Entity{
 		tube.setAngle(angle);
 		
 		tube.setCenter(x, y);
-		setCenter(x+tube.getWidth()*MathUtils.cos(angle), y+tube.getWidth()*MathUtils.sin(angle));
+		setCenter(x, y);
 		
 		JointsFactory.createWeldJoint(body.getWorld(), this, tube, Vector2.Zero, Vector2.Zero, getAngle(), true);
 		
@@ -73,25 +73,27 @@ public class Press extends Entity{
 		float scale = (maxLen/tube.getRealWidth()) * dst/maxLen;
 		float trasl = maxLen - dst;
 		
-		tube.setScaleX(scale+0.1f);
+		tube.setScaleX(scale);
 		tube.setTraslX(trasl*MathUtils.cos(getAngle()));
 		tube.setTraslY(trasl*MathUtils.sin(getAngle()));
 		
 		if((dst<minLen && dir == -1) || (dst>maxLen && dir == 1)){
 			dir *= -1;
 		}
-		tube.setLinearVelocity(vel*dir*MathUtils.cos(getAngle()), vel*dir*MathUtils.sin(getAngle()));
+		tube.setLinearVelocity(vel*dir*MathUtils.cos(getAngle()), (float)(vel*dir*Math.sin(getAngle())));
+		
+		System.out.println(Math.sin(Math.));
 	}
 
 	public boolean isClosed(){
 		float dst = startPos.dst(getCenter());
-		float scale = (maxLen/tube.getRealWidth()) * dst/maxLen;
-		return scale>0.985f;
+		
+		return dst/maxLen>=1;
 	}
 	
 	public void open(){
-		tube.setCenter(tube.getCenter().x-(maxLen-minLen)*MathUtils.cos(getAngle()), tube.getCenter().y-(maxLen-minLen)*MathUtils.sin(getAngle()));
-		setCenter(getCenter().x-(maxLen-minLen)*MathUtils.cos(getAngle()), getCenter().y-(maxLen-minLen)*MathUtils.sin(getAngle()));
+		tube.setCenter(startPos.cpy().add(minLen*MathUtils.cos(getAngle()), minLen*MathUtils.sin(getAngle())));
+		setCenter(startPos.cpy().add(minLen*MathUtils.cos(getAngle()), minLen*MathUtils.sin(getAngle())));
 	}
 	
 	@Override
