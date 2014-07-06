@@ -19,7 +19,7 @@ public class Chain extends Entity{
 		
 		setScaleX(scale);
 		setScaleY(scale);
-		initFixture(this);
+		initFixture();
 		
 		for(int i=0; i<len; i++){
 			chain[i] = new Entity("Chain", world);
@@ -29,20 +29,21 @@ public class Chain extends Entity{
 			initFixture(chain[i]);
 			
 			chain[i].setAngle(angle);
-			chain[i].setCenter(x, y-chain[i].getWidth()*(i+1));
+			chain[i].setCenter(x+chain[i].getWidth()*2*(i+1), y);
 		}
+		
 		setAngle(angle);
 		setCenter(x, y);
 		
 		JointsFactory.createRopeJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, chain[0].getWidth(), true);
 		JointsFactory.createRevoluteJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, true);
 		
+		
 		for(int i=0; i<len-1; i++){
 			JointsFactory.createRopeJoint(world, 
 					chain[i], chain[i+1], 
 					new Vector2(chain[i].getWidth(), 0), Vector2.Zero, 
 					chain[i].getWidth(), true);
-			
 			JointsFactory.createRevoluteJoint(world, 
 					chain[i], chain[i+1], 
 					new Vector2(chain[i].getWidth(), 0), Vector2.Zero, true);
@@ -50,12 +51,23 @@ public class Chain extends Entity{
 		
 	}
 	
+	protected void initFixture() {
+		FixtureDef fd = new FixtureDef();
+		fd.density = 2;
+		fd.filter.categoryBits = WALL;
+		fd.filter.maskBits = WALL_MASK;
+		
+		bodyLoader.attachFixture(getBody(), "Chain", fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
+		origin.set(bodyLoader.getOrigin("Chain", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
+		getBody().setGravityScale(9.8f);
+	}
+	
 	
 	protected void initFixture(Entity e) {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
 		fd.filter.categoryBits = ENTITY;
-		fd.filter.maskBits = ENTITY_MASK;
+		fd.filter.maskBits = PLAYER | LIGHT;;
 		
 		bodyLoader.attachFixture(e.getBody(), "Chain", fd, getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD);
 		e.origin.set(bodyLoader.getOrigin("Chain", getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD));

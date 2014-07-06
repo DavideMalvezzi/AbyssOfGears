@@ -24,9 +24,8 @@ public class MainMenuScene extends Scene {
 	private MainMenuLevel level;
 	private ParallaxLayer bg1,bg2;
 	
-	private ImageButton achive, shop, stats;
 	
-	private ChainedContetxMenuContainer menu;
+	private ChainedContetxMenuContainer contextMenu;
 	
 	public MainMenuScene() {
 		super();
@@ -39,9 +38,9 @@ public class MainMenuScene extends Scene {
 		Gdx.input.setInputProcessor(stage);
 		
 		
-		achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
-		shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
-		stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
+		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
+		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
+		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
 		
 		achive.setPosition(0.3041f * stage.getWidth(), 0.007f * stage.getHeight());
 		shop.setPosition(0.4468f * stage.getWidth(), 0.007f * stage.getHeight());
@@ -52,7 +51,7 @@ public class MainMenuScene extends Scene {
 		achive.setOrigin(achive.getWidth()/2, achive.getHeight()/2);
 		achive.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				menu.showMenu(achive, 0);
+				contextMenu.showMenu(achive, 0);
 			}
 		});
 		
@@ -60,7 +59,7 @@ public class MainMenuScene extends Scene {
 		shop.setOrigin(shop.getWidth()/2, shop.getHeight()/2);
 		shop.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				menu.showMenu(shop, 1);
+				contextMenu.showMenu(shop, 1);
 			}
 		});
 		
@@ -68,12 +67,12 @@ public class MainMenuScene extends Scene {
 		stats.setOrigin(stats.getWidth()/2, stats.getHeight()/2);
 		stats.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				menu.showMenu(stats, 2);
+				contextMenu.showMenu(stats, 2);
 			}
 		});
 		
-		LabelStyle labelStyle = new LabelStyle(Assets.font100, Color.BLACK);
-		Label play = new Label("Play", labelStyle);
+		LabelStyle playStyle = new LabelStyle(Assets.font100, Color.BLACK);
+		Label play = new Label("Play", playStyle);
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * stage.getHeight());
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
@@ -87,12 +86,21 @@ public class MainMenuScene extends Scene {
 		Label titlep2 = new Label("Gears", titleStyle);
 		titlep2.setPosition((stage.getWidth()-titlep2.getWidth())/2, 0.61f * stage.getHeight());
 		
+		LabelStyle infoStyle = new LabelStyle(Assets.font64, Color.WHITE);
+		Label info = new Label("?", infoStyle);
+		info.setPosition(0.95f * stage.getWidth(), 0);
+		info.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				
+			}
+		});
 		
-		menu = new ChainedContetxMenuContainer(world, stage);
+		contextMenu = new ChainedContetxMenuContainer(world, stage);
 		
 		stage.addActor(achive);
 		stage.addActor(shop);
 		stage.addActor(stats);
+		stage.addActor(info);
 		
 		stage.addActor(play);
 		stage.addActor(titlep1);
@@ -102,6 +110,7 @@ public class MainMenuScene extends Scene {
 		
 		bg1 = new ParallaxLayer(Assets.layer1Background, 160);
 		bg2 = new ParallaxLayer(Assets.layer2Background, 160);
+		
 	}
 	
 	
@@ -121,9 +130,10 @@ public class MainMenuScene extends Scene {
 			
 		endDraw();
 		
-		camera.combined.scl(WORLD_TO_BOX);
+//		box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
+		/*
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
 		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
 		
@@ -131,6 +141,12 @@ public class MainMenuScene extends Scene {
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
+		*/
+		
+		if(Gdx.input.isKeyPressed(Keys.A))stage.getCamera().position.x-=4f;
+		if(Gdx.input.isKeyPressed(Keys.D))stage.getCamera().position.x+=4f;
+		if(Gdx.input.isKeyPressed(Keys.S))stage.getCamera().position.y-=4f;
+		if(Gdx.input.isKeyPressed(Keys.W))stage.getCamera().position.y+=4f;
 	}
 	
 	
@@ -141,7 +157,7 @@ public class MainMenuScene extends Scene {
 		bg1.update(delta, 0.5f);
 		bg2.update(delta, 0.25f);
 		level.update(delta);
-		world.step(1/60f, 8, 3);
+		world.step(1f/60f, 8, 3);
 		stage.act(delta);
 	}
 	
@@ -153,6 +169,7 @@ public class MainMenuScene extends Scene {
 	}
 	
 	public void dispose() {
+		stage.dispose();
 		batch.dispose();
 		level.dispose();
 		rayHandler.dispose();

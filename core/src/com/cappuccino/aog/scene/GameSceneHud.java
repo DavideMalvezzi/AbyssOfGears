@@ -43,7 +43,7 @@ public class GameSceneHud extends Stage{
 		CheckBoxStyle checkStyle = new CheckBoxStyle();
 		checkStyle.checkboxOff = Assets.hudSkin.getDrawable("umbrellaOff");
 		checkStyle.checkboxOn = Assets.hudSkin.getDrawable("umbrellaOn");
-		checkStyle.font = Assets.font15;
+		checkStyle.font = Assets.font64;
 		useUmbrella = new CheckBox("", checkStyle);
 		useUmbrella.setPosition(48, 10);
 		
@@ -65,7 +65,7 @@ public class GameSceneHud extends Stage{
 		
 		//Menu
 		TextButtonStyle textStyle = new TextButtonStyle();
-		textStyle.font = Assets.font15;
+		textStyle.font = Assets.font64;
 		textStyle.fontColor = Color.BLACK;
 		textStyle.up = Assets.hudSkin.getDrawable("tempButton");
 		

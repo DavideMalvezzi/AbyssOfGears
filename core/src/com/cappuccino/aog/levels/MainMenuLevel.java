@@ -14,7 +14,6 @@ public class MainMenuLevel extends Level {
 	public MainMenuLevel(World world) {
 		init(world, false);
 		
-		
 		Wall wallL = new Wall("lvl0wallLeft", world, -50, 0);
 		Wall wallR = new Wall("lvl0wallRight", world, 556, 0);
 		
@@ -47,6 +46,7 @@ public class MainMenuLevel extends Level {
 		active_entities.add(gear);
 		active_entities.add(gear2);
 		active_entities.add(gear3);
+		
 		
 	}
 	

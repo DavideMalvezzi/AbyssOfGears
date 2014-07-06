@@ -34,7 +34,7 @@ public class ChainedContetxMenuContainer extends Actor {
 	public ChainedContetxMenuContainer(World world, Stage stage) {
 		 this.stage = stage;
 		 menuBg = new ContetxMenuEntity(world);
-		 menuBg.setCenter(stage.getWidth() * 0.5f, 1.7f * stage.getHeight());
+		 menuBg.setCenter(stage.getWidth() * 0.5f, 1.75f * stage.getHeight());
 		
 		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
 		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
@@ -139,6 +139,8 @@ public class ChainedContetxMenuContainer extends Actor {
 		c1.setLinearVelocity(velX, velY);
 		c2.setLinearVelocity(velX, velY);
 	}
+	
+	
 	
 	public Stage getStage(){
 		return stage;

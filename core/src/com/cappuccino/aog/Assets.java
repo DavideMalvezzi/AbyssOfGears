@@ -26,7 +26,7 @@ public class Assets {
 	public static ParticleEmitter fallingEffect, smokeEffect, gasEffect;
 	
 	public static Skin hudSkin;
-	public static BitmapFont font15,font100,font200;
+	public static BitmapFont font64,font100,font200;
 	
 	
 	public static void load(){
@@ -37,9 +37,9 @@ public class Assets {
 		parameter.minFilter = TextureFilter.Linear;
 		parameter.magFilter = TextureFilter.Linear;
 		parameter.genMipMaps = true;
-		parameter.size = 32;
-		font15 = fontGenerator.generateFont(parameter);
-		font15.setScale(0.5f);
+		parameter.size = 128;
+		font64 = fontGenerator.generateFont(parameter);
+		font64.setScale(0.5f);
 		parameter.size = 190;
 		font100 = fontGenerator.generateFont(parameter);
 		font100.setScale(0.5f);
@@ -80,7 +80,7 @@ public class Assets {
 		layer0Background.dispose();
 		layer1Background.dispose();
 		layer2Background.dispose();
-		font15.dispose();
+		font64.dispose();
 		font100.dispose();
 		hudSkin.dispose();
 		textures.clear();

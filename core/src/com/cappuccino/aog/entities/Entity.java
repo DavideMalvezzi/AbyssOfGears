@@ -26,9 +26,9 @@ public class Entity implements Disposable {
 	public static final short LIGHT = 0x0010;
 	
 	public static final short PLAYER_MASK = PLAYER | WALL | ENTITY;
-	public static final short WALL_MASK = PLAYER | WALL | LIGHT;
+	public static final short WALL_MASK = PLAYER | LIGHT;
 	public static final short ENTITY_MASK = PLAYER | ENTITY | LIGHT;
-	public static final short LIGHT_MASK = LIGHT | ENTITY | WALL |PLAYER;
+	public static final short LIGHT_MASK = LIGHT | ENTITY | WALL | PLAYER;
 	
 	
 	

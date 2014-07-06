@@ -24,27 +24,6 @@ Gear4
   orig: 716, 718
   offset: 0, 0
   index: -1
-vScrollBar
-  rotate: false
-  xy: 988, 608
-  size: 22, 416
-  orig: 22, 416
-  offset: 0, 0
-  index: -1
-vScrollKnob
-  rotate: false
-  xy: 988, 586
-  size: 22, 22
-  orig: 22, 22
-  offset: 0, 0
-  index: -1
-Fade
-  rotate: false
-  xy: 988, 570
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
 Gear5
   rotate: false
   xy: 272, 50
@@ -73,18 +52,18 @@ PressTube
   orig: 74, 250
   offset: 0, 0
   index: -1
-SmokeEmitter
+Pipe_A
   rotate: false
-  xy: 784, 5
-  size: 59, 51
-  orig: 59, 51
+  xy: 784, 4
+  size: 52, 52
+  orig: 52, 52
   offset: 0, 0
   index: -1
-Chain
+SmokeEmitter
   rotate: false
-  xy: 843, 21
-  size: 56, 35
-  orig: 56, 35
+  xy: 836, 5
+  size: 59, 51
+  orig: 59, 51
   offset: 0, 0
   index: -1
 AchievementButton
@@ -103,14 +82,14 @@ BackButton
   index: -1
 Player
   rotate: false
-  xy: 899, 28
+  xy: 895, 28
   size: 42, 72
   orig: 42, 72
   offset: 0, 0
   index: -1
 Umbrella
   rotate: false
-  xy: 941, 29
+  xy: 937, 29
   size: 75, 71
   orig: 75, 71
   offset: 0, 0
@@ -134,6 +113,27 @@ umbrellaOff
   xy: 960, 114
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+Fade
+  rotate: false
+  xy: 858, 84
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+vScrollBar
+  rotate: false
+  xy: 858, 68
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+vScrollKnob
+  rotate: false
+  xy: 869, 73
+  size: 11, 11
+  orig: 11, 11
   offset: 0, 0
   index: -1
 
@@ -174,6 +174,20 @@ umbrellaOn
   xy: 0, 0
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+Pipe_H
+  rotate: false
+  xy: 102, 135
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+Chain
+  rotate: false
+  xy: 836, 812
+  size: 56, 35
+  orig: 56, 35
   offset: 0, 0
   index: -1
 

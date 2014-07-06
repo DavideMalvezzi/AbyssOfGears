@@ -5,7 +5,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
-import com.cappuccino.aog.scene.GameScene;
 import com.cappuccino.aog.scene.MainMenuScene;
 
 public class AOGGame extends ApplicationAdapter {
