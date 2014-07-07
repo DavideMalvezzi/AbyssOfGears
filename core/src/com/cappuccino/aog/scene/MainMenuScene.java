@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -40,6 +38,7 @@ public class MainMenuScene extends Scene {
 		Gdx.input.setInputProcessor(stage);
 		
 		
+		//Main Menù
 		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
 		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
 		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
@@ -78,6 +77,7 @@ public class MainMenuScene extends Scene {
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * SCENE_H);
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
+				//AOGGame.changeScene(new GameScene());
 				
 				level.activePress();
 				play.addAction(Actions.forever(Actions.run(new Runnable() {
@@ -90,12 +90,14 @@ public class MainMenuScene extends Scene {
 									Actions.sequence(
 											Actions.fadeOut(0.5f),
 											Actions.delay(0.3f),
-											Actions.moveBy(0, -stage.getWidth(), 1.5f)
+											Actions.moveBy(0, stage.getHeight()*2, 1.5f),
+											Actions.fadeIn(0.5f)
 									));
 							
 						}
 					}
 				})));
+				
 			}
 		});
 		
@@ -114,8 +116,6 @@ public class MainMenuScene extends Scene {
 			}
 		});
 		
-		contextMenu = new ChainedContetxMenuContainer(world, stage);
-		
 		stage.addActor(achive);
 		stage.addActor(shop);
 		stage.addActor(stats);
@@ -125,6 +125,25 @@ public class MainMenuScene extends Scene {
 		stage.addActor(titlep1);
 		stage.addActor(titlep2);
 		
+		//Menù play
+		final ImageButton back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
+		back.setPosition(0.005f * stage.getWidth(), -1.15f * stage.getHeight());
+		back.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				level.openPress();
+				stage.addAction(
+						Actions.sequence(
+								Actions.fadeOut(0.5f),
+								Actions.delay(0.3f),
+								Actions.moveBy(0, -stage.getHeight()*2, 1.5f),
+								Actions.fadeIn(0.5f)
+						));
+			}
+		});
+		
+		stage.addActor(back);
+		
+		contextMenu = new ChainedContetxMenuContainer(world, stage);
 		level = new MainMenuLevel(world);
 		
 		bg0 = new ParallaxLayer(Assets.layer0Background, 160);
@@ -136,7 +155,7 @@ public class MainMenuScene extends Scene {
 	
 	
 	public void render(float delta) {
-		beginDraw();
+		beginClip();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 				bg0.render(batch, camera);
@@ -147,16 +166,15 @@ public class MainMenuScene extends Scene {
 			batch.end();
 			
 			stage.draw();
-			
-		endDraw();
-		
+		endClip();
 		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
-		/*
+		
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
 		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
 		
+		/*
 		if(Gdx.input.isKeyPressed(Keys.A))camera.position.x-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
@@ -167,20 +185,21 @@ public class MainMenuScene extends Scene {
 		if(Gdx.input.isKeyPressed(Keys.D))stage.getCamera().position.x+=4f;
 		if(Gdx.input.isKeyPressed(Keys.S))stage.getCamera().position.y-=4f;
 		if(Gdx.input.isKeyPressed(Keys.W))stage.getCamera().position.y+=4f;
+		
 	}
 	
 	
 	public void update(float delta) {
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		
 		
 		level.update(delta);
 		world.step(1f/60f, 8, 3);
 		stage.act(delta);
 		
-		camera.position.y = stage.getRoot().getY() * BOX_TO_WORLD + camera.viewportHeight/2;
-
+		camera.position.y = -stage.getRoot().getY() * BOX_TO_WORLD + camera.viewportHeight/2;
+		
 		float speedY = (camera.position.y-camera.viewportHeight/2)-Scissor.getArea().y;
 		
 		if(speedY!=0){

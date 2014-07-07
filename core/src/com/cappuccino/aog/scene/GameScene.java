@@ -43,7 +43,7 @@ public class GameScene extends Scene{
 	}
 	
 	public void render(float delta){
-		beginDraw();
+		beginClip();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 		
@@ -62,7 +62,7 @@ public class GameScene extends Scene{
 			
 			hud.draw();
 			
-		endDraw();
+		endClip();
 		
 	}
 	

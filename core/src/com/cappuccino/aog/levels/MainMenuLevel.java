@@ -19,11 +19,14 @@ public class MainMenuLevel extends Level {
 		
 		Wall wallL = new Wall("lvl0wallLeft", world, -50, 0);
 		Wall wallR = new Wall("lvl0wallRight", world, 556, 0);
+		Wall wallL2 = new Wall("lvl0wallLeft", world, -50, -1000);
+		Wall wallR2 = new Wall("lvl0wallRight", world, 556, -1000);
+		Wall wallL3 = new Wall("lvl0wallLeft", world, -50, -2000);
+		Wall wallR3 = new Wall("lvl0wallRight", world, 556, -2000);
 		
-		p = new Press(world, 0, 250, 75, 300, 20, 0, 0.65f);
-		p.open();
-		p2 = new Press(world, 642, 250, 75, 300, 20, 180*MathUtils.degRad, 0.65f);
-		p2.open();
+		p = new Press(world, 0, 250, 75, 300, 30, 0, 0.65f);
+		p2 = new Press(world, 642, 250, 75, 300, 30, 180*MathUtils.degRad, 0.65f);
+		openPress();
 		disactivePress();
 		
 		SmokeEmitter smoke1 = new SmokeEmitter(world, 20, 420, 20*MathUtils.degRad);
@@ -35,6 +38,10 @@ public class MainMenuLevel extends Level {
 		
 		active_entities.add(wallL);
 		active_entities.add(wallR);
+		active_entities.add(wallL2);
+		active_entities.add(wallR2);
+		active_entities.add(wallL3);
+		active_entities.add(wallR3);
 		
 		
 		active_entities.add(smoke1);
@@ -57,6 +64,11 @@ public class MainMenuLevel extends Level {
 	public void disactivePress(){
 		p.disactive();
 		p2.disactive();
+	}
+	
+	public void openPress(){
+		p.open();
+		p2.open();
 	}
 	
 	public boolean pressFinish(){

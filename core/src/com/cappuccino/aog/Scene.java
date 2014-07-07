@@ -46,24 +46,24 @@ public class Scene extends ScreenAdapter {
 		box2dDebug = new Box2DDebugRenderer(true,true,false,true,true,true);
 	}
 	
-	protected void beginDraw(){
+	protected void beginClip(){
 		Rectangle view = new Rectangle(
-				camera.position.x-camera.viewportWidth/2f, 
-				camera.position.y-camera.viewportHeight/2f, 
-				camera.viewportWidth, camera.viewportHeight+15*BOX_TO_WORLD);
+				(camera.position.x-camera.viewportWidth/2f), 
+				(camera.position.y-camera.viewportHeight/2f), 
+				camera.viewportWidth, camera.viewportHeight);
 		
 		Rectangle scissor = new Rectangle();
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
 		Scissor.setArea(view, scissor);
-		
 		camera.combined.scl(BOX_TO_WORLD);
 		camera.projection.scl(BOX_TO_WORLD);
 		
 	}
 	
-	protected void endDraw(){
+	protected void endClip(){
 		Scissor.popScissors();
 	}
+	
 	
 	public void init(){}
 	public void update(float delta){}

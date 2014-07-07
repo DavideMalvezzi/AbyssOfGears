@@ -9,6 +9,8 @@ public class Scissor extends ScissorStack {
 	
 	public static void setArea(Rectangle area, Rectangle scissor){
 		Scissor.area.set(area);
+		
+		if(scissor.y!=0)scissor.y = 0;
 		pushScissors(scissor);
 	}
 	
