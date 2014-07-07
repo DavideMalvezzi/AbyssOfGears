@@ -32,8 +32,8 @@ public class Umbrella extends Entity{
 	@Override
 	public void initFixture() {
 		FixtureDef fd = new FixtureDef();
-		fd.filter.categoryBits = ENTITY;
-		fd.filter.maskBits = ENTITY_MASK;
+		fd.filter.categoryBits = PLAYER;
+		fd.filter.maskBits = PLAYER_MASK;
 		
 		bodyLoader.attachFixture(body, "Umbrella_top", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
 		bodyLoader.attachFixture(body, "Umbrella_sensor", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);

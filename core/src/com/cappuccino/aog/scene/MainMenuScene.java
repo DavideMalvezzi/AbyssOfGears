@@ -77,8 +77,8 @@ public class MainMenuScene extends Scene {
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 0.31f * SCENE_H);
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				//AOGGame.changeScene(new GameScene());
-				
+				AOGGame.changeScene(new GameScene());
+				/*
 				level.activePress();
 				play.addAction(Actions.forever(Actions.run(new Runnable() {
 					boolean isStarted = false;
@@ -93,11 +93,10 @@ public class MainMenuScene extends Scene {
 											Actions.moveBy(0, stage.getHeight()*2, 1.5f),
 											Actions.fadeIn(0.5f)
 									));
-							
 						}
 					}
 				})));
-				
+				*/
 			}
 		});
 		

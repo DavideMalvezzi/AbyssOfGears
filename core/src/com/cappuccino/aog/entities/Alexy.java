@@ -25,7 +25,10 @@ public class Alexy extends Entity {
 	};
 	
 	public static enum DeadType{
-		PIERCED, BLOWED_UP, POISONED;
+		PIERCED, 
+		BLOWED_UP, 
+		POISONED, 
+		LASERED;
 	};
 	
 	private Status state = Status.UMBRELLA_OPEN;
