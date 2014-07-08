@@ -50,9 +50,6 @@ public class LaserEmitter extends Entity {
 		laser.setCenter(x+(getWidth()-getOrigin().x)*MathUtils.cos(angle), y+(getWidth()-getOrigin().x)*MathUtils.sin(angle));
 		
 		((EntityData)laser.getBody().getUserData()).setEntity(this);
-		
-		
-		
 	}
 	
 	@Override

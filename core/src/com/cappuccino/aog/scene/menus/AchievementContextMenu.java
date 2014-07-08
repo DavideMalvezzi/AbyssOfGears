@@ -1,4 +1,4 @@
-package com.cappuccino.aog.scene.actors;
+package com.cappuccino.aog.scene.menus;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.cappuccino.aog.Assets;

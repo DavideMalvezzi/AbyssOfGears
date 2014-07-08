@@ -1,4 +1,4 @@
-package com.cappuccino.aog.scene.actors;
+package com.cappuccino.aog.scene.menus;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

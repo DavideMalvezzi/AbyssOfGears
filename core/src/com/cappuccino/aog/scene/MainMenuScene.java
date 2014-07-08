@@ -18,7 +18,7 @@ import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.Scissor;
 import com.cappuccino.aog.game.ParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
-import com.cappuccino.aog.scene.actors.ChainedContetxMenuContainer;
+import com.cappuccino.aog.scene.menus.ChainedContetxMenuContainer;
 
 public class MainMenuScene extends Scene {
 	
