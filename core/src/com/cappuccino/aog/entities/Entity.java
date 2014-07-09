@@ -24,13 +24,14 @@ public class Entity implements Disposable {
 	public static final short WALL = 0x0004;
 	public static final short ENTITY = 0x0008;
 	public static final short LIGHT = 0x0010;
-	
-	public static final short PLAYER_MASK = PLAYER | WALL | ENTITY;
-	public static final short WALL_MASK = PLAYER | LIGHT;
-	public static final short ENTITY_MASK = PLAYER | LIGHT;
-	public static final short LIGHT_MASK = LIGHT | ENTITY | WALL | PLAYER;
+	public static final short BULLET = 0x0020;
 	
 	
+	public static final short PLAYER_MASK = PLAYER | WALL | ENTITY | BULLET;
+	public static final short WALL_MASK = PLAYER | LIGHT | BULLET;
+	public static final short ENTITY_MASK = PLAYER | LIGHT | BULLET;
+	public static final short LIGHT_MASK = LIGHT | ENTITY | WALL | BULLET | PLAYER;
+	public static final short BULLET_MASK = LIGHT | ENTITY | WALL | PLAYER;
 	
 	protected static final BodyEditorLoader bodyLoader = new BodyEditorLoader(Gdx.files.internal("data/Bodies"));
 	
@@ -39,6 +40,13 @@ public class Entity implements Disposable {
 	protected Vector2 origin,trasl;
 	protected float scaleX,scaleY;
 	protected boolean flipX,flipY;
+	
+	public Entity(String name) {
+		texture = Assets.getTexture(name);
+		scaleX = scaleY = 1;
+		origin = new Vector2();
+		trasl = new Vector2();
+	}
 	
 	public Entity(String name, World world) {
 		texture = Assets.getTexture(name);

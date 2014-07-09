@@ -24,7 +24,7 @@ public class AOGGame extends ApplicationAdapter {
 	@Override
 	public void render() {
 		float dt = Gdx.graphics.getDeltaTime();
-		fpsLogger.log();
+		//fpsLogger.log();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		

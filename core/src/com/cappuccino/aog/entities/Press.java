@@ -8,6 +8,9 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.cappuccino.aog.entities.Alexy.DeadType;
+import com.cappuccino.aog.entities.Alexy.Status;
+import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.scene.GameScene;
 
 public class Press extends Entity{
@@ -15,9 +18,7 @@ public class Press extends Entity{
 	private int dir;
 	private float minLen, maxLen, vel;
 	private final Vector2 startPos = new Vector2();
-	private Entity tube;
-	
-
+	private Entity tube, otherPress, wall;
 	
 	public Press(World world, float x, float y, float minLen, float maxLen, float vel, float angle, float scale) {
 		super("PressPlate", world);
@@ -115,21 +116,31 @@ public class Press extends Entity{
 		getBody().setActive(true);
 	}
 	
+	public void setWall(Wall wall){
+		this.wall = wall;
+	}
+	
+	public void setOtherPress(Press otherPress){
+		this.otherPress = otherPress;
+	}
+	
+	
 	@Override
-	public void onCollide(Fixture sender, Fixture collided, Contact contact) {
-		/*
-		final Alexy alexy = Level.getPlayer();
-		int pressure = 0;
-		float[] normal = impulse.getNormalImpulses();
-		for(int i=0; i<normal.length; i++){
-			pressure+=normal[i];
+	public void onCollide(Fixture sender, Fixture collided, Contact contact){
+		String collidedName = (String)collided.getUserData();
+		Alexy alexy = Level.getPlayer();
+		
+		if(otherPress!=null){
+			float plateDst = getCenter().dst(otherPress.getCenter())-2*getWidth();
+
+			if(plateDst<=alexy.getWidth() && dir == 1){
+				if(collidedName.contains("Player") || collidedName.contains("Umbrella")){
+					alexy.setState(Status.DYING);
+					alexy.setDeadType(DeadType.PRESSED);
+				}
+			}
+			
 		}
-		System.out.println(pressure);
-		if(pressure>30*vel){
-			alexy.setState(Status.DYING);
-			alexy.setDeadType(DeadType.BLOWED_UP);
-		}
-		*/
 	}
 
 	@Override

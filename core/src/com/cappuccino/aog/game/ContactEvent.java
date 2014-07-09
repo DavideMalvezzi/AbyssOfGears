@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.entities.Entity;
 import com.cappuccino.aog.entities.EntityData;
 
@@ -20,6 +21,12 @@ public class ContactEvent implements ContactListener{
 			entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 		}else if(dataA.getName().equals("Umbrella") || dataA.getName().equals("Player")){
 			entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+		}else{
+			if(entityA.getBody().getType() == BodyType.DynamicBody){
+				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+			}else if(entityB.getBody().getType() == BodyType.DynamicBody){
+				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+			}
 		}
 		
 	}

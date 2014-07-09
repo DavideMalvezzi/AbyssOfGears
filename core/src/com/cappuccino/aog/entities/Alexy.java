@@ -25,10 +25,12 @@ public class Alexy extends Entity {
 	};
 	
 	public static enum DeadType{
-		PIERCED, 
+		ARROWED,
 		BLOWED_UP, 
+		LASERED,
+		PIERCED, 
 		POISONED, 
-		LASERED;
+		PRESSED;
 	};
 	
 	private Status state = Status.UMBRELLA_OPEN;
@@ -86,12 +88,12 @@ public class Alexy extends Entity {
 	
 	
 	public void update(float delta){
-		/*
+		
 		if(Gdx.input.isKeyPressed(Keys.LEFT))setLinearVelocity(-5, 0);
 		if(Gdx.input.isKeyPressed(Keys.RIGHT))setLinearVelocity(5, 0);
 		if(Gdx.input.isKeyPressed(Keys.DOWN))setLinearVelocity(0, -5);
 		if(Gdx.input.isKeyPressed(Keys.UP))setLinearVelocity(0, 5);
-		*/
+		
 		
 		switch (state) {
 		
