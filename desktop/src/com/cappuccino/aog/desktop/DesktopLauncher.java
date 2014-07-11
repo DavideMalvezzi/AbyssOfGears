@@ -7,9 +7,9 @@ import com.cappuccino.aog.AOGGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 960;
-		config.height = 720;
-		config.resizable = false;
+		config.width = 640;
+		config.height = 480;
+		config.resizable = true;
 		new LwjglApplication(new AOGGame(), config);
 	}
 }

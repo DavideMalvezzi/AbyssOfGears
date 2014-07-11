@@ -17,6 +17,7 @@ public class Scene extends ScreenAdapter {
 	public static final int SCENE_W = 960, SCENE_H = 640;
 	public static final int WIN_W = Gdx.graphics.getWidth(), WIN_H =  Gdx.graphics.getHeight();
 	public static final float BOX_TO_WORLD = 0.04f, WORLD_TO_BOX = 25f, ZOOM = 1f; 
+	public static final float CAM_TRASL_X = -(SCENE_W-SCENE_H/ZOOM)/2*ZOOM;
 	
 	protected OrthographicCamera camera;
 	protected ExtendViewport viewport;
@@ -31,7 +32,7 @@ public class Scene extends ScreenAdapter {
 		viewport = new ExtendViewport(SCENE_W*BOX_TO_WORLD, SCENE_H*BOX_TO_WORLD, camera);
 		//Accentramento telecamera rispetto alle immagini
 		camera.position.set(SCENE_W/2f*BOX_TO_WORLD*ZOOM, SCENE_H/2f*BOX_TO_WORLD*ZOOM, 0);
-		camera.translate(-(SCENE_W-SCENE_H/ZOOM)/2*ZOOM*BOX_TO_WORLD, 0);
+		camera.translate(CAM_TRASL_X*BOX_TO_WORLD, 0);
 		camera.zoom = ZOOM;
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		
@@ -54,14 +55,14 @@ public class Scene extends ScreenAdapter {
 		
 		Rectangle scissor = new Rectangle();
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
-		Scissor.setArea(view, scissor);
+		//Scissor.setArea(view, scissor);
 		camera.combined.scl(BOX_TO_WORLD);
 		camera.projection.scl(BOX_TO_WORLD);
 		
 	}
 	
 	protected void endClip(){
-		Scissor.popScissors();
+		//Scissor.popScissors();
 	}
 	
 	

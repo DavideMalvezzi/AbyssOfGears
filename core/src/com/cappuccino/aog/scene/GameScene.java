@@ -28,9 +28,9 @@ public class GameScene extends Scene{
 	public GameScene(){
 		super();
 		
-		parallaxbg0 = new ParallaxLayer(Assets.layer0Background, 160);
-		parallaxbg1 = new ParallaxLayer(Assets.layer1Background, 160);
-		parallaxbg2 = new ParallaxLayer(Assets.layer2Background, 160);
+		parallaxbg0 = new ParallaxLayer(Assets.layer0Background, -CAM_TRASL_X);
+		parallaxbg1 = new ParallaxLayer(Assets.layer1Background, -CAM_TRASL_X);
+		parallaxbg2 = new ParallaxLayer(Assets.layer2Background, -CAM_TRASL_X);
 		
 		level = LevelManager.load(world, 0);
 		player = Level.getPlayer();
