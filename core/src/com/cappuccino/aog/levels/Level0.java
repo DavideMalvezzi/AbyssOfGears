@@ -11,6 +11,7 @@ import com.cappuccino.aog.entities.GasEmitter;
 import com.cappuccino.aog.entities.LaserEmitter;
 import com.cappuccino.aog.entities.Press;
 import com.cappuccino.aog.entities.SpikedBall;
+import com.cappuccino.aog.entities.ThunderEmitter;
 import com.cappuccino.aog.entities.Wall;
 
 public class Level0 extends Level {
@@ -30,9 +31,6 @@ public class Level0 extends Level {
 		Spear spear1 = new Spear(world, 0, 620, 300, 30, 10*MathUtils.degRad, 1);
 		Spear spear2 = new Spear(world, 0, 640, 300, 30, 20*MathUtils.degRad, 1);
 	
-		
-		
-		
 		
 		active_entities.add(spike);
 		active_entities.add(smokeEmitter);
@@ -56,11 +54,26 @@ public class Level0 extends Level {
 		active_entities.add(a);
 		*/
 		
+		/*
 		Press press = new Press(world, 0, 800, 50, 320, 10, -15*MathUtils.degRad, 0.45f);
 		Press press2 = new Press(world, 640, 630, 50, 320, 10, 165*MathUtils.degRad, 0.45f);
 		press.setOtherPress(press2);
 		active_entities.add(press);
 		active_entities.add(press2);
+		*/
+		
+		ThunderEmitter te = new ThunderEmitter(world, 60, 600, 30*MathUtils.degRad);
+		ThunderEmitter te2 = new ThunderEmitter(world, 565, 600, 180*MathUtils.degRad);
+		ThunderEmitter te3 = new ThunderEmitter(world, 565, 700, 180*MathUtils.degRad);
+		
+		
+		te.setEnd(te3);
+		te2.setEnd(te);
+		
+		active_entities.add(te2);
+		active_entities.add(te);
+		active_entities.add(te3);
+		
 		
 		Wall wallL = new Wall("lvl0wallLeft", world, 0, 0);
 		Wall wallR = new Wall("lvl0wallRight", world, 504, 0);

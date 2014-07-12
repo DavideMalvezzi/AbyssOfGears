@@ -5,6 +5,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.cappuccino.aog.scene.GameScene;
 import com.cappuccino.aog.scene.MainMenuScene;
 import com.cappuccino.aog.scene.TryScene;
 
@@ -17,7 +18,7 @@ public class AOGGame extends ApplicationAdapter {
 	public void create() {
 		Assets.load();
 		fpsLogger = new FPSLogger();
-		currentScene = new TryScene();
+		currentScene = new GameScene();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 	}

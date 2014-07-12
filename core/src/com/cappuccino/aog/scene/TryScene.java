@@ -15,7 +15,7 @@ public class TryScene extends Scene{
 	
 	public TryScene() {
 		camera.position.y = camera.viewportHeight/2;
-		t1 = new Thunder(world, 100, 100, 100, 0, 1, camera);
+		//t1 = new Thunder(world, 100, 100, 100, 0, 1);
 		
 	}
 	
@@ -30,7 +30,7 @@ public class TryScene extends Scene{
 			batch.setColor(Color.WHITE);
 			batch.draw(Assets.layer0Background, 0, 0);
 			
-			t1.draw(batch, camera);
+			t1.draw(batch);
 		//	t2.draw(batch, camera);
 			
 		batch.end();

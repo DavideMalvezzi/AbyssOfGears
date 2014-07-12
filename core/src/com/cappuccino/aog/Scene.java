@@ -55,14 +55,14 @@ public class Scene extends ScreenAdapter {
 		
 		Rectangle scissor = new Rectangle();
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
-		//Scissor.setArea(view, scissor);
+		Scissor.setArea(view, scissor);
 		camera.combined.scl(BOX_TO_WORLD);
 		camera.projection.scl(BOX_TO_WORLD);
 		
 	}
 	
 	protected void endClip(){
-		//Scissor.popScissors();
+		Scissor.popScissors();
 	}
 	
 	
@@ -71,5 +71,6 @@ public class Scene extends ScreenAdapter {
 	public void resize(int width, int height) {
 		viewport.update(width, height);
 	}
+	
 	
 }

@@ -71,7 +71,7 @@ public class GameScene extends Scene{
 		
 		if(!hud.isPaused()){
 			if(player.getState()!=Status.DYING){
-				camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
+				//camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
 				//parallaxbg0.update(delta, -player.getBody().getLinearVelocity().y*0.15f*BOX_TO_WORLD);
 				//parallaxbg1.update(delta, -player.getBody().getLinearVelocity().y*0.3f*BOX_TO_WORLD);
 				//parallaxbg2.update(delta, -player.getBody().getLinearVelocity().y*0.6f*BOX_TO_WORLD);

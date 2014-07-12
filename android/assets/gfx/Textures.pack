@@ -143,77 +143,84 @@ filter: Nearest,Nearest
 repeat: none
 Gear2
   rotate: false
-  xy: 0, 135
+  xy: 0, 187
   size: 785, 783
   orig: 785, 783
   offset: 0, 0
   index: -1
 PressTube
   rotate: false
-  xy: 785, 668
+  xy: 785, 720
   size: 148, 250
   orig: 148, 250
   offset: 0, 0
   index: -1
 PressPlate
   rotate: false
-  xy: 785, 325
+  xy: 785, 377
   size: 51, 343
   orig: 51, 343
   offset: 0, 0
   index: -1
 Umbrella
   rotate: false
-  xy: 0, 64
+  xy: 0, 116
   size: 75, 71
   orig: 75, 71
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 933, 854
+  xy: 933, 906
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 tempButton
   rotate: false
-  xy: 836, 604
+  xy: 836, 656
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 umbrellaOff
   rotate: false
-  xy: 0, 0
+  xy: 0, 52
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 umbrellaOn
   rotate: false
-  xy: 75, 71
+  xy: 75, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+ThunderEmitter
+  rotate: false
+  xy: 933, 846
+  size: 63, 60
+  orig: 63, 60
+  offset: 0, 0
+  index: -1
 Player
   rotate: false
-  xy: 785, 253
+  xy: 785, 305
   size: 42, 72
   orig: 42, 72
   offset: 0, 0
   index: -1
 SmokeEmitter
   rotate: false
-  xy: 933, 803
+  xy: 836, 605
   size: 59, 51
   orig: 59, 51
   offset: 0, 0
   index: -1
 Pipe_A
   rotate: false
-  xy: 836, 552
+  xy: 0, 0
   size: 52, 52
   orig: 52, 52
   offset: 0, 0

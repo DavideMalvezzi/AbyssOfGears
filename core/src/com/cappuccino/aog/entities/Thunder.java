@@ -3,7 +3,6 @@ package com.cappuccino.aog.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,13 +10,14 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.BatchUtils;
 
 public class Thunder extends Entity {
 
@@ -25,58 +25,74 @@ public class Thunder extends Entity {
 	private static final Pool<Segment> segmentPool = new Pool<Segment>(){
 			protected Segment newObject() {
 				return new Segment();
-			};
+			}
 	};
 	
-	private final Array<Segment> thunderPoint = new Array<Segment>();;
-	private FrameBuffer buffer;
 	
-	private float alpha = 0, len = 0;
+	private Matrix4 projection;
+	private FrameBuffer light_buf, bloom_buf;
+	private final Array<Segment> thunderPoint = new Array<Segment>();
+	
+	private float alpha, len, maxOffset;
 	private boolean isTextureReady = false;
 	
 	
-	public Thunder(World world, float x, float y, float len, float angle, float delay, OrthographicCamera camera) {
+	public Thunder(World world, float x, float y, float len, float maxOffset, float angle, float delay) {
 		super("LaserEmitter", world);
 		init(world, BodyType.KinematicBody);
 		
 		this.len = len;
+		this.maxOffset = maxOffset;
 		this.alpha = delay;
-		this.buffer = new FrameBuffer(Format.RGBA8888, (int)(camera.viewportWidth*Scene.WORLD_TO_BOX), (int)(camera.viewportHeight*Scene.WORLD_TO_BOX), false);
+		this.light_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
+		this.bloom_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
+		
+		projection = new Matrix4();
+		projection.setToOrtho(0, light_buf.getWidth(), 0, light_buf.getHeight(), 0, 10);
 		
 		setCenter(x, y);
 		setAngle(angle);
-		
-		
 		
 		createNew();
 	}
 	
 
 	
-	
-	public void draw(SpriteBatch batch, OrthographicCamera camera){
-		Texture t = getTexture();
+	@Override
+	public void draw(SpriteBatch batch){
+		Texture light_text = light_buf.getColorBufferTexture();
+		Texture bloom_text = bloom_buf.getColorBufferTexture();
 		
 		if(!isTextureReady){
 			batch.end();
-			drawOnBuffer(camera);
+			drawOnBuffer();
 			batch.begin();
 		}
 		
-		//batch.setColor(1, 1, 0, alpha);
-		//BatchUtils.drawBloommed(batch, t, 0, 0, 1.65f);
+		batch.setColor(144f/255f, 208f/255f, 248f/255f, 1);
+		BatchUtils.drawBloommed(batch, light_text, getX(), getY()+maxOffset, 0, bloom_text.getHeight()/2, getAngle(), 1.65f);
 		
-		//batch.setColor(1, 1, 1, alpha);
+		batch.draw(bloom_text, getX(), getY()-maxOffset, 
+				0, bloom_text.getHeight()/2, bloom_text.getWidth(), bloom_text.getHeight(), 
+				1,1, getAngle()*MathUtils.radDeg, 
+				0, 0, bloom_text.getWidth(), bloom_text.getHeight(),
+				false, true);
 		
-		
-		//batch.draw(t, getCenter().x, getCenter().y-100, len, 200, (int)0, (int)buffer.getHeight()/2-100, (int) len, 200, false, true);
-		batch.draw(t, Scene.CAM_TRASL_X, 0);
+		/*
+		batch.setColor(1, 1, 1, 1);
+		batch.draw(light_text, getX(), getY()-maxOffset, 
+				0, light_text.getHeight()/2, light_text.getWidth(), light_text.getHeight(), 
+				1,1, getAngle()*MathUtils.radDeg, 
+				0, 0, light_text.getWidth(), light_text.getHeight(),
+				false, false);
+		*/
+		batch.setColor(Color.WHITE);
 	}
 	
 	public void update(float delta){
 		
-		if(alpha<=0){
-			createNew();
+		if(alpha<0){
+			//createNew();
 			alpha = 1;
 		}
 		
@@ -85,13 +101,13 @@ public class Thunder extends Entity {
 	}
 	
 	
-	public void drawOnBuffer(OrthographicCamera camera){
+	public void drawOnBuffer(){
 		
-		buffer.begin();
-			Gdx.gl20.glClearColor(0, 0, 0, 0.5f);
+		light_buf.begin();
+			Gdx.gl20.glClearColor(0, 0, 0, 0f);
 			Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			Gdx.gl20.glClearColor(1, 0, 0, 1f);
-			shapeRenderer.setProjectionMatrix(camera.projection);
+			shapeRenderer.setProjectionMatrix(projection);
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(Color.WHITE);
 				for(int i=0; i<thunderPoint.size; i++){
@@ -101,20 +117,23 @@ public class Thunder extends Entity {
 		
 			shapeRenderer.end();
 			
-		buffer.end();
+		light_buf.end();
+		
+		BatchUtils.drawBloommedOnBuffer(bloom_buf, light_buf.getColorBufferTexture(), projection, 1.65f);
+		
 		isTextureReady = true;
 	}
 	
 	
 	public void createNew(){
-		float MAX_OFFSET = 100;
+		float MAX_OFFSET = maxOffset;
 		float dst, angle, off;
 		Vector2 midPoint = new Vector2();
 		Vector2 branch = new Vector2();
 		
 		segmentPool.freeAll(thunderPoint);
 		thunderPoint.clear();
-		thunderPoint.add(segmentPool.obtain().set(new Vector2(-buffer.getWidth()/2, 0), new Vector2(-buffer.getWidth()/2+len, 0)));
+		thunderPoint.add(segmentPool.obtain().set(new Vector2(0, maxOffset), new Vector2(len, maxOffset)));
 		for(int i=0; i<7; i++){
 			for(int j=0; j<thunderPoint.size; j++){
 				Segment s = thunderPoint.get(j);
@@ -153,7 +172,7 @@ public class Thunder extends Entity {
 	
 	
 	public Texture getTexture(){
-		return buffer.getColorBufferTexture();
+		return light_buf.getColorBufferTexture();
 	}
 	
 	
