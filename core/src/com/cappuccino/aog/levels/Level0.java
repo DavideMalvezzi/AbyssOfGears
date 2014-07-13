@@ -68,7 +68,6 @@ public class Level0 extends Level {
 		
 		
 		te.setEnd(te3);
-		te2.setEnd(te);
 		
 		active_entities.add(te2);
 		active_entities.add(te);

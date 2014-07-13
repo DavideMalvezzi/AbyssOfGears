@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -29,8 +28,7 @@ public class Thunder extends Entity {
 	};
 	
 	
-	private Matrix4 projection;
-	private FrameBuffer light_buf, bloom_buf;
+	public FrameBuffer light_buf, bloom_buf;
 	private final Array<Segment> thunderPoint = new Array<Segment>();
 	
 	private float alpha, len, maxOffset;
@@ -47,9 +45,6 @@ public class Thunder extends Entity {
 		this.light_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
 		this.bloom_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
 		
-		projection = new Matrix4();
-		projection.setToOrtho(0, light_buf.getWidth(), 0, light_buf.getHeight(), 0, 10);
-		
 		setCenter(x, y);
 		setAngle(angle);
 		
@@ -64,35 +59,31 @@ public class Thunder extends Entity {
 		Texture bloom_text = bloom_buf.getColorBufferTexture();
 		
 		if(!isTextureReady){
-			batch.end();
-			drawOnBuffer();
-			batch.begin();
+			drawOnBuffer(batch);
 		}
 		
 		batch.setColor(144f/255f, 208f/255f, 248f/255f, 1);
-		BatchUtils.drawBloommed(batch, light_text, getX(), getY()+maxOffset, 0, bloom_text.getHeight()/2, getAngle(), 1.65f);
 		
 		batch.draw(bloom_text, getX(), getY()-maxOffset, 
 				0, bloom_text.getHeight()/2, bloom_text.getWidth(), bloom_text.getHeight(), 
 				1,1, getAngle()*MathUtils.radDeg, 
 				0, 0, bloom_text.getWidth(), bloom_text.getHeight(),
-				false, true);
+				false, false);
+
 		
-		/*
 		batch.setColor(1, 1, 1, 1);
 		batch.draw(light_text, getX(), getY()-maxOffset, 
 				0, light_text.getHeight()/2, light_text.getWidth(), light_text.getHeight(), 
 				1,1, getAngle()*MathUtils.radDeg, 
 				0, 0, light_text.getWidth(), light_text.getHeight(),
 				false, false);
-		*/
+		
 		batch.setColor(Color.WHITE);
 	}
 	
 	public void update(float delta){
-		
 		if(alpha<0){
-			//createNew();
+			createNew();
 			alpha = 1;
 		}
 		
@@ -101,13 +92,13 @@ public class Thunder extends Entity {
 	}
 	
 	
-	public void drawOnBuffer(){
-		
+	public void drawOnBuffer(SpriteBatch batch){
+		batch.end();
 		light_buf.begin();
 			Gdx.gl20.glClearColor(0, 0, 0, 0f);
 			Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			Gdx.gl20.glClearColor(1, 0, 0, 1f);
-			shapeRenderer.setProjectionMatrix(projection);
+			shapeRenderer.setProjectionMatrix(BatchUtils.getBufferProj(light_buf));
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(Color.WHITE);
 				for(int i=0; i<thunderPoint.size; i++){
@@ -118,8 +109,9 @@ public class Thunder extends Entity {
 			shapeRenderer.end();
 			
 		light_buf.end();
+		batch.begin();
 		
-		BatchUtils.drawBloommedOnBuffer(bloom_buf, light_buf.getColorBufferTexture(), projection, 1.65f);
+		BatchUtils.drawBloommedOnBuffer(bloom_buf, light_buf.getColorBufferTexture(), batch, 1.65f);
 		
 		isTextureReady = true;
 	}
@@ -176,7 +168,7 @@ public class Thunder extends Entity {
 	}
 	
 	
-	static class Segment implements Poolable{
+	public static class Segment implements Poolable{
 		public final Vector2 start = new Vector2();
 		public final Vector2 end =  new Vector2();
 		public Segment set(Vector2 start, Vector2 end) {
