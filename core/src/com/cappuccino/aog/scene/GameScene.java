@@ -4,7 +4,6 @@ package com.cappuccino.aog.scene;
 import box2dLight.PointLight;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.Assets;
@@ -15,6 +14,7 @@ import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.game.ParallaxLayer;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.levels.LevelManager;
+import com.cappuccino.aog.mapeditor.MapEditingInputListener;
 
 
 public class GameScene extends Scene{
@@ -25,9 +25,10 @@ public class GameScene extends Scene{
 	private GameSceneHud hud;
 	
 	
+	private MapEditingInputListener mapEditor;
+	
 	public GameScene(){
 		super();
-		
 		parallaxbg0 = new ParallaxLayer(Assets.layer0Background, -CAM_TRASL_X);
 		parallaxbg1 = new ParallaxLayer(Assets.layer1Background, -CAM_TRASL_X);
 		parallaxbg2 = new ParallaxLayer(Assets.layer2Background, -CAM_TRASL_X);
@@ -40,6 +41,9 @@ public class GameScene extends Scene{
 		PointLight l = new PointLight(rayHandler, 32, new Color(1f, 0.45f, 0f, 0.75f), 20, 0, 0);
 		l.attachToBody(player.getBody(), 0, -2);
 		PointLight.setContactFilter(Entity.LIGHT, (short) 0, Entity.LIGHT_MASK);
+		
+		mapEditor = new MapEditingInputListener(level, world, camera);
+		Gdx.input.setInputProcessor(mapEditor);
 	}
 	
 	public void render(float delta){
@@ -56,11 +60,13 @@ public class GameScene extends Scene{
 		
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
-			//box2dDebug.render(world, camera.combined);
+			box2dDebug.render(world, camera.combined);
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			
 			hud.draw();
+			
+			mapEditor.render(batch);
 			
 		endClip();
 		
@@ -72,9 +78,9 @@ public class GameScene extends Scene{
 		if(!hud.isPaused()){
 			if(player.getState()!=Status.DYING){
 				//camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
-				//parallaxbg0.update(delta, -player.getBody().getLinearVelocity().y*0.15f*BOX_TO_WORLD);
-				//parallaxbg1.update(delta, -player.getBody().getLinearVelocity().y*0.3f*BOX_TO_WORLD);
-				//parallaxbg2.update(delta, -player.getBody().getLinearVelocity().y*0.6f*BOX_TO_WORLD);
+				parallaxbg0.update(delta, -player.getBody().getLinearVelocity().y*0.15f*BOX_TO_WORLD);
+				parallaxbg1.update(delta, -player.getBody().getLinearVelocity().y*0.3f*BOX_TO_WORLD);
+				parallaxbg2.update(delta, -player.getBody().getLinearVelocity().y*0.6f*BOX_TO_WORLD);
 			}else{
 				hud.showGameOverMenu();
 			}
@@ -86,15 +92,7 @@ public class GameScene extends Scene{
 		
 		hud.act(delta);
 		
-		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
-		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
-		
-		if(Gdx.input.isKeyPressed(Keys.A))camera.position.x-=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
-		
-		
+		mapEditor.update();
 	}
 	
 	

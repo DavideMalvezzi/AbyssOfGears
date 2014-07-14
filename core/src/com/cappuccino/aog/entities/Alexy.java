@@ -26,11 +26,11 @@ public class Alexy extends Entity {
 	
 	public static enum DeadType{
 		ARROWED,
-		BLOWED_UP, 
 		LASERED,
 		PIERCED, 
 		POISONED, 
-		PRESSED;
+		PRESSED,
+		FULMINATED;
 	};
 	
 	private Status state = Status.UMBRELLA_OPEN;
@@ -43,7 +43,7 @@ public class Alexy extends Entity {
 	
 	public Umbrella umbrella;
 	private Joint umbrellaJoint;
-	
+
 	
 	public Alexy(World world) {
 		super("Player", world);
@@ -80,12 +80,6 @@ public class Alexy extends Entity {
 			Assets.fallingEffect.draw(batch);
 		}
 	}
-	
-	@Override
-	public void active() {
-		//TODO reset filter data
-	}
-	
 	
 	public void update(float delta){
 		
@@ -186,9 +180,6 @@ public class Alexy extends Entity {
 			
 			break;
 
-		case BLOWED_UP:
-			
-			break;
 			
 		case POISONED:
 			break;

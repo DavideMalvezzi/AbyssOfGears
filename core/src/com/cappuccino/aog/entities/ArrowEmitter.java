@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class ArrowEmitter extends Entity {
 
@@ -88,6 +89,7 @@ public class ArrowEmitter extends Entity {
 		
 	}
 	
+	
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -98,6 +100,22 @@ public class ArrowEmitter extends Entity {
 		for(int i=0; i<arrowsPool.getFree(); i++){
 			arrowsPool.obtain().dispose();
 		}
+	}
+	
+	
+	@Override
+	public Property getProp1() {
+		return new Property("EmissionDelay", shootTime);
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		shootTime = value;
+	}
+	
+	@Override
+	public void recalculate() {
+		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
 	}
 	
 }

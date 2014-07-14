@@ -11,12 +11,20 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.cappuccino.aog.BatchUtils;
+import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.entities.Alexy.DeadType;
+import com.cappuccino.aog.entities.Alexy.Status;
+import com.cappuccino.aog.levels.Level;
 
 public class Thunder extends Entity {
 
@@ -27,21 +35,22 @@ public class Thunder extends Entity {
 			}
 	};
 	
-	
 	public FrameBuffer light_buf, bloom_buf;
 	private final Array<Segment> thunderPoint = new Array<Segment>();
 	
-	private float alpha, len, maxOffset;
+	private float alpha, len, maxOffset, timer, duration;
 	private boolean isTextureReady = false;
 	
 	
-	public Thunder(World world, float x, float y, float len, float maxOffset, float angle, float delay) {
+	public Thunder(World world, float x, float y, float len, float maxOffset, float angle, float delay, float duration) {
 		super("LaserEmitter", world);
 		init(world, BodyType.KinematicBody);
+		origin.set(0, maxOffset).scl(Scene.BOX_TO_WORLD);
 		
 		this.len = len;
 		this.maxOffset = maxOffset;
 		this.alpha = delay;
+		this.duration = duration;
 		this.light_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
 		this.bloom_buf = new FrameBuffer(Format.RGBA8888, (int)len, (int)maxOffset*2, false);
 		
@@ -51,44 +60,50 @@ public class Thunder extends Entity {
 		createNew();
 	}
 	
-
 	
 	@Override
 	public void draw(SpriteBatch batch){
-		Texture light_text = light_buf.getColorBufferTexture();
-		Texture bloom_text = bloom_buf.getColorBufferTexture();
+		if(body.isActive()){
+			Texture light_text = light_buf.getColorBufferTexture();
+			Texture bloom_text = bloom_buf.getColorBufferTexture();
 		
-		if(!isTextureReady){
-			drawOnBuffer(batch);
-		}
+			if(!isTextureReady){
+				drawOnBuffer(batch);
+			}
 		
-		batch.setColor(144f/255f, 208f/255f, 248f/255f, 1);
-		
-		batch.draw(bloom_text, getX(), getY()-maxOffset, 
-				0, bloom_text.getHeight()/2, bloom_text.getWidth(), bloom_text.getHeight(), 
-				1,1, getAngle()*MathUtils.radDeg, 
-				0, 0, bloom_text.getWidth(), bloom_text.getHeight(),
-				false, false);
+			batch.setColor(144f/255f, 208f/255f, 248f/255f, alpha);
+			batch.draw(bloom_text, getX(), getY(), 
+					0, bloom_text.getHeight()/2, bloom_text.getWidth(), bloom_text.getHeight(), 
+					1,1, getAngle()*MathUtils.radDeg, 
+					0, 0, bloom_text.getWidth(), bloom_text.getHeight(),
+					false, true);
 
 		
-		batch.setColor(1, 1, 1, 1);
-		batch.draw(light_text, getX(), getY()-maxOffset, 
-				0, light_text.getHeight()/2, light_text.getWidth(), light_text.getHeight(), 
-				1,1, getAngle()*MathUtils.radDeg, 
-				0, 0, light_text.getWidth(), light_text.getHeight(),
-				false, false);
+			batch.setColor(1, 1, 1, alpha);
+			batch.draw(light_text, getX(), getY(), 
+					0, light_text.getHeight()/2, light_text.getWidth(), light_text.getHeight(), 
+					1,1, getAngle()*MathUtils.radDeg, 
+					0, 0, light_text.getWidth(), light_text.getHeight(),
+					false, true);
 		
-		batch.setColor(Color.WHITE);
+			batch.setColor(Color.WHITE);
+		}
 	}
 	
 	public void update(float delta){
-		if(alpha<0){
-			createNew();
-			alpha = 1;
+		if(timer>=duration){
+			body.setActive(!body.isActive());
+			timer = 0;
 		}
-		
-		alpha-= delta * 3;
-		
+		timer+=delta;
+
+		if(body.isActive()){
+			if(alpha<0){
+				createNew();
+				alpha = 1;
+			}
+			alpha-= delta * 3;
+		}
 	}
 	
 	
@@ -148,25 +163,51 @@ public class Thunder extends Entity {
 					angle = (MathUtils.random(-35, 35)+15)*MathUtils.degRad;
 					branch.sub(midPoint).rotateRad(angle).add(midPoint);
 					
+					branch.y = MathUtils.clamp(branch.y, -maxOffset*2, maxOffset*2);
+					
 					thunderPoint.insert(j+2, segmentPool.obtain().set(midPoint, branch));
 					j++;
 				}
 				
 				j++;
-				
 			}
 			MAX_OFFSET*=0.5f;
 		}
+		
+		Array<Fixture> fixtures = body.getFixtureList();
+		
+		for(int i=0; i<fixtures.size; i++){
+			body.destroyFixture(fixtures.get(i));
+			i--;
+		}
+		
+		for(int i=0; i<thunderPoint.size; i++){
+			body.createFixture(thunderPoint.get(i).getFixDef(origin)).setUserData("Thunder");
+		}
+		
+		
 		isTextureReady = false;
 	}
 	
-	
-	
-	
-	public Texture getTexture(){
-		return light_buf.getColorBufferTexture();
+	@Override
+	public void onCollide(Fixture sender, Fixture collided, Contact contact){
+		Alexy alexy = Level.getPlayer();
+		String collidedName = (String) collided.getUserData();
+		if(alexy.getState() != Status.DYING){
+			if(collidedName.contains("Umbrella") || collidedName.contains("Player")){
+				alexy.setState(Status.DYING);
+				alexy.setDeadType(DeadType.FULMINATED);
+			}
+		}
 	}
 	
+	public void dispose() {
+		super.dispose();
+		thunderPoint.clear();
+		segmentPool.clear();
+		light_buf.dispose();
+		bloom_buf.dispose();
+	}
 	
 	public static class Segment implements Poolable{
 		public final Vector2 start = new Vector2();
@@ -176,9 +217,28 @@ public class Thunder extends Entity {
 			this.end.set(end);
 			return this;
 		}
+		public FixtureDef getFixDef(Vector2 origin){
+			FixtureDef def = new FixtureDef();
+			ChainShape line = new ChainShape();
+			float vertices[] = new float[]{
+					start.x*Scene.BOX_TO_WORLD,
+					start.y*Scene.BOX_TO_WORLD-origin.y,
+					end.x*Scene.BOX_TO_WORLD,
+					end.y*Scene.BOX_TO_WORLD-origin.y,
+				};
+			line.createChain(vertices);
+			def.filter.categoryBits = ENTITY;
+			def.filter.maskBits = ENTITY_MASK;
+			def.isSensor = true;
+			def.shape = line;
+			
+			
+			return def;
+		}
 		public void reset(){
 			
 		}
 	}
+	
 	
 }

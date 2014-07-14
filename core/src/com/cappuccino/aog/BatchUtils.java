@@ -169,7 +169,7 @@ public class BatchUtils {
 	private static void clear(){
 		Gdx.gl.glClearColor(0, 0, 0, 0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 	
 	

@@ -13,12 +13,21 @@ import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.entities.models.EntityModel;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
 public class SpikedBall extends Entity {
 	
 	private Joint attacched;
 
+	public SpikedBall(World world) {
+		super("SpikedBall", world);
+		init(world, BodyType.KinematicBody);
+		initFixture();
+	}
+	
+	/*
+	
 	public SpikedBall(World world, float x, float y, float speed) {
 		super("SpikedBall", world);
 		init(world, BodyType.KinematicBody);
@@ -36,6 +45,8 @@ public class SpikedBall extends Entity {
 		setAngularVelocity(speed);
 	}
 
+	*/
+	
 	@Override
 	public void initFixture() {
 		FixtureDef fd = new FixtureDef();
@@ -80,6 +91,16 @@ public class SpikedBall extends Entity {
 		}
 		alexy.setState(Status.DYING);
 		alexy.setDeadType(DeadType.PIERCED);
+	}
+	
+	@Override
+	public Property getProp1() {
+		return new Property("Omega", getAngularVelocity());
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		setAngularVelocity(value);
 	}
 
 }

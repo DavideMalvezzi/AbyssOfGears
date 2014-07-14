@@ -13,6 +13,7 @@ import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class LaserEmitter extends Entity {
 
@@ -109,4 +110,43 @@ public class LaserEmitter extends Entity {
 			alexy.setDeadType(DeadType.LASERED);
 		}
 	}
+	
+	@Override
+	public void recalculate(){
+		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
+	}
+	
+	@Override
+	public void setCenter(float x, float y) {
+		super.setCenter(x, y);
+		laser.setCenter(x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
+	}
+	
+	@Override
+	public void setAngle(float angle) {
+		super.setAngle(angle);
+		laser.setAngle(angle);
+	}
+	
+	@Override
+	public Property getProp1() {
+		return new Property("MaxLength", maxLen);
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		maxLen = value;
+	}
+	
+	@Override
+	public Property getProp2() {
+		return new Property("Duration", duration);
+	}
+	
+	@Override
+	public void setProp2(float value) {
+		duration = value;
+	}
+	
+	
 }

@@ -85,12 +85,24 @@ public class GasEmitter extends Entity {
 	}
 	
 	@Override
+	public void recalculate(){
+		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+	}
+	
+	
+	@Override
 	public void active() {
 		emittersNumber++;
 	}
 	
 	@Override
 	public void disactive() {
+		emittersNumber--;
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
 		emittersNumber--;
 	}
 

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.cappuccino.aog.Assets;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
 public class Entity implements Disposable {
@@ -140,8 +141,16 @@ public class Entity implements Disposable {
 		trasl.y = traslY;
 	}
 	
+	//Properties
+	public void setProp1(float value){}
+	public void setProp2(float value){}
+	public void setProp3(float value){}
 	
+	public Property getProp1(){return new Property();}
+	public Property getProp2(){return new Property();}
+	public Property getProp3(){return new Property();}
 	
+	public void recalculate(){}
 	
 	//Body properties
 	public Body getBody(){

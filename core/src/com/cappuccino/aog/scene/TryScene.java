@@ -62,7 +62,7 @@ public class TryScene extends Scene{
 			batch.draw(Assets.layer0Background, 0, 0);
 			
 			//batch.draw(light_buf.getColorBufferTexture(), 0, 0);
-			if(!draw){
+			//if(!draw){
 			
 			Matrix4 old = batch.getProjectionMatrix().cpy();
 			
@@ -95,7 +95,7 @@ public class TryScene extends Scene{
 			batch.setShader(null);
 			
 			draw = true;	
-			}
+			//}
 			
 			Texture t = bloom_buf.getColorBufferTexture();
 			Pixmap p = new Pixmap(t.getWidth(), t.getHeight(), Format.RGBA8888);

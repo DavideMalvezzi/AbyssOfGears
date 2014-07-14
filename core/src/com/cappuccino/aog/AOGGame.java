@@ -18,9 +18,9 @@ public class AOGGame extends ApplicationAdapter {
 	public void create() {
 		Assets.load();
 		fpsLogger = new FPSLogger();
-		currentScene = new TryScene();
+		currentScene = new GameScene();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 	}
 	
 	@Override

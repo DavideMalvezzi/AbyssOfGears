@@ -89,6 +89,11 @@ public class SmokeEmitter extends Entity {
 	}
 	
 	@Override
+	public void recalculate(){
+		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+	}
+	
+	@Override
 	public void active() {
 		emittersNumber++;
 	}

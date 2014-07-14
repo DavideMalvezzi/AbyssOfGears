@@ -87,6 +87,10 @@ public abstract class Level {
 	public static Alexy getPlayer(){
 		return alexy;
 	}
+	
+	public Array<Entity> getActiveEntities(){
+		return active_entities;
+	}
 
 	public void dispose(){
 		for(Entity e : active_entities)
