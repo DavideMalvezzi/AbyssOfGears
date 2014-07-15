@@ -7,16 +7,19 @@ public class EntityModel {
 	Class<? extends Entity> type;
 	Vector2 position,scale;
 	float angle;
-	Property prop1,prop2,prop3;
+	Property internalProp1,internalProp2,internalProp3;
+	Property externalEntity1, externalEntity2;
 	
 	public EntityModel(Class<? extends Entity> type) {
 		this.type = type;
 		this.position = new Vector2();
 		this.scale = new Vector2(1, 1);
 		this.angle = 0;
-		this.prop1 = new Property();
-		this.prop2 = new Property();
-		this.prop3 = new Property();
+		this.internalProp1 = new Property();
+		this.internalProp2 = new Property();
+		this.internalProp3 = new Property();
+		this.externalEntity1 = new Property();
+		this.externalEntity2 = new Property();
 	}
 	
 	

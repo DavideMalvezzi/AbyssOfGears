@@ -13,11 +13,8 @@ public class Gear extends Entity{
 		super("Gear6", world);
 		init(world, BodyType.KinematicBody);
 		initFixture();
-		
-		
 	}
 	
-	/*
 	
 	public Gear(World world, int type, float x, float y, float vel, float scale) {
 		super("Gear"+type, world);
@@ -32,7 +29,6 @@ public class Gear extends Entity{
 		setCenter(x, y);
 		setAngularVelocity(vel);
 	}
-	*/
 	
 	@Override
 	protected void initFixture() {

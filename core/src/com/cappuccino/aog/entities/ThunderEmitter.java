@@ -13,6 +13,14 @@ public class ThunderEmitter extends Entity{
 	private Thunder thunder;
 	private Vector2 emitPoint;
 	
+	public ThunderEmitter(World world){
+		super("ThunderEmitter", world);
+		init(world, BodyType.StaticBody);
+		initFixture();
+		
+		emitPoint = new Vector2(getCenter()).add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle()) );		
+	}
+	
 	public ThunderEmitter(World world, float x, float y, float angle){
 		super("ThunderEmitter", world);
 		init(world, BodyType.StaticBody);

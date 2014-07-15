@@ -26,8 +26,6 @@ public class SpikedBall extends Entity {
 		initFixture();
 	}
 	
-	/*
-	
 	public SpikedBall(World world, float x, float y, float speed) {
 		super("SpikedBall", world);
 		init(world, BodyType.KinematicBody);
@@ -45,7 +43,6 @@ public class SpikedBall extends Entity {
 		setAngularVelocity(speed);
 	}
 
-	*/
 	
 	@Override
 	public void initFixture() {

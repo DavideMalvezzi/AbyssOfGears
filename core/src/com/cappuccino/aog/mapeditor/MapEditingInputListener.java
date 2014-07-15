@@ -1,7 +1,5 @@
 package com.cappuccino.aog.mapeditor;
 
-import java.lang.reflect.InvocationTargetException;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -16,16 +14,31 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.entities.ArrowEmitter;
+import com.cappuccino.aog.entities.Chain;
 import com.cappuccino.aog.entities.Entity;
 import com.cappuccino.aog.entities.EntityData;
+import com.cappuccino.aog.entities.GasEmitter;
 import com.cappuccino.aog.entities.Gear;
+import com.cappuccino.aog.entities.LaserEmitter;
+import com.cappuccino.aog.entities.SmokeEmitter;
 import com.cappuccino.aog.entities.SpikedBall;
+import com.cappuccino.aog.entities.ThunderEmitter;
 import com.cappuccino.aog.levels.Level;
 
 public class MapEditingInputListener extends InputAdapter{
 	
 	@SuppressWarnings("unchecked")
-	private static Class< ? extends Entity>[] entityTypes = new Class[]{SpikedBall.class, Gear.class};
+	private static Class< ? extends Entity>[] entityTypes = new Class[]{
+		ArrowEmitter.class,
+		Chain.class,
+		GasEmitter.class,
+		Gear.class,
+		LaserEmitter.class,
+		SmokeEmitter.class,
+		SpikedBall.class, 
+		ThunderEmitter.class,
+	};
 	
 	
 	private enum EditingModes{
@@ -45,12 +58,17 @@ public class MapEditingInputListener extends InputAdapter{
 	
 	private static final QueryCallback callback = new QueryCallback() {
 		public boolean reportFixture(Fixture fixture) {
+			
 			currentEntity = ((EntityData)fixture.getBody().getUserData()).getEntity();
 			
 			int i=0;
-			while(currentEntity.getClass() != entityTypes[i] && i<entityTypes.length)i++;
-			currentType = i;
-			System.out.println(currentType);
+			while(i<entityTypes.length && currentEntity.getClass() != entityTypes[i])i++;
+			if(i<entityTypes.length){
+				currentType = i;
+			}else{
+				currentEntity = null;
+				currentType = 0;
+			}
 			return false;
 		}
 	};
@@ -169,7 +187,7 @@ public class MapEditingInputListener extends InputAdapter{
 				
 			case Keys.N:
 					try {
-						currentEntity =  (Entity) entityTypes[0].getConstructors()[0].newInstance(world);
+						currentEntity =  (Entity) entityTypes[0].getConstructor(World.class).newInstance(world);
 						level.getActiveEntities().add(currentEntity);
 						currentType = 0;
 					} catch (Exception e) {
@@ -181,8 +199,24 @@ public class MapEditingInputListener extends InputAdapter{
 					currentEntity.dispose();
 					level.getActiveEntities().removeValue(currentEntity, true);
 					try{
-						System.out.println("MapEditingInputListener.keyDown()");
-						currentEntity = (Entity) entityTypes[++currentType].getConstructors()[0].newInstance(world);
+						currentType = (currentType+1)%entityTypes.length;
+						currentEntity = (Entity) entityTypes[currentType].getConstructor(World.class).newInstance(world);
+						level.getActiveEntities().add(currentEntity);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+				break;
+			case Keys.MINUS:
+				if(currentEntity!=null){
+					currentEntity.dispose();
+					level.getActiveEntities().removeValue(currentEntity, true);
+					try{
+						currentType--;
+						if(currentType<0){
+							currentType = entityTypes.length-1;
+						}
+						currentEntity = (Entity) entityTypes[currentType].getConstructor(World.class).newInstance(world);
 						level.getActiveEntities().add(currentEntity);
 					}catch(Exception e){
 						e.printStackTrace();
@@ -209,9 +243,11 @@ public class MapEditingInputListener extends InputAdapter{
 								"y: " + currentEntity.getScaleY() + "\n" +
 						currentEntity.getProp1().name + ": " + currentEntity.getProp1().value + "\n" + 
 						currentEntity.getProp2().name + ": " + currentEntity.getProp2().value + "\n" + 
-						currentEntity.getProp3().name + ": " + currentEntity.getProp3().value + "\n" ,
+						currentEntity.getProp3().name + ": " + currentEntity.getProp3().value + "\n" +
+						currentEntity.getExternalBody1().name + "ID: " + currentEntity.getExternalBody1().value + "\n" +
+						currentEntity.getExternalBody2().name + "ID: " + currentEntity.getExternalBody2().value + "\n" ,
 								
-						840, 190);
+						820, 220);
 				
 				
 			}

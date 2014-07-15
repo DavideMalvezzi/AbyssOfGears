@@ -145,10 +145,16 @@ public class Entity implements Disposable {
 	public void setProp1(float value){}
 	public void setProp2(float value){}
 	public void setProp3(float value){}
+	public void setExternalBody1(Entity value){}
+	public void setExternalBody2(Entity value){}
+	
 	
 	public Property getProp1(){return new Property();}
 	public Property getProp2(){return new Property();}
 	public Property getProp3(){return new Property();}
+	public Property getExternalBody1(){return new Property("null",-1);}
+	public Property getExternalBody2(){return new Property("null",-1);}
+	
 	
 	public void recalculate(){}
 	

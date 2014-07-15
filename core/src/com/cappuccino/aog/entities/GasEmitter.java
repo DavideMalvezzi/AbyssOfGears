@@ -36,6 +36,15 @@ public class GasEmitter extends Entity {
 		}
 	};
 	
+	public GasEmitter(World world) {
+		super("SmokeEmitter", world);
+		init(world, BodyType.StaticBody);
+		initFixture();
+		
+		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+		emittersNumber++;
+	}
+	
 	
 	public GasEmitter(World world, float x, float y, float angle) {
 		super("SmokeEmitter", world);

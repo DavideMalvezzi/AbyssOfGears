@@ -18,7 +18,7 @@ import com.cappuccino.aog.mapeditor.EntityModel.Property;
 public class LaserEmitter extends Entity {
 
 	private Entity laser;
-	private float maxLen, curLen, duration, timer;
+	private float maxLen = 300, curLen, duration = 1, timer;
 	
 	private final RayCastCallback callBack = new RayCastCallback() {
 		public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -30,6 +30,24 @@ public class LaserEmitter extends Entity {
 			return 1;
 		}
 	};
+	
+	
+	public LaserEmitter(World world) {
+		super("LaserEmitter", world);
+		
+		laser = new Entity("Laser", world);
+		
+		init(world, BodyType.StaticBody);
+		laser.init(world, BodyType.KinematicBody);
+		laser.setScaleX(maxLen/laser.getRealWidth());
+		laser.setScaleY(0.5f);
+		initFixture();
+		
+
+		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().x+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
+		
+		((EntityData)laser.getBody().getUserData()).setEntity(this);
+	}
 	
 	public LaserEmitter(World world, float x, float y, float angle, float maxLen, float duration) {
 		super("LaserEmitter", world);
@@ -95,8 +113,8 @@ public class LaserEmitter extends Entity {
 	}
 	
 	@Override
-	public void disactive() {
-		super.disactive();
+	public void dispose() {
+		super.dispose();
 		laser.dispose();
 	}
 

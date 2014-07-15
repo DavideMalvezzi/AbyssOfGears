@@ -21,8 +21,18 @@ public class ArrowEmitter extends Entity {
 	
 	private final Array<Arrow> emittedArrow = new Array<Arrow>();
 	
-	private float timer, shootTime;
+	private float timer, shootTime = 5;
 	private Vector2 emissionPoint;
+	
+	
+	public ArrowEmitter(World world) {
+		super("ArrowEmitter", world);
+		init(world, BodyType.StaticBody);
+		initFixture();
+		
+		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+	}
+	
 	
 	public ArrowEmitter(World world, float x, float y, float angle, float shootTime) {
 		super("ArrowEmitter", world);
