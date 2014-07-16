@@ -1,9 +1,12 @@
 package com.cappuccino.aog.mapeditor;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Json;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.ArrowEmitter;
 import com.cappuccino.aog.entities.Chain;
@@ -21,6 +25,7 @@ import com.cappuccino.aog.entities.EntityData;
 import com.cappuccino.aog.entities.GasEmitter;
 import com.cappuccino.aog.entities.Gear;
 import com.cappuccino.aog.entities.LaserEmitter;
+import com.cappuccino.aog.entities.Press;
 import com.cappuccino.aog.entities.SmokeEmitter;
 import com.cappuccino.aog.entities.SpikedBall;
 import com.cappuccino.aog.entities.ThunderEmitter;
@@ -35,6 +40,7 @@ public class MapEditingInputListener extends InputAdapter{
 		GasEmitter.class,
 		Gear.class,
 		LaserEmitter.class,
+		Press.class,
 		SmokeEmitter.class,
 		SpikedBall.class, 
 		ThunderEmitter.class,
@@ -55,6 +61,8 @@ public class MapEditingInputListener extends InputAdapter{
 	
 	private static final Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight(), 0, 10);
 	private static final BitmapFont font = new BitmapFont();
+	
+	private boolean debug = false;
 	
 	private static final QueryCallback callback = new QueryCallback() {
 		public boolean reportFixture(Fixture fixture) {
@@ -180,9 +188,22 @@ public class MapEditingInputListener extends InputAdapter{
 				break;
 				
 			case Keys.NUM_0:
-				for(Entity e : level.getActiveEntities()){
-					System.out.println(e.getCenter() + "  " + e.getAngle() + "  " + e.getScaleX() + "  " + e.getScaleY());
+				Json j = new Json();
+				FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
+				ArrayList<EntityModel> models = new ArrayList<EntityModel>();
+				
+				if(levelFile.exists()){
+					levelFile.delete();
 				}
+				
+				for(Entity e : level.getActiveEntities()){
+					EntityModel model = new EntityModel(e);
+					models.add(model);
+				}
+				
+				levelFile.writeString(j.prettyPrint(models), true);
+				
+				
 				break;
 				
 			case Keys.N:
@@ -194,6 +215,7 @@ public class MapEditingInputListener extends InputAdapter{
 						e.printStackTrace();
 					}
 				break;
+				
 			case Keys.PLUS:
 				if(currentEntity!=null){
 					currentEntity.dispose();
@@ -207,6 +229,7 @@ public class MapEditingInputListener extends InputAdapter{
 					}
 				}
 				break;
+				
 			case Keys.MINUS:
 				if(currentEntity!=null){
 					currentEntity.dispose();
@@ -222,6 +245,9 @@ public class MapEditingInputListener extends InputAdapter{
 						e.printStackTrace();
 					}
 				}
+				break;
+			case Keys.ENTER:
+				debug = !debug;
 				break;
 		}
 		
@@ -262,11 +288,11 @@ public class MapEditingInputListener extends InputAdapter{
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
-		
-		
-		
 	}
 	
+	public boolean isDebugging(){
+		return debug;
+	}
 	
 
 }

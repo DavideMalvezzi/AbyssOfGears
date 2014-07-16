@@ -1,9 +1,16 @@
 package com.cappuccino.aog.levels;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.cappuccino.aog.entities.Alexy;
 import com.cappuccino.aog.entities.Entity;
 
@@ -21,6 +28,7 @@ public abstract class Level {
 			active_entities.add(alexy);
 		}
 		
+	//	loadLevelFromFile();
 	}
 	
 	public void reset(){
@@ -32,6 +40,7 @@ public abstract class Level {
 	public abstract void render(SpriteBatch batch);
 	public abstract void update(float delta);
 	public abstract Vector2 getSpawnPoint();
+	public abstract String getLevelName();
 	
 	protected void renderEntities(SpriteBatch batch){
 		int i = 0;
@@ -101,5 +110,26 @@ public abstract class Level {
 		inactive_entities.clear();
 	}
 
+	
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	private void loadLevelFromFile(){
+		Json j = new Json();
+		FileHandle levelFile = Gdx.files.internal("data/levels/"+getLevelName()+".json");
+		JsonValue models = new JsonReader().parse(levelFile);
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

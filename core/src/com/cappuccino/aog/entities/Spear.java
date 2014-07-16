@@ -39,14 +39,14 @@ public class Spear extends Entity{
 		this.maxLen = maxLen;
 		this.vel = vel;
 		
-		scaleX = maxLen/getRealWidth();
-		scaleY = scale;
+		setScaleX(maxLen/getRealWidth());
+		setScaleX(scale);
 		
 		init(world, BodyType.KinematicBody);
 		initFixture();
 		
 		setAngle(angle);
-		setCenter(startPos.cpy());
+		setCenter(startPos);
 		
 		body.setActive(false);
 	}
@@ -73,8 +73,6 @@ public class Spear extends Entity{
 		end.set(start.x+1000*MathUtils.cos(getAngle()), start.y+1000*MathUtils.sin(getAngle()));
 		start.scl(GameScene.BOX_TO_WORLD);
 		end.scl(GameScene.BOX_TO_WORLD);
-		
-		
 		
 		if(!body.isActive()){
 			body.getWorld().rayCast(callBack, start, end);

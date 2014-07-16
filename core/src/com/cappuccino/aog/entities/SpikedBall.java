@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
-import com.cappuccino.aog.entities.models.EntityModel;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
@@ -47,8 +46,8 @@ public class SpikedBall extends Entity {
 	@Override
 	public void initFixture() {
 		FixtureDef fd = new FixtureDef();
-		fd.filter.categoryBits = EntityModel.ENTITY;
-		fd.filter.maskBits = EntityModel.ENTITY_MASK;
+		fd.filter.categoryBits = ENTITY;
+		fd.filter.maskBits = ENTITY_MASK;
 		
 		bodyLoader.attachFixture(body, "SpikedBall_ball", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
 		

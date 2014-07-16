@@ -22,7 +22,9 @@ public class ContetxMenuEntity extends Entity{
 		bodyLoader.attachFixture(body, "ContexMenuBg", fd, getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD);
 		
 		origin.set(bodyLoader.getOrigin("ContexMenuBg", getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD));
+		
 		body.setGravityScale(9.8f);
+		
 	}
 
 }

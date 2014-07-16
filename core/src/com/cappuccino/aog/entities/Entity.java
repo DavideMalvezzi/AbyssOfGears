@@ -27,7 +27,6 @@ public class Entity implements Disposable {
 	public static final short LIGHT = 0x0010;
 	public static final short BULLET = 0x0020;
 	
-	
 	public static final short PLAYER_MASK = PLAYER | WALL | ENTITY | BULLET;
 	public static final short WALL_MASK = PLAYER | LIGHT | BULLET;
 	public static final short ENTITY_MASK = PLAYER | LIGHT | BULLET;
@@ -142,22 +141,20 @@ public class Entity implements Disposable {
 	}
 	
 	//Properties
+	public void recalculate(){}
+	
 	public void setProp1(float value){}
 	public void setProp2(float value){}
 	public void setProp3(float value){}
 	public void setExternalBody1(Entity value){}
 	public void setExternalBody2(Entity value){}
 	
-	
 	public Property getProp1(){return new Property();}
 	public Property getProp2(){return new Property();}
 	public Property getProp3(){return new Property();}
 	public Property getExternalBody1(){return new Property("null",-1);}
 	public Property getExternalBody2(){return new Property("null",-1);}
-	
-	
-	public void recalculate(){}
-	
+
 	//Body properties
 	public Body getBody(){
 		return body;
@@ -192,8 +189,7 @@ public class Entity implements Disposable {
 	}
 	
 	public void setPosition(Vector2 position){
-		position.scl(GameScene.BOX_TO_WORLD);
-		body.setTransform(position.add(origin), getAngle());
+		body.setTransform(position.cpy().scl(GameScene.BOX_TO_WORLD), getAngle());
 	}
 	
 	public void setPosition(float x, float y){
@@ -203,8 +199,7 @@ public class Entity implements Disposable {
 	}
 	
 	public void setCenter(Vector2 position){
-		position.scl(GameScene.BOX_TO_WORLD);
-		body.setTransform(position, getAngle());
+		body.setTransform(position.cpy().scl(GameScene.BOX_TO_WORLD), getAngle());
 		
 	}
 	

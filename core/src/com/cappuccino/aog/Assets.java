@@ -37,6 +37,7 @@ public class Assets {
 		parameter.minFilter = TextureFilter.Linear;
 		parameter.magFilter = TextureFilter.Linear;
 		parameter.genMipMaps = true;
+		
 		parameter.size = 128;
 		font64 = fontGenerator.generateFont(parameter);
 		font64.setScale(0.5f);
@@ -80,8 +81,11 @@ public class Assets {
 		layer0Background.dispose();
 		layer1Background.dispose();
 		layer2Background.dispose();
+		
 		font64.dispose();
 		font100.dispose();
+		font200.dispose();
+		
 		hudSkin.dispose();
 		textures.clear();
 	}

@@ -1,0 +1,110 @@
+[
+{
+	class: com.cappuccino.aog.mapeditor.EntityModel,
+	externalEntity1: {
+		name: Null,
+		value: -1
+	},
+	externalEntity2: {
+		name: Null,
+		value: -1
+	},
+	position: {
+		x: 231.00002,
+		y: 493.825
+	},
+	scale: {
+		x: 1,
+		y: 1
+	},
+	internalProp1: {
+		name: EmissionDelay,
+		value: 5
+	},
+	internalProp2: {},
+	angle: 0,
+	internalProp3: {},
+	type: com.cappuccino.aog.entities.ArrowEmitter
+},
+{
+	class: com.cappuccino.aog.mapeditor.EntityModel,
+	externalEntity1: {
+		name: Null,
+		value: -1
+	},
+	externalEntity2: {
+		name: Null,
+		value: -1
+	},
+	position: {
+		x: 266,
+		y: 372.82504
+	},
+	scale: {
+		x: 1,
+		y: 1
+	},
+	internalProp1: {
+		name: EmissionDelay,
+		value: 5
+	},
+	internalProp2: {},
+	angle: 0,
+	internalProp3: {},
+	type: com.cappuccino.aog.entities.ArrowEmitter
+},
+{
+	class: com.cappuccino.aog.mapeditor.EntityModel,
+	externalEntity1: {
+		name: Null,
+		value: -1
+	},
+	externalEntity2: {
+		name: Null,
+		value: -1
+	},
+	position: {
+		x: 452,
+		y: 435.82504
+	},
+	scale: {
+		x: 1,
+		y: 1
+	},
+	internalProp1: {
+		name: EmissionDelay,
+		value: 5
+	},
+	internalProp2: {},
+	angle: 0,
+	internalProp3: {},
+	type: com.cappuccino.aog.entities.ArrowEmitter
+},
+{
+	class: com.cappuccino.aog.mapeditor.EntityModel,
+	externalEntity1: {
+		name: Null,
+		value: -1
+	},
+	externalEntity2: {
+		name: Null,
+		value: -1
+	},
+	position: {
+		x: 444.99997,
+		y: 278.82504
+	},
+	scale: {
+		x: 1,
+		y: 1
+	},
+	internalProp1: {
+		name: EmissionDelay,
+		value: 5
+	},
+	internalProp2: {},
+	angle: 0,
+	internalProp3: {},
+	type: com.cappuccino.aog.entities.ArrowEmitter
+}
+]

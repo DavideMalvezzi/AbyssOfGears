@@ -52,10 +52,11 @@ public class Scene extends ScreenAdapter {
 				(camera.position.x-camera.viewportWidth/2f), 
 				(camera.position.y-camera.viewportHeight/2f), 
 				camera.viewportWidth, camera.viewportHeight);
-		
 		Rectangle scissor = new Rectangle();
+		
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
 		Scissor.setArea(view, scissor);
+		
 		camera.combined.scl(BOX_TO_WORLD);
 		camera.projection.scl(BOX_TO_WORLD);
 		
@@ -66,7 +67,6 @@ public class Scene extends ScreenAdapter {
 	}
 	
 	
-	public void init(){}
 	public void update(float delta){}
 	public void resize(int width, int height) {
 		viewport.update(width, height);

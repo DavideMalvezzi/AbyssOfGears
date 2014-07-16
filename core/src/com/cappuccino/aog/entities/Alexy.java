@@ -111,11 +111,11 @@ public class Alexy extends Entity {
 					getBody().setLinearVelocity(getBody().getLinearVelocity().x, 25);
 					umbrella.getBody().setLinearVelocity(getBody().getLinearVelocity().x, 25);
 					state = Status.FALLING_BACK;
+					Assets.fallingEffect.reset();
 				}
 				break;
 				
 			case FALLING_BACK:
-				Assets.fallingEffect.reset();
 				if(getBody().getLinearVelocity().y>0f){
 					getBody().applyForceToCenter(0, -350, true);
 					umbrella.getBody().applyForceToCenter(0, -350, true);
@@ -143,10 +143,6 @@ public class Alexy extends Entity {
 				umbrella.update(delta);
 				deadAnimation(delta);
 				break;
-						
-		default:
-			break;
-
 		}
 		
 	}

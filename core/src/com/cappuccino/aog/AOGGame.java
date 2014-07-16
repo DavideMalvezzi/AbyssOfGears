@@ -17,18 +17,21 @@ public class AOGGame extends ApplicationAdapter {
 	@Override
 	public void create() {
 		Assets.load();
+		
 		fpsLogger = new FPSLogger();
 		currentScene = new GameScene();
+		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 0, 0, 1);
 	}
 	
 	@Override
 	public void render() {
 		float dt = Gdx.graphics.getDeltaTime();
-		fpsLogger.log();
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
+		fpsLogger.log();
+		
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
 		currentScene.render(dt);
 		currentScene.update(dt);
@@ -44,6 +47,5 @@ public class AOGGame extends ApplicationAdapter {
 	public static void changeScene(Scene newScene){
 		currentScene.dispose();
 		currentScene = newScene;
-		currentScene.init();
 	}
 }

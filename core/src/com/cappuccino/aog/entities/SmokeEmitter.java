@@ -45,7 +45,6 @@ public class SmokeEmitter extends Entity {
 		init(world, BodyType.StaticBody);
 		initFixture();
 		
-		
 		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
 		emittersNumber++;
 	}

@@ -92,4 +92,9 @@ public class MainMenuLevel extends Level {
 		return new Vector2(0,-200);
 	}
 
+	@Override
+	public String getLevelName() {
+		return "MainMenuLevel";
+	}
+
 }

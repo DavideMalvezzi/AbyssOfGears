@@ -11,19 +11,36 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
 public class Press extends Entity{
 
 	private int dir;
-	private float minLen, maxLen, vel;
+	private float minLen = 10, maxLen = 100, vel = 0;
 	private final Vector2 startPos = new Vector2();
 	private Entity tube, otherPress, wall;
 	
+	public Press(World world) {
+		super("PressPlate", world);
+		this.tube = new Entity("PressTube", world);
+		this.startPos.set(0, 0);
+		this.dir = 1;
+
+		init(world, BodyType.DynamicBody);
+		
+		tube.setScaleX(maxLen/tube.getRealWidth());
+		tube.init(world, BodyType.KinematicBody);
+		
+		initFixture();
+		
+		JointsFactory.createWeldJoint(body.getWorld(), this, tube, Vector2.Zero, Vector2.Zero, getAngle(), true);
+		
+	}
+	
 	public Press(World world, float x, float y, float minLen, float maxLen, float vel, float angle, float scale) {
 		super("PressPlate", world);
-		tube = new Entity("PressTube", world);
-		
+		this.tube = new Entity("PressTube", world);
 		this.minLen = minLen;
 		this.maxLen = maxLen;
 		this.vel = vel;
@@ -84,12 +101,14 @@ public class Press extends Entity{
 			dir *= -1;
 		}
 		
-		
 		float velX = vel*dir*MathUtils.cos(getAngle());
 		float velY = vel*dir*MathUtils.sin(getAngle());
 		velX = MathUtils.isZero(velX, 0.00001f)? 0 : velX;
 		velY = MathUtils.isZero(velY, 0.00001f)? 0 : velY;
 		tube.setLinearVelocity(velX, velY);
+		
+		
+		System.out.println(startPos +"  " + getCenter() + "  " + dst);
 		
 	}
 
@@ -147,6 +166,44 @@ public class Press extends Entity{
 	public void dispose() {
 		super.dispose();
 		tube.dispose();
+	}
+	
+	
+	@Override
+	public void recalculate() {
+		startPos.set(getCenter().cpy());
+		tube.setAngle(getAngle());
+		tube.setCenter(startPos.cpy());
+		
+		initFixture();
+	}
+	
+	@Override
+	public Property getProp1() {
+		return new Property("minLength", minLen);
+	}
+	@Override
+	public Property getProp2() {
+		return new Property("maxLength", maxLen);
+	}
+	@Override
+	public Property getProp3() {
+		return new Property("Velocity", vel);
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		this.minLen = value;
+	}
+	
+	@Override
+	public void setProp2(float value) {
+		this.maxLen = value;
+	}
+	
+	@Override
+	public void setProp3(float value) {
+		this.vel = value;
 	}
 	
 }

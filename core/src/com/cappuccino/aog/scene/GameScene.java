@@ -85,8 +85,11 @@ public class GameScene extends Scene{
 				hud.showGameOverMenu();
 			}
 			
-			level.update(delta);
-			world.step(1/60f, 8, 3);
+			if(mapEditor.isDebugging()){
+				level.update(delta);
+				world.step(1/60f, 8, 3);
+			}
+			
 			rayHandler.update();
 		}
 		

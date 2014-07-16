@@ -16,8 +16,10 @@ public class Chain extends Entity{
 	
 	public Chain(World world) {
 		super("Chain", world);
+		
 		init(world, BodyType.KinematicBody);
 		initFixture();
+		
 		createChain(world);
 	}
 	
@@ -25,6 +27,7 @@ public class Chain extends Entity{
 	public Chain(World world, float x, float y, int len, float scale, float angle) {
 		super("Chain", world);
 		this.chainLen = len;
+		
 		init(world, BodyType.KinematicBody);
 		
 		setScaleX(scale);
@@ -48,12 +51,11 @@ public class Chain extends Entity{
 			initFixture(chain[i]);
 			
 			chain[i].setAngle(getAngle());
-			chain[i].setCenter(getCenter().x+chain[i].getWidth()*2*(i+1), getCenter().y);
+			chain[i].setCenter(getCenter().x+chain[i].getWidth()*(i+1), getCenter().y);
 		}
 		
 		JointsFactory.createRopeJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, chain[0].getWidth(), true);
 		JointsFactory.createRevoluteJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, true);
-		
 		
 		for(int i=0; i<chainLen-1; i++){
 			JointsFactory.createRopeJoint(world, 
@@ -83,7 +85,7 @@ public class Chain extends Entity{
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
 		fd.filter.categoryBits = ENTITY;
-		fd.filter.maskBits = PLAYER | LIGHT;;
+		fd.filter.maskBits = 0;
 		
 		bodyLoader.attachFixture(e.getBody(), "Chain", fd, getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD);
 		e.origin.set(bodyLoader.getOrigin("Chain", getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD));

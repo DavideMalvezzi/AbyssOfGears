@@ -27,6 +27,7 @@ public class ArrowEmitter extends Entity {
 	
 	public ArrowEmitter(World world) {
 		super("ArrowEmitter", world);
+		
 		init(world, BodyType.StaticBody);
 		initFixture();
 		
@@ -37,9 +38,9 @@ public class ArrowEmitter extends Entity {
 	public ArrowEmitter(World world, float x, float y, float angle, float shootTime) {
 		super("ArrowEmitter", world);
 		this.shootTime = shootTime;
+		
 		init(world, BodyType.StaticBody);
 		initFixture();
-		
 		
 		setAngle(angle);
 		setCenter(x,y);
@@ -80,7 +81,7 @@ public class ArrowEmitter extends Entity {
 			if(a.getBody()==null){
 				a.init(body.getWorld(), BodyType.DynamicBody);
 			}
-			a.setCenter(emissionPoint.cpy());
+			a.setCenter(emissionPoint);
 			a.setAngle(getAngle());
 			a.setLinearVelocity(Arrow.MAX_SPEED*MathUtils.cos(getAngle()), Arrow.MAX_SPEED*MathUtils.sin(getAngle()));
 			a.getBody().setActive(true);

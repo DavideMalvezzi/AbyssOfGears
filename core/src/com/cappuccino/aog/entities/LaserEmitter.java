@@ -24,7 +24,7 @@ public class LaserEmitter extends Entity {
 		public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 			String name = (String) fixture.getUserData();
 			float dst = laser.getCenter().dst(point.scl(Scene.WORLD_TO_BOX));
-			if( dst < curLen && !name.equals("Laser")){
+			if(dst < curLen && !name.equals("Laser")){
 				curLen = dst;
 			}
 			return 1;
@@ -34,19 +34,16 @@ public class LaserEmitter extends Entity {
 	
 	public LaserEmitter(World world) {
 		super("LaserEmitter", world);
-		
 		laser = new Entity("Laser", world);
 		
 		init(world, BodyType.StaticBody);
 		laser.init(world, BodyType.KinematicBody);
+		
 		laser.setScaleX(maxLen/laser.getRealWidth());
 		laser.setScaleY(0.5f);
 		initFixture();
 		
-
 		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().x+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
-		
-		((EntityData)laser.getBody().getUserData()).setEntity(this);
 	}
 	
 	public LaserEmitter(World world, float x, float y, float angle, float maxLen, float duration) {
@@ -85,6 +82,7 @@ public class LaserEmitter extends Entity {
 		origin.set(bodyLoader.getOrigin("LaserEmitter", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
 		laser.origin.set(bodyLoader.getOrigin("Laser", laser.getRealWidth()*laser.scaleX*Scene.BOX_TO_WORLD, laser.getRealWidth()*laser.scaleY*Scene.BOX_TO_WORLD));
 		
+		((EntityData)laser.getBody().getUserData()).setEntity(this);
 	}
 	
 	@Override
@@ -132,12 +130,6 @@ public class LaserEmitter extends Entity {
 	@Override
 	public void recalculate(){
 		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
-	}
-	
-	@Override
-	public void setCenter(float x, float y) {
-		super.setCenter(x, y);
-		laser.setCenter(x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
 	}
 	
 	@Override
