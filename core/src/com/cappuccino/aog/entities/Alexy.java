@@ -49,8 +49,8 @@ public class Alexy extends Entity {
 		super("Player", world);
 		umbrella = new Umbrella(world);
 		
-		init(world, BodyType.DynamicBody);
-		initFixture();
+		initBody(world, BodyType.DynamicBody);
+		initFixtures();
 		
 		setMass(6);
 		
@@ -58,7 +58,7 @@ public class Alexy extends Entity {
 	}
 	
 	
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = PLAYER;
 		fd.filter.maskBits = PLAYER_MASK;

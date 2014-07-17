@@ -1,6 +1,5 @@
 package com.cappuccino.aog.mapeditor;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
@@ -25,8 +24,10 @@ import com.cappuccino.aog.entities.EntityData;
 import com.cappuccino.aog.entities.GasEmitter;
 import com.cappuccino.aog.entities.Gear;
 import com.cappuccino.aog.entities.LaserEmitter;
+import com.cappuccino.aog.entities.Pipeline;
 import com.cappuccino.aog.entities.Press;
 import com.cappuccino.aog.entities.SmokeEmitter;
+import com.cappuccino.aog.entities.Spear;
 import com.cappuccino.aog.entities.SpikedBall;
 import com.cappuccino.aog.entities.ThunderEmitter;
 import com.cappuccino.aog.levels.Level;
@@ -40,8 +41,10 @@ public class MapEditingInputListener extends InputAdapter{
 		GasEmitter.class,
 		Gear.class,
 		LaserEmitter.class,
+		Pipeline.class,
 		Press.class,
 		SmokeEmitter.class,
+		Spear.class,
 		SpikedBall.class, 
 		ThunderEmitter.class,
 	};
@@ -104,6 +107,15 @@ public class MapEditingInputListener extends InputAdapter{
 			}else{
 				currentEntity = null;
 			}
+		}else if(button == Buttons.RIGHT){
+			Level.getPlayer().setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
+		}else if(button == Buttons.MIDDLE){
+			if(currentEntity!=null){
+				currentEntity.dispose();
+				level.getActiveEntities().removeValue(currentEntity, true);
+				currentType = 0;
+				currentEntity = null;
+			}
 		}
 		
 		return super.touchDown(screenX, screenY, pointer, button);
@@ -164,6 +176,9 @@ public class MapEditingInputListener extends InputAdapter{
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		Vector3 mousePoint = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		mousePoint = camera.unproject(mousePoint);
+		
 		switch (keycode) {
 			case Keys.NUM_1:
 				currentMode = EditingModes.ROTATE;
@@ -190,18 +205,17 @@ public class MapEditingInputListener extends InputAdapter{
 			case Keys.NUM_0:
 				Json j = new Json();
 				FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
-				ArrayList<EntityModel> models = new ArrayList<EntityModel>();
+				LevelModel model = new LevelModel();
 				
 				if(levelFile.exists()){
 					levelFile.delete();
 				}
 				
 				for(Entity e : level.getActiveEntities()){
-					EntityModel model = new EntityModel(e);
-					models.add(model);
+					model.addEntity(e);
 				}
 				
-				levelFile.writeString(j.prettyPrint(models), true);
+				levelFile.writeString(j.prettyPrint(model), true);
 				
 				
 				break;
@@ -249,6 +263,11 @@ public class MapEditingInputListener extends InputAdapter{
 			case Keys.ENTER:
 				debug = !debug;
 				break;
+		}
+		
+		if(currentEntity!=null){
+			currentEntity.setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
+			currentEntity.recalculate();
 		}
 		
 		return super.keyDown(keycode);

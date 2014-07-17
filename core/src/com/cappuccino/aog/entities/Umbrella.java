@@ -12,8 +12,8 @@ public class Umbrella extends Entity{
 	
 	public Umbrella(World world) {
 		super("Umbrella", world);
-		init(world, BodyType.DynamicBody);
-		initFixture();
+		initBody(world, BodyType.DynamicBody);
+		initFixtures();
 		setMass(6);
 		setAngle(0.1f);
 	}
@@ -30,7 +30,7 @@ public class Umbrella extends Entity{
 
 
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = PLAYER;
 		fd.filter.maskBits = PLAYER_MASK;

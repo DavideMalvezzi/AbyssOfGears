@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class ArrowEmitter extends Entity {
@@ -21,17 +22,16 @@ public class ArrowEmitter extends Entity {
 	
 	private final Array<Arrow> emittedArrow = new Array<Arrow>();
 	
-	private float timer, shootTime = 5;
+	private float timer, shootTime;
 	private Vector2 emissionPoint;
 	
 	
 	public ArrowEmitter(World world) {
-		super("ArrowEmitter", world);
-		
-		init(world, BodyType.StaticBody);
-		initFixture();
-		
-		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+		this(world, 0, 0, 0, 5);
+	}
+	
+	public ArrowEmitter(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.angle, model.internalProp1.value);
 	}
 	
 	
@@ -39,14 +39,15 @@ public class ArrowEmitter extends Entity {
 		super("ArrowEmitter", world);
 		this.shootTime = shootTime;
 		
-		init(world, BodyType.StaticBody);
-		initFixture();
+		initBody(world, BodyType.StaticBody);
+		initFixtures();
 		
 		setAngle(angle);
 		setCenter(x,y);
 		
 		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
 	}
+	
 
 	@Override
 	public void disactive() {
@@ -55,7 +56,7 @@ public class ArrowEmitter extends Entity {
 	}
 	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = WALL;
 		fd.filter.maskBits = WALL_MASK;
@@ -79,7 +80,7 @@ public class ArrowEmitter extends Entity {
 		if(timer>=shootTime){
 			Arrow a = arrowsPool.obtain();
 			if(a.getBody()==null){
-				a.init(body.getWorld(), BodyType.DynamicBody);
+				a.initBody(body.getWorld(), BodyType.DynamicBody);
 			}
 			a.setCenter(emissionPoint);
 			a.setAngle(getAngle());

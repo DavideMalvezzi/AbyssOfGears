@@ -29,16 +29,16 @@ public class Arrow extends Entity implements Poolable {
 	}
 	
 	@Override
-	protected void init(World world, BodyType type) {
-		super.init(world, type);
+	protected void initBody(World world, BodyType type) {
+		super.initBody(world, type);
 		body.setBullet(true);
 		body.setGravityScale(9.8f);
-		initFixture();
+		initFixtures();
 		setMass(6);
 	}
 	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = BULLET;
 		fd.filter.maskBits = BULLET_MASK;

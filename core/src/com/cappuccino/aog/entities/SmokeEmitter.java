@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.scene.GameScene;
 
 public class SmokeEmitter extends Entity {
@@ -41,18 +42,19 @@ public class SmokeEmitter extends Entity {
 	};
 	
 	public SmokeEmitter(World world) {
-		super("SmokeEmitter", world);
-		init(world, BodyType.StaticBody);
-		initFixture();
-		
-		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
-		emittersNumber++;
+		this(world, 0, 0, 0);
 	}
+	
+	public SmokeEmitter(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.angle);
+	}
+	
+	
 	
 	public SmokeEmitter(World world, float x, float y, float angle) {
 		super("SmokeEmitter", world);
-		init(world, BodyType.StaticBody);
-		initFixture();
+		initBody(world, BodyType.StaticBody);
+		initFixtures();
 		
 		setAngle(angle);
 		setCenter(x,y);
@@ -63,7 +65,7 @@ public class SmokeEmitter extends Entity {
 	
 	
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;

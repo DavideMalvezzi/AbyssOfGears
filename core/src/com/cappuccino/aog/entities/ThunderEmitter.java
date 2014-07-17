@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel;
 
 public class ThunderEmitter extends Entity{
 
@@ -14,17 +15,17 @@ public class ThunderEmitter extends Entity{
 	private Vector2 emitPoint;
 	
 	public ThunderEmitter(World world){
-		super("ThunderEmitter", world);
-		init(world, BodyType.StaticBody);
-		initFixture();
-		
-		emitPoint = new Vector2(getCenter()).add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle()) );		
+		this(world, 0, 0, 0);
+	}
+	
+	public ThunderEmitter(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.angle);
 	}
 	
 	public ThunderEmitter(World world, float x, float y, float angle){
 		super("ThunderEmitter", world);
-		init(world, BodyType.StaticBody);
-		initFixture();
+		initBody(world, BodyType.StaticBody);
+		initFixtures();
 		
 		
 		setAngle(angle);
@@ -56,7 +57,7 @@ public class ThunderEmitter extends Entity{
 	
 	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = WALL;
 		fd.filter.maskBits = WALL_MASK;

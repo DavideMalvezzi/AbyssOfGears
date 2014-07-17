@@ -4,15 +4,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.cappuccino.aog.entities.Entity;
 
 public class EntityModel {
-	String type;
-	Vector2 position,scale;
-	float angle;
-	Property internalProp1,internalProp2,internalProp3;
-	Property externalEntity1, externalEntity2;
+	public String type;
+	public Vector2 position,scale;
+	public float angle;
+	public Property internalProp1,internalProp2,internalProp3;
+	public Property externalEntity1, externalEntity2;
+	
+	public EntityModel() {
+		
+	}
+	
 	
 	public EntityModel(Entity e) {
 		this.type = e.getClass().getName();
-		this.position = e.getPosition();
+		this.position = e.getCenter();
 		this.scale = new Vector2(e.getScaleX(), e.getScaleY());
 		this.angle = e.getAngle();
 		this.internalProp1 = e.getProp1();
@@ -24,13 +29,10 @@ public class EntityModel {
 	
 	
 	public static class Property{
-		String name;
-		float value;
+		String name = "NoProp";
+		public float value = 0;
 		
-		public Property() {
-			name = "NoProp";
-			value = 0;
-		}
+		public Property() {}
 		
 		public Property(String name, float value) {
 			this.name = name;

@@ -9,14 +9,14 @@ public class Wall extends Entity{
 
 	public Wall(String name, World world, float x, float y) {
 		super(name, world);
-		init(world, BodyType.StaticBody);
-		initFixture();
+		initBody(world, BodyType.StaticBody);
+		initFixtures();
 		
 		setPosition(x, y);
 	}
 	
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = WALL;
 		fd.filter.maskBits = WALL_MASK;

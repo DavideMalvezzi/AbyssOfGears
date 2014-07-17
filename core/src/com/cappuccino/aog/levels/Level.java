@@ -1,6 +1,5 @@
 package com.cappuccino.aog.levels;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -9,10 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 import com.cappuccino.aog.entities.Alexy;
 import com.cappuccino.aog.entities.Entity;
+import com.cappuccino.aog.mapeditor.LevelModel;
 
 public abstract class Level {
 
@@ -28,7 +26,7 @@ public abstract class Level {
 			active_entities.add(alexy);
 		}
 		
-	//	loadLevelFromFile();
+		loadLevelFromFile(world);
 	}
 	
 	public void reset(){
@@ -114,13 +112,11 @@ public abstract class Level {
 	
 	
 	
-	@SuppressWarnings("unchecked")
-	private void loadLevelFromFile(){
+	private void loadLevelFromFile(World world){
 		Json j = new Json();
 		FileHandle levelFile = Gdx.files.internal("data/levels/"+getLevelName()+".json");
-		JsonValue models = new JsonReader().parse(levelFile);
-		
-		
+		LevelModel model = j.fromJson(LevelModel.class, levelFile);
+		model.loadOnLevel(world, this);
 		
 	}
 	

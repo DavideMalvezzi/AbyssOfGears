@@ -13,12 +13,13 @@ import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class LaserEmitter extends Entity {
 
 	private Entity laser;
-	private float maxLen = 300, curLen, duration = 1, timer;
+	private float maxLen, curLen, duration, timer;
 	
 	private final RayCastCallback callBack = new RayCastCallback() {
 		public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -33,31 +34,27 @@ public class LaserEmitter extends Entity {
 	
 	
 	public LaserEmitter(World world) {
-		super("LaserEmitter", world);
-		laser = new Entity("Laser", world);
-		
-		init(world, BodyType.StaticBody);
-		laser.init(world, BodyType.KinematicBody);
-		
-		laser.setScaleX(maxLen/laser.getRealWidth());
-		laser.setScaleY(0.5f);
-		initFixture();
-		
-		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().x+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
+		this(world, 0, 0, 0, 300, 1);
 	}
+	
+	public LaserEmitter(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.angle, model.internalProp1.value, model.internalProp2.value);
+	}
+	
 	
 	public LaserEmitter(World world, float x, float y, float angle, float maxLen, float duration) {
 		super("LaserEmitter", world);
 		this.maxLen = maxLen;
 		this.duration = duration;
 		
-		laser = new Entity("Laser", world);
+		initBody(world, BodyType.StaticBody);
+		initFixtures();
 		
-		init(world, BodyType.StaticBody);
-		laser.init(world, BodyType.KinematicBody);
+		laser = new Entity("Laser", world);
+		laser.initBody(world, BodyType.KinematicBody);
 		laser.setScaleX(maxLen/laser.getRealWidth());
 		laser.setScaleY(0.5f);
-		initFixture();
+		initLaserFixture();
 		
 		setAngle(angle);
 		setCenter(x, y);
@@ -69,21 +66,29 @@ public class LaserEmitter extends Entity {
 	}
 	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
 		
 		bodyLoader.attachFixture(body, "LaserEmitter", fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
 		
+		origin.set(bodyLoader.getOrigin("LaserEmitter", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
+		
+	}
+	
+	private void initLaserFixture() {
+		FixtureDef fd = new FixtureDef();
+		fd.filter.categoryBits = ENTITY;
+		fd.filter.maskBits = ENTITY_MASK;		
+		
 		fd.isSensor = true;
 		bodyLoader.attachFixture(laser.getBody(), "Laser", fd, laser.getRealWidth()*laser.scaleX*Scene.BOX_TO_WORLD, laser.getRealWidth()*laser.scaleY*Scene.BOX_TO_WORLD);
-		
-		origin.set(bodyLoader.getOrigin("LaserEmitter", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
 		laser.origin.set(bodyLoader.getOrigin("Laser", laser.getRealWidth()*laser.scaleX*Scene.BOX_TO_WORLD, laser.getRealWidth()*laser.scaleY*Scene.BOX_TO_WORLD));
 		
 		((EntityData)laser.getBody().getUserData()).setEntity(this);
 	}
+	
 	
 	@Override
 	public void update(float delta) {
@@ -129,13 +134,13 @@ public class LaserEmitter extends Entity {
 	
 	@Override
 	public void recalculate(){
+		laser.setAngle(getAngle());
 		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
 	}
 	
 	@Override
 	public void setAngle(float angle) {
 		super.setAngle(angle);
-		laser.setAngle(angle);
 	}
 	
 	@Override

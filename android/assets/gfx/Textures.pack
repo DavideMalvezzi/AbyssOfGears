@@ -94,7 +94,7 @@ StatsButton
   orig: 102, 103
   offset: 0, 0
   index: -1
-Pipe_H
+Pipe0
   rotate: false
   xy: 899, 9
   size: 64, 32
@@ -211,6 +211,13 @@ Player
   orig: 42, 72
   offset: 0, 0
   index: -1
+GasEmitter
+  rotate: false
+  xy: 836, 605
+  size: 59, 51
+  orig: 59, 51
+  offset: 0, 0
+  index: -1
 SmokeEmitter
   rotate: false
   xy: 836, 605
@@ -218,7 +225,7 @@ SmokeEmitter
   orig: 59, 51
   offset: 0, 0
   index: -1
-Pipe_A
+Pipe1
   rotate: false
   xy: 0, 0
   size: 52, 52

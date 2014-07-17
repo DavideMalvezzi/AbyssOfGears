@@ -49,14 +49,11 @@ public class Entity implements Disposable {
 	}
 	
 	public Entity(String name, World world) {
-		texture = Assets.getTexture(name);
-		scaleX = scaleY = 1;
-		origin = new Vector2();
-		trasl = new Vector2();
+		this(name);
 	}
 	
 	
-	protected void init(World world, BodyType type){
+	protected void initBody(World world, BodyType type){
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(0, 0);
 		bodyDef.type = type;
@@ -66,7 +63,7 @@ public class Entity implements Disposable {
 		body.setUserData(new EntityData(texture.name, this));
 	}
 	
-	protected void initFixture(){}
+	protected void initFixtures(){}
 	
 	public void draw(SpriteBatch batch) {
 		batch.draw(texture.getTexture(),

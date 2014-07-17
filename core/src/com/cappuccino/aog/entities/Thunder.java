@@ -44,7 +44,7 @@ public class Thunder extends Entity {
 	
 	public Thunder(World world, float x, float y, float len, float maxOffset, float angle, float delay, float duration) {
 		super("LaserEmitter", world);
-		init(world, BodyType.KinematicBody);
+		initBody(world, BodyType.KinematicBody);
 		origin.set(0, maxOffset).scl(Scene.BOX_TO_WORLD);
 		
 		this.len = len;

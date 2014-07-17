@@ -10,12 +10,12 @@ public class ContetxMenuEntity extends Entity{
 	
 	public ContetxMenuEntity(World world) {
 		super("ContexMenuBg", world);
-		init(world, BodyType.DynamicBody);
-		initFixture();
+		initBody(world, BodyType.DynamicBody);
+		initFixtures();
 	}
 	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 0.05f;
 		

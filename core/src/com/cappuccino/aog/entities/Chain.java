@@ -7,20 +7,20 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class Chain extends Entity{
 
 	private Entity[] chain;
-	private int chainLen = 1;
+	private int chainLen ;
 	
 	public Chain(World world) {
-		super("Chain", world);
-		
-		init(world, BodyType.KinematicBody);
-		initFixture();
-		
-		createChain(world);
+		this(world, 0, 0, 1, 1, 0);
+	}
+	
+	public Chain(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, (int) model.internalProp1.value, model.scale.x, model.angle);
 	}
 	
 	
@@ -28,11 +28,11 @@ public class Chain extends Entity{
 		super("Chain", world);
 		this.chainLen = len;
 		
-		init(world, BodyType.KinematicBody);
+		initBody(world, BodyType.KinematicBody);
 		
 		setScaleX(scale);
 		setScaleY(scale);
-		initFixture();
+		initFixtures();
 		
 		createChain(world);
 		
@@ -45,10 +45,10 @@ public class Chain extends Entity{
 		chain = new Entity[chainLen];
 		for(int i=0; i<chainLen; i++){
 			chain[i] = new Entity("Chain", world);
-			chain[i].init(world, BodyType.DynamicBody);
+			chain[i].initBody(world, BodyType.DynamicBody);
 			chain[i].setScaleX(getScaleX());
 			chain[i].setScaleY(getScaleY());
-			initFixture(chain[i]);
+			initFixtures(chain[i]);
 			
 			chain[i].setAngle(getAngle());
 			chain[i].setCenter(getCenter().x+chain[i].getWidth()*(i+1), getCenter().y);
@@ -69,7 +69,7 @@ public class Chain extends Entity{
 	}
 	
 	
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
 		fd.filter.categoryBits = WALL;
@@ -80,8 +80,7 @@ public class Chain extends Entity{
 		getBody().setGravityScale(9.8f);
 	}
 	
-	
-	protected void initFixture(Entity e) {
+	protected void initFixtures(Entity e) {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
 		fd.filter.categoryBits = ENTITY;
@@ -98,7 +97,6 @@ public class Chain extends Entity{
 				chain[chain.length-1], e, 
 				new Vector2(chain[chain.length-1].getWidth(), 0), anchor, true);
 	}
-	
 
 	@Override
 	public void draw(SpriteBatch batch){
@@ -114,18 +112,9 @@ public class Chain extends Entity{
 		super.setCenter(x, y);
 		
 		for(int i=0; i<chain.length; i++){
-			chain[i].setCenter(x+i*chain[i].getWidth()*MathUtils.cos(getAngle()),y+i*chain[i].getWidth()*MathUtils.sin(getAngle()) );
+			chain[i].setCenter(x+(i+1)*chain[i].getWidth()*MathUtils.cos(getAngle()),y+(i+1)*chain[i].getWidth()*MathUtils.sin(getAngle()));
 		}
 	}
-	
-	@Override
-	public void setLinearVelocity(float velX, float velY) {
-		super.setLinearVelocity(velX, velY);
-		for(int i=0; i<chain.length; i++){
-			chain[i].setLinearVelocity(velX, velY);
-		}
-	}
-	
 	
 	@Override
 	public void dispose() {
@@ -137,7 +126,6 @@ public class Chain extends Entity{
 		
 	}
 	
-	
 	@Override
 	public Property getProp1() {
 		return new Property("Length", chainLen);
@@ -147,14 +135,13 @@ public class Chain extends Entity{
 	public void setProp1(float value) {
 		if(value>0){
 			this.chainLen = (int)value;
-			
-			for (int i=0; i<chain.length; i++) {
-				chain[i].dispose();
+			if(chain!=null){
+				for (int i=0; i<chain.length; i++) {
+					chain[i].dispose();
+				}
 			}
-			
 			createChain(body.getWorld());
 		}
-		
 	}
 	
 }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
@@ -20,39 +21,34 @@ public class SpikedBall extends Entity {
 	private Joint attacched;
 
 	public SpikedBall(World world) {
-		super("SpikedBall", world);
-		init(world, BodyType.KinematicBody);
-		initFixture();
+		this(world, 0, 0, 1, 1);
 	}
 	
-	public SpikedBall(World world, float x, float y, float speed) {
-		super("SpikedBall", world);
-		init(world, BodyType.KinematicBody);
-		initFixture();
-		setCenter(x, y);
-		setAngularVelocity(speed);
+	public SpikedBall(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.internalProp1.value, model.scale.x);
 	}
+	
+	
 	
 	public SpikedBall(World world, float x, float y, float speed, float scale) {
 		super("SpikedBall", world);
 		scaleX = scaleY = scale;
-		init(world, BodyType.KinematicBody);
-		initFixture();
+		initBody(world, BodyType.KinematicBody);
+		initFixtures();
 		setCenter(x, y);
 		setAngularVelocity(speed);
 	}
 
 	
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
 		
 		bodyLoader.attachFixture(body, "SpikedBall_ball", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
-		
 		bodyLoader.attachFixture(body, "SpikedBall_sensor", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
-		
+
 		origin.set(bodyLoader.getOrigin("SpikedBall_ball", getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD));
 	}
 

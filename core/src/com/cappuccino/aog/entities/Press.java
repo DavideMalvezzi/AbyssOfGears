@@ -8,9 +8,11 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
@@ -22,20 +24,11 @@ public class Press extends Entity{
 	private Entity tube, otherPress, wall;
 	
 	public Press(World world) {
-		super("PressPlate", world);
-		this.tube = new Entity("PressTube", world);
-		this.startPos.set(0, 0);
-		this.dir = 1;
-
-		init(world, BodyType.DynamicBody);
-		
-		tube.setScaleX(maxLen/tube.getRealWidth());
-		tube.init(world, BodyType.KinematicBody);
-		
-		initFixture();
-		
-		JointsFactory.createWeldJoint(body.getWorld(), this, tube, Vector2.Zero, Vector2.Zero, getAngle(), true);
-		
+		this(world, 0, 0, 10, 100, 1, 0 , 1);
+	}
+	
+	public Press(World world, EntityModel model) {
+		this(world, model.position.x, model.position.y, model.internalProp1.value, model.internalProp2.value, model.internalProp3.value, model.angle, model.scale.x); 
 	}
 	
 	public Press(World world, float x, float y, float minLen, float maxLen, float vel, float angle, float scale) {
@@ -49,13 +42,13 @@ public class Press extends Entity{
 
 		setScaleX(scale);
 		setScaleY(scale);
-		init(world, BodyType.DynamicBody);
+		initBody(world, BodyType.DynamicBody);
 		
 		tube.setScaleX(maxLen/tube.getRealWidth());
 		tube.setScaleY(scale);
-		tube.init(world, BodyType.KinematicBody);
+		tube.initBody(world, BodyType.KinematicBody);
 		
-		initFixture();
+		initFixtures();
 		
 		setAngle(angle);
 		tube.setAngle(angle);
@@ -64,11 +57,12 @@ public class Press extends Entity{
 		setCenter(x, y);
 		
 		JointsFactory.createWeldJoint(body.getWorld(), this, tube, Vector2.Zero, Vector2.Zero, getAngle(), true);
-		
 	}
+	
+	
 
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
@@ -107,14 +101,10 @@ public class Press extends Entity{
 		velY = MathUtils.isZero(velY, 0.00001f)? 0 : velY;
 		tube.setLinearVelocity(velX, velY);
 		
-		
-		System.out.println(startPos +"  " + getCenter() + "  " + dst);
-		
 	}
 
 	public boolean isClosed(){
 		float dst = startPos.dst(getCenter());
-		
 		return dst/maxLen>=1;
 	}
 	
@@ -143,7 +133,6 @@ public class Press extends Entity{
 		this.otherPress = otherPress;
 	}
 	
-	
 	@Override
 	public void onCollide(Fixture sender, Fixture collided, Contact contact){
 		String collidedName = (String)collided.getUserData();
@@ -162,6 +151,7 @@ public class Press extends Entity{
 		}
 	}
 
+	
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -174,8 +164,21 @@ public class Press extends Entity{
 		startPos.set(getCenter().cpy());
 		tube.setAngle(getAngle());
 		tube.setCenter(startPos.cpy());
+		tube.setScaleX(maxLen/tube.getRealWidth());
+		tube.setScaleY(getScaleX());
 		
-		initFixture();
+		Array<Fixture> f = tube.body.getFixtureList();
+		for(Fixture fix : f){
+			tube.body.destroyFixture(fix);
+		}
+		
+		Array<Fixture> f2 = body.getFixtureList();
+		for(Fixture fix : f2){
+			body.destroyFixture(fix);
+		}
+		
+		initFixtures();
+		
 	}
 	
 	@Override
@@ -205,5 +208,7 @@ public class Press extends Entity{
 	public void setProp3(float value) {
 		this.vel = value;
 	}
+	
+	
 	
 }

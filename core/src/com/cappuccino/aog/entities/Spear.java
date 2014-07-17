@@ -14,6 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
+import com.cappuccino.aog.mapeditor.EntityModel;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
 public class Spear extends Entity{
@@ -32,18 +34,24 @@ public class Spear extends Entity{
 		}
 	};
 	
+	public Spear(World world){
+		this(world, 0, 0, 300, 1, 0);
+	}
 	
-	public Spear(World world, float x, float y, float maxLen, float vel, float angle, float scale) {
+	public Spear(World world, EntityModel model){
+		this(world, model.position.x, model.position.y, model.internalProp1.value, model.internalProp2.value, model.angle);
+	}
+	
+	
+	public Spear(World world, float x, float y, float maxLen, float vel, float angle) {
 		super("Spear", world);
-		this.startPos.set(x-maxLen*MathUtils.cos(angle),y-maxLen*MathUtils.sin(angle));
+		this.startPos.set(x,y);
 		this.maxLen = maxLen;
 		this.vel = vel;
 		
-		setScaleX(maxLen/getRealWidth());
-		setScaleX(scale);
 		
-		init(world, BodyType.KinematicBody);
-		initFixture();
+		initBody(world, BodyType.KinematicBody);
+		initFixtures();
 		
 		setAngle(angle);
 		setCenter(startPos);
@@ -52,7 +60,7 @@ public class Spear extends Entity{
 	}
 	
 	@Override
-	public void initFixture() {
+	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
@@ -93,35 +101,61 @@ public class Spear extends Entity{
 		
 		if(attacched == null && !senderFixName.contains("pole") && alexy.getState()!=Status.DYING){
 			
-			if(!collidedFixName.contains("Player") && !collidedFixName.equals("Umbrella_sensor"))return;
+			if(collidedFixName.contains("Player") ||collidedFixName.equals("Umbrella_sensor")){
 			
-			Gdx.app.postRunnable(new Runnable() {
-				public void run() {
-					while(getBody().getWorld().isLocked());
-					Vector2 senderAttach = new Vector2();
-					Vector2 collidedAttach = new Vector2();
+				Gdx.app.postRunnable(new Runnable() {
+					public void run() {
+						Vector2 senderAttach = new Vector2();
+						Vector2 collidedAttach = new Vector2();
+						
+						float dst = contactPoint.dst(getCenter());
+						float angle = MathUtils.atan2(collidedEntity.getCenter().y-getCenter().y, collidedEntity.getCenter().x-getCenter().x);
 					
-					float dst = contactPoint.dst(getCenter());
-					float angle = MathUtils.atan2(collidedEntity.getCenter().y-getCenter().y, collidedEntity.getCenter().x-getCenter().x);
+						senderAttach.set(dst*MathUtils.cos(angle), dst*MathUtils.sin(angle));
+						senderAttach.rotateRad(-getAngle());
 					
-					senderAttach.set(dst*MathUtils.cos(angle), dst*MathUtils.sin(angle));
-					senderAttach.rotateRad(-getAngle());
+						if(collidedFixName.contains("Umbrella")){
+							dst = contactPoint.dst(collidedEntity.getCenter())*0.7f;
+							collidedAttach.set(dst*MathUtils.cos(angle-180*MathUtils.degRad), dst*MathUtils.sin(angle-180*MathUtils.degRad));
+							collidedAttach.rotateRad(-collidedEntity.getAngle());
+						}else{
+							collidedAttach.set(Vector2.Zero);
+						}
 					
-					if(collidedFixName.contains("Umbrella")){
-						dst = contactPoint.dst(collidedEntity.getCenter())*0.7f;
-						collidedAttach.set(dst*MathUtils.cos(angle-180*MathUtils.degRad), dst*MathUtils.sin(angle-180*MathUtils.degRad));
-						collidedAttach.rotateRad(-collidedEntity.getAngle());
-					}else{
-						collidedAttach.set(Vector2.Zero);
+						attacched = JointsFactory.createWeldJoint(body.getWorld(), collidedEntity, Spear.this, collidedAttach, senderAttach, getAngle(), false);
+						collidedEntity.getBody().setAngularVelocity(body.getAngularVelocity());
 					}
-					
-					attacched = JointsFactory.createWeldJoint(body.getWorld(), collidedEntity, Spear.this, collidedAttach, senderAttach, getAngle(), false);
-					collidedEntity.getBody().setAngularVelocity(body.getAngularVelocity());
-				}
-			});
-			alexy.setState(Status.DYING);
-			alexy.setDeadType(DeadType.PIERCED);
+				});
+				alexy.setState(Status.DYING);
+				alexy.setDeadType(DeadType.PIERCED);
+			}
 		}
 	}
 
+	@Override
+	public void recalculate() {
+		startPos.set(getCenter());
+		body.setActive(false);
+	}
+	
+	@Override
+	public Property getProp2() {
+		return new Property("Velocity", vel);
+	}
+	@Override
+	public Property getProp1() {
+		return new Property("MaxLength", maxLen);
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		this.maxLen = value;
+	}
+	
+	@Override
+	public void setProp2(float value) {
+		this.vel = value;
+	}
+	
+	
 }

@@ -5,16 +5,20 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class Gear extends Entity{
 
 	public Gear(World world) {
-		super("Gear6", world);
-		init(world, BodyType.KinematicBody);
-		initFixture();
+		this(world, 6, 0, 0, 0, 1);
 	}
 	
+	
+	public Gear(World world, EntityModel model) {
+		this(world, (int)model.internalProp1.value, model.position.x, model.position.y, model.internalProp2.value, model.scale.x);
+		
+	}
 	
 	public Gear(World world, int type, float x, float y, float vel, float scale) {
 		super("Gear"+type, world);
@@ -22,16 +26,18 @@ public class Gear extends Entity{
 		setScaleX(scale);
 		setScaleY(scale);
 		
-		init(world, BodyType.KinematicBody);
-		initFixture();
+		initBody(world, BodyType.KinematicBody);
+		initFixtures();
 		
 		
 		setCenter(x, y);
 		setAngularVelocity(vel);
 	}
 	
+	
+	
 	@Override
-	protected void initFixture() {
+	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
@@ -52,13 +58,14 @@ public class Gear extends Entity{
 	
 	@Override
 	public Property getProp1() {
-		return new Property("Type", Integer.parseInt(((EntityData)body.getUserData()).getName().replace("Gear", "")));
+		return new Property("Type", Integer.parseInt(texture.name.replace("Gear", "")));
 	}
 	
 	@Override
 	public void setProp1(float value) {
-		texture = Assets.getTexture("Gear"+(int)value);
-		((EntityData)body.getUserData()).setName("Gear"+(int)value);
+		if(Assets.getTexture("Gear"+(int)value)!=null){
+			 texture = Assets.getTexture("Gear"+(int)value);
+		}
 	}
 
 	

@@ -1,110 +1,115 @@
-[
 {
-	class: com.cappuccino.aog.mapeditor.EntityModel,
-	externalEntity1: {
-		name: Null,
-		value: -1
+entitiesModels: [
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 299.00235,
+			y: 430.00003
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: MaxLength,
+			value: 300
+		},
+		internalProp2: {
+			name: Velocity,
+			value: 1
+		},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Spear
 	},
-	externalEntity2: {
-		name: Null,
-		value: -1
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 350.12714,
+			y: 306.6574
+		},
+		scale: {
+			x: 0.49999982,
+			y: 0.49999982
+		},
+		internalProp1: {
+			name: minLength,
+			value: 10
+		},
+		internalProp2: {
+			name: maxLength,
+			value: 250
+		},
+		angle: -3.6651912,
+		internalProp3: {
+			name: Velocity,
+			value: 20
+		},
+		type: com.cappuccino.aog.entities.Press
 	},
-	position: {
-		x: 231.00002,
-		y: 493.825
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 52.000027,
+			y: 467
+		},
+		scale: {
+			x: 1.7999992,
+			y: 1.7999992
+		},
+		internalProp1: {
+			name: Type
+		},
+		internalProp2: {},
+		angle: 0.34906584,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Pipeline
 	},
-	scale: {
-		x: 1,
-		y: 1
-	},
-	internalProp1: {
-		name: EmissionDelay,
-		value: 5
-	},
-	internalProp2: {},
-	angle: 0,
-	internalProp3: {},
-	type: com.cappuccino.aog.entities.ArrowEmitter
-},
-{
-	class: com.cappuccino.aog.mapeditor.EntityModel,
-	externalEntity1: {
-		name: Null,
-		value: -1
-	},
-	externalEntity2: {
-		name: Null,
-		value: -1
-	},
-	position: {
-		x: 266,
-		y: 372.82504
-	},
-	scale: {
-		x: 1,
-		y: 1
-	},
-	internalProp1: {
-		name: EmissionDelay,
-		value: 5
-	},
-	internalProp2: {},
-	angle: 0,
-	internalProp3: {},
-	type: com.cappuccino.aog.entities.ArrowEmitter
-},
-{
-	class: com.cappuccino.aog.mapeditor.EntityModel,
-	externalEntity1: {
-		name: Null,
-		value: -1
-	},
-	externalEntity2: {
-		name: Null,
-		value: -1
-	},
-	position: {
-		x: 452,
-		y: 435.82504
-	},
-	scale: {
-		x: 1,
-		y: 1
-	},
-	internalProp1: {
-		name: EmissionDelay,
-		value: 5
-	},
-	internalProp2: {},
-	angle: 0,
-	internalProp3: {},
-	type: com.cappuccino.aog.entities.ArrowEmitter
-},
-{
-	class: com.cappuccino.aog.mapeditor.EntityModel,
-	externalEntity1: {
-		name: Null,
-		value: -1
-	},
-	externalEntity2: {
-		name: Null,
-		value: -1
-	},
-	position: {
-		x: 444.99997,
-		y: 278.82504
-	},
-	scale: {
-		x: 1,
-		y: 1
-	},
-	internalProp1: {
-		name: EmissionDelay,
-		value: 5
-	},
-	internalProp2: {},
-	angle: 0,
-	internalProp3: {},
-	type: com.cappuccino.aog.entities.ArrowEmitter
-}
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 209.00005,
+			y: 504.99997
+		},
+		scale: {
+			x: 1.7999992,
+			y: 1.7999992
+		},
+		internalProp1: {
+			name: Type,
+			value: 1
+		},
+		internalProp2: {},
+		angle: -4.3633227,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Pipeline
+	}
 ]
+}

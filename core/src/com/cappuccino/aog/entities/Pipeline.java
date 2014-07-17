@@ -1,136 +1,72 @@
 package com.cappuccino.aog.entities;
 
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
+import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.mapeditor.EntityModel;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class Pipeline extends Entity{
 
-	public static enum Piece{
-		HORIZONTAL, VERTICAL, ANGLE_UP_LEFT, ANGLE_UP_RIGHT, ANGLE_DOWN_LEFT, ANGLE_DOWN_RIGHT;
+	public Pipeline(World world){
+		this(world, 0, 0, 0, 1, 1, 0);
 	}
 	
-	public static enum Direction{
-		LEFT_TO_RIGHT, RIGHT_TO_LEFT;
+	public Pipeline(World world, EntityModel model){
+		this(world, (int) model.internalProp1.value, model.position.x, model.position.y, model.scale.x, model.scale.y, model.angle);
 	}
 	
 	
-	private Entity path[];
-	
-	public Pipeline( World world, float x, float y, Direction dir, Piece[] route) {
-		super("Pipe_H", world);
-		init(world, BodyType.StaticBody);
-	
+	public Pipeline(World world, int type, float x, float y, float scaleX, float scaleY, float angle) {
+		super("Pipe" + type, world);
+		initBody(world, BodyType.StaticBody);
 		
-		path = new Entity[route.length];
-
-		Vector2 pos = new Vector2(x, y);
+		setScaleX(scaleX);
+		setScaleY(scaleY);
+		initFixtures();
 		
-		for(int i=0; i<route.length; i++){
-			switch (route[i]) {
-				case HORIZONTAL:
-					path[i] = new Entity("Pipe_H", world);
-					path[i].init(world, BodyType.StaticBody);
-					initFixture(path[i]);
-					
-					path[i].setCenter(pos.cpy());
-					
-					
-					if(dir == Direction.RIGHT_TO_LEFT){
-						pos.sub(path[i].getWidth(), 0);
-						path[i].setAngle(180*MathUtils.degRad);
-					}else{
-						pos.add(path[i].getWidth(), 0);
-					}
-					
-					break;
-					
-				case VERTICAL:
-					path[i] = new Entity("Pipe_H", world);
-					path[i].init(world, BodyType.StaticBody);
-					initFixture(path[i]);
-					
-					path[i].setCenter(pos.cpy());
-					
-					if(route[i-1] == Piece.ANGLE_DOWN_LEFT || route[i-1] == Piece.ANGLE_DOWN_RIGHT){
-						path[i].setAngle(90*MathUtils.degRad);
-						pos.add(0, path[i].getWidth());
-					}else{
-						path[i].setAngle(-90*MathUtils.degRad);
-						pos.sub(0, path[i].getWidth());
-					}
-					break;	
-					
-					case ANGLE_DOWN_LEFT:
-						path[i] = new Entity("Pipe_A", world);
-						path[i].init(world, BodyType.StaticBody);
-						initFixture(path[i]);
-						
-						pos.add(0, -path[i].getOrigin().y+10);
-						
-						path[i].setPosition(pos.cpy());
-						
-						pos.add(path[i].getOrigin().x+10, path[i].getHeight());
-						
-						break;
-						
-					case ANGLE_UP_RIGHT:
-						path[i] = new Entity("Pipe_A", world);
-						path[i].init(world, BodyType.StaticBody);
-						initFixture(path[i]);
-						
-						path[i].setAngle(180*MathUtils.degRad);
-						
-						pos.add(-16, -path[i].getOrigin().y+25);
-						
-						path[i].setPosition(pos.cpy());
-						
-						pos.add(path[i].getWidth(), path[i].getHeight()-16);
-						break;
-						
-					case ANGLE_UP_LEFT:
-						path[i] = new Entity("Pipe_A", world);
-						path[i].init(world, BodyType.StaticBody);
-						initFixture(path[i]);
-						
-						path[i].setAngle(90*MathUtils.degRad);
-						
-						pos.add(0, -path[i].getOrigin().y-10);
-						
-						path[i].setPosition(pos.cpy());
-						
-						pos.add(path[i].getWidth()-16, -path[i].origin.y+5);
-						break;
-						
-			}
-			
-		}
-		
-		
+		setAngle(angle);
+		setCenter(x, y);
 	}
 	
-	protected void initFixture(Entity e){
+	
+	
+	protected void initFixtures(){
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = WALL;
 		fd.filter.maskBits = WALL_MASK;
 		
-		bodyLoader.attachFixture(e.body, e.texture.name, fd, e.getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, e.getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD);
+		bodyLoader.attachFixture(body, texture.name, fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
 		
-		e.origin.set(bodyLoader.getOrigin(e.texture.name, e.getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, e.getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD));
+		origin.set(bodyLoader.getOrigin(texture.name, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
 		
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch) {
-		for(int i=0; i<path.length; i++){
-			path[i].draw(batch);
+	public void recalculate() {
+		Array<Fixture> fs = body.getFixtureList();
+		for(Fixture f: fs){
+			body.destroyFixture(f);
 		}
+		fs.clear();
+		initFixtures();
 	}
 	
+	@Override
+	public Property getProp1() {
+		return new Property("Type", Integer.parseInt(texture.name.replace("Pipe", "")));
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		if(value>=0 && value<=1){
+			texture = Assets.getTexture("Pipe" + (int)value);
+		}
+	}
 
 }
