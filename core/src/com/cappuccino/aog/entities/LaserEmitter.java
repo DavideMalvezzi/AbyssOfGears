@@ -74,7 +74,6 @@ public class LaserEmitter extends Entity {
 		bodyLoader.attachFixture(body, "LaserEmitter", fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
 		
 		origin.set(bodyLoader.getOrigin("LaserEmitter", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
-		
 	}
 	
 	private void initLaserFixture() {
@@ -136,6 +135,10 @@ public class LaserEmitter extends Entity {
 	public void recalculate(){
 		laser.setAngle(getAngle());
 		laser.setCenter(getCenter().x+(getWidth()-getOrigin().x)*MathUtils.cos(getAngle()), getCenter().y+(getWidth()-getOrigin().x)*MathUtils.sin(getAngle()));
+		laser.setScaleX(maxLen/laser.getRealWidth());
+		
+		laser.reloadFixtures();
+		initLaserFixture();
 	}
 	
 	@Override

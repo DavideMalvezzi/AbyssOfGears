@@ -28,8 +28,6 @@ public class SpikedBall extends Entity {
 		this(world, model.position.x, model.position.y, model.internalProp1.value, model.scale.x);
 	}
 	
-	
-	
 	public SpikedBall(World world, float x, float y, float speed, float scale) {
 		super("SpikedBall", world);
 		scaleX = scaleY = scale;
@@ -39,7 +37,6 @@ public class SpikedBall extends Entity {
 		setAngularVelocity(speed);
 	}
 
-	
 	@Override
 	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
@@ -83,6 +80,11 @@ public class SpikedBall extends Entity {
 		}
 		alexy.setState(Status.DYING);
 		alexy.setDeadType(DeadType.PIERCED);
+	}
+	
+	@Override
+	public void recalculate() {
+		reloadFixtures();
 	}
 	
 	@Override

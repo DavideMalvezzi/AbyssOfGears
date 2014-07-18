@@ -1,11 +1,9 @@
 package com.cappuccino.aog.entities;
 
 
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.utils.Array;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.mapeditor.EntityModel;
@@ -49,12 +47,7 @@ public class Pipeline extends Entity{
 	
 	@Override
 	public void recalculate() {
-		Array<Fixture> fs = body.getFixtureList();
-		for(Fixture f: fs){
-			body.destroyFixture(f);
-		}
-		fs.clear();
-		initFixtures();
+		reloadFixtures();
 	}
 	
 	@Override

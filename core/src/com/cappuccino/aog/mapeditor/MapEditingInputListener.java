@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
@@ -30,6 +31,7 @@ import com.cappuccino.aog.entities.SmokeEmitter;
 import com.cappuccino.aog.entities.Spear;
 import com.cappuccino.aog.entities.SpikedBall;
 import com.cappuccino.aog.entities.ThunderEmitter;
+import com.cappuccino.aog.entities.Wall;
 import com.cappuccino.aog.levels.Level;
 
 public class MapEditingInputListener extends InputAdapter{
@@ -47,14 +49,15 @@ public class MapEditingInputListener extends InputAdapter{
 		Spear.class,
 		SpikedBall.class, 
 		ThunderEmitter.class,
+		Wall.class
 	};
 	
 	
-	private enum EditingModes{
-		ROTATE,SCALEXY,SCALEX,SCALEY,EDIT_PROP1,EDIT_PROP2,EDIT_PROP3;
+	private enum EntityEditingModes{
+		ROTATE,SCALEXY,SCALEX,SCALEY,EDIT_PROP1,EDIT_PROP2,EDIT_PROP3,WALLEDIT;
 	}
 	
-	private EditingModes currentMode = EditingModes.ROTATE;
+	private EntityEditingModes entityEditingCurrentMode = EntityEditingModes.ROTATE;
 	
 	private World world;
 	private OrthographicCamera camera;
@@ -65,11 +68,11 @@ public class MapEditingInputListener extends InputAdapter{
 	private static final Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight(), 0, 10);
 	private static final BitmapFont font = new BitmapFont();
 	
+	private final LevelModel levelModel = new LevelModel();
 	private boolean debug = false;
 	
 	private static final QueryCallback callback = new QueryCallback() {
 		public boolean reportFixture(Fixture fixture) {
-			
 			currentEntity = ((EntityData)fixture.getBody().getUserData()).getEntity();
 			
 			int i=0;
@@ -78,7 +81,6 @@ public class MapEditingInputListener extends InputAdapter{
 				currentType = i;
 			}else{
 				currentEntity = null;
-				currentType = 0;
 			}
 			return false;
 		}
@@ -92,40 +94,54 @@ public class MapEditingInputListener extends InputAdapter{
 	}
 	
 	
-	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 mousePoint = new Vector3(screenX, screenY, 0);
 		mousePoint = camera.unproject(mousePoint);
+		if(!isDebugging()){
+			if(button == Buttons.LEFT){
+				if(currentEntity == null){
+				world.QueryAABB(callback, 
+						mousePoint.x-10*Scene.BOX_TO_WORLD, mousePoint.y-10*Scene.BOX_TO_WORLD, 
+						mousePoint.x+10*Scene.BOX_TO_WORLD, mousePoint.y+10*Scene.BOX_TO_WORLD
+					);
+				}else{
+					currentEntity = null;
+				}
+			}else if(button == Buttons.MIDDLE){
+				if(currentEntity!=null){
+					currentEntity.dispose();
+					level.getActiveEntities().removeValue(currentEntity, true);
+					currentEntity = null;
+				}else{
+					world.QueryAABB(callback, 
+							mousePoint.x-10*Scene.BOX_TO_WORLD, mousePoint.y-10*Scene.BOX_TO_WORLD, 
+							mousePoint.x+10*Scene.BOX_TO_WORLD, mousePoint.y+10*Scene.BOX_TO_WORLD
+						);
+					if(currentEntity!=null){
+						currentEntity.dispose();
+						level.getActiveEntities().removeValue(currentEntity, true);
+						currentEntity = null;
+					}
+				}
+			}
+		}
 		
-		if(button == Buttons.LEFT){
-			if(currentEntity == null){
-			world.QueryAABB(callback, 
-					mousePoint.x-10*Scene.BOX_TO_WORLD, mousePoint.y-10*Scene.BOX_TO_WORLD, 
-					mousePoint.x+10*Scene.BOX_TO_WORLD, mousePoint.y+10*Scene.BOX_TO_WORLD
-				);
-			}else{
-				currentEntity = null;
-			}
-		}else if(button == Buttons.RIGHT){
+		if(button == Buttons.RIGHT){
 			Level.getPlayer().setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
-		}else if(button == Buttons.MIDDLE){
-			if(currentEntity!=null){
-				currentEntity.dispose();
-				level.getActiveEntities().removeValue(currentEntity, true);
-				currentType = 0;
-				currentEntity = null;
-			}
 		}
 		
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
 	
 	
+	
+	
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		Vector3 mousePoint = new Vector3(screenX, screenY, 0);
 		mousePoint = camera.unproject(mousePoint);
+		
 		
 		if(currentEntity!=null){
 			currentEntity.setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
@@ -141,7 +157,7 @@ public class MapEditingInputListener extends InputAdapter{
 	public boolean scrolled(int amount) {
 		amount*=-1;
 		if(currentEntity!=null){
-			switch (currentMode) {
+			switch (entityEditingCurrentMode) {
 				case ROTATE:
 					currentEntity.setAngle(currentEntity.getAngle()+5*amount*MathUtils.degRad);
 					break;
@@ -164,6 +180,8 @@ public class MapEditingInputListener extends InputAdapter{
 				case EDIT_PROP3:
 					currentEntity.setProp3(currentEntity.getProp3().value+amount);
 					break;
+			default:
+				break;
 
 			}
 			currentEntity.recalculate();
@@ -181,53 +199,42 @@ public class MapEditingInputListener extends InputAdapter{
 		
 		switch (keycode) {
 			case Keys.NUM_1:
-				currentMode = EditingModes.ROTATE;
+				entityEditingCurrentMode = EntityEditingModes.ROTATE;
 				break;
 			case Keys.NUM_2:
-				currentMode = EditingModes.SCALEXY;
+				entityEditingCurrentMode = EntityEditingModes.SCALEXY;
 				break;
 			case Keys.NUM_3:
-				currentMode = EditingModes.SCALEX;
+				entityEditingCurrentMode = EntityEditingModes.SCALEX;
 				break;
 			case Keys.NUM_4:
-				currentMode = EditingModes.SCALEY;
+				entityEditingCurrentMode = EntityEditingModes.SCALEY;
 				break;
 			case Keys.NUM_5:
-				currentMode = EditingModes.EDIT_PROP1;
+				entityEditingCurrentMode = EntityEditingModes.EDIT_PROP1;
 				break;
 			case Keys.NUM_6:
-				currentMode = EditingModes.EDIT_PROP2;
+				entityEditingCurrentMode = EntityEditingModes.EDIT_PROP2;
 				break;
 			case Keys.NUM_7:
-				currentMode = EditingModes.EDIT_PROP3;
+				entityEditingCurrentMode = EntityEditingModes.EDIT_PROP3;
+				break;
+			case Keys.Q:
+				entityEditingCurrentMode = EntityEditingModes.WALLEDIT;
+				break;
+			case Keys.N:
+				try {
+					currentEntity =  (Entity) entityTypes[currentType].getConstructor(World.class).newInstance(world);
+					level.getActiveEntities().add(currentEntity);
+					currentEntity.setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
+					currentEntity.recalculate();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 				
 			case Keys.NUM_0:
-				Json j = new Json();
-				FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
-				LevelModel model = new LevelModel();
-				
-				if(levelFile.exists()){
-					levelFile.delete();
-				}
-				
-				for(Entity e : level.getActiveEntities()){
-					model.addEntity(e);
-				}
-				
-				levelFile.writeString(j.prettyPrint(model), true);
-				
-				
-				break;
-				
-			case Keys.N:
-					try {
-						currentEntity =  (Entity) entityTypes[0].getConstructor(World.class).newInstance(world);
-						level.getActiveEntities().add(currentEntity);
-						currentType = 0;
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				save();
 				break;
 				
 			case Keys.PLUS:
@@ -261,7 +268,15 @@ public class MapEditingInputListener extends InputAdapter{
 				}
 				break;
 			case Keys.ENTER:
-				debug = !debug;
+				if(currentEntity==null){
+					debug = !debug;
+					if(!debug){
+						level.dispose();
+						levelModel.loadOnLevel(world, level);
+					}else{
+						save();
+					}
+				}
 				break;
 		}
 		
@@ -270,10 +285,28 @@ public class MapEditingInputListener extends InputAdapter{
 			currentEntity.recalculate();
 		}
 		
+		
 		return super.keyDown(keycode);
 	}
 	
 	
+	private void save() {
+		Json j = new Json();
+		FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
+		
+		levelModel.clear();
+		
+		if(levelFile.exists()){
+			levelFile.delete();
+		}
+		
+		for(Entity e : level.getActiveEntities()){
+			levelModel.addEntity(e);
+		}
+		
+		levelFile.writeString(j.prettyPrint(levelModel), true);
+	}
+
 	public void render(SpriteBatch batch){
 		batch.setProjectionMatrix(projection);
 		batch.begin();
@@ -293,11 +326,15 @@ public class MapEditingInputListener extends InputAdapter{
 						currentEntity.getExternalBody2().name + "ID: " + currentEntity.getExternalBody2().value + "\n" ,
 								
 						820, 220);
-				
-				
 			}
+			
+			font.setScale(1.75f);
+			font.draw(batch, "Debug: "+ isDebugging(), 10, Gdx.graphics.getHeight()-10);
+			font.setScale(1);
 		batch.end();
 	}
+	
+	Vector2 lastPos = new Vector2();
 	
 	public void update(){
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
@@ -307,6 +344,19 @@ public class MapEditingInputListener extends InputAdapter{
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
+		
+		Vector3 mousePoint = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		mousePoint = camera.unproject(mousePoint);
+		Vector2 pos = new Vector2(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
+		
+		if(pos.dst(lastPos)>100 && entityEditingCurrentMode == EntityEditingModes.WALLEDIT){
+			float angle = MathUtils.atan2(pos.y-lastPos.y, pos.x-lastPos.x)-90*MathUtils.degRad;
+			Wall e = new Wall(world, pos.x, pos.y, angle, MathUtils.random(0.5f, 1), MathUtils.random(0.5f, 1));
+			
+			level.getActiveEntities().add(e);
+			lastPos.set(pos);
+		}
+		
 	}
 	
 	public boolean isDebugging(){

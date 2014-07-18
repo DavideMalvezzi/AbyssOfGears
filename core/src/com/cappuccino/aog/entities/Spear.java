@@ -35,20 +35,21 @@ public class Spear extends Entity{
 	};
 	
 	public Spear(World world){
-		this(world, 0, 0, 300, 1, 0);
+		this(world, 0, 0, 300, 1, 0, 1, 1);
 	}
 	
 	public Spear(World world, EntityModel model){
-		this(world, model.position.x, model.position.y, model.internalProp1.value, model.internalProp2.value, model.angle);
+		this(world, model.position.x, model.position.y, model.internalProp1.value, model.internalProp2.value, model.angle, model.scale.x, model.scale.y);
 	}
 	
-	
-	public Spear(World world, float x, float y, float maxLen, float vel, float angle) {
+	public Spear(World world, float x, float y, float maxLen, float vel, float angle, float scaleX, float scaleY) {
 		super("Spear", world);
 		this.startPos.set(x,y);
 		this.maxLen = maxLen;
 		this.vel = vel;
 		
+		setScaleX(scaleX);
+		setScaleY(scaleY);
 		
 		initBody(world, BodyType.KinematicBody);
 		initFixtures();
@@ -136,6 +137,8 @@ public class Spear extends Entity{
 	public void recalculate() {
 		startPos.set(getCenter());
 		body.setActive(false);
+		
+		reloadFixtures();
 	}
 	
 	@Override

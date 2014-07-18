@@ -34,8 +34,6 @@ public class Gear extends Entity{
 		setAngularVelocity(vel);
 	}
 	
-	
-	
 	@Override
 	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
@@ -44,6 +42,11 @@ public class Gear extends Entity{
 		bodyLoader.attachFixture(body, texture.name, fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
 		
 		origin.set(bodyLoader.getOrigin(texture.name, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
+	}
+	
+	@Override
+	public void recalculate() {
+		reloadFixtures();
 	}
 	
 	@Override

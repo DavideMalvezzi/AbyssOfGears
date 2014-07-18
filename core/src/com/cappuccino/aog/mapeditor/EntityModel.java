@@ -17,7 +17,7 @@ public class EntityModel {
 	
 	public EntityModel(Entity e) {
 		this.type = e.getClass().getName();
-		this.position = e.getCenter();
+		this.position = new Vector2(e.getCenter());
 		this.scale = new Vector2(e.getScaleX(), e.getScaleY());
 		this.angle = e.getAngle();
 		this.internalProp1 = e.getProp1();
@@ -27,6 +27,11 @@ public class EntityModel {
 		this.externalEntity2 = new Property("Null",-1);
 	}
 	
+	
+	@Override
+	public String toString() {
+		return type + "  " + position + "  " + angle + "  " + scale;
+	}
 	
 	public static class Property{
 		String name = "NoProp";

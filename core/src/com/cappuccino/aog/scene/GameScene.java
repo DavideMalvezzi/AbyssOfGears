@@ -60,7 +60,9 @@ public class GameScene extends Scene{
 		
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
-			box2dDebug.render(world, camera.combined);
+			if(mapEditor.isDebugging()){
+				box2dDebug.render(world, camera.combined);
+			}
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			

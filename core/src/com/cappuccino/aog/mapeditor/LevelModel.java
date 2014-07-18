@@ -16,6 +16,11 @@ public class LevelModel {
 		entitiesModels.add(model);
 	}
 
+	public void clear(){
+		entitiesModels.clear();
+	}
+	
+	
 	public void loadOnLevel(World world, Level level) {
 		Array<Entity> entities = level.getActiveEntities();
 		for (EntityModel model : entitiesModels) {

@@ -128,6 +128,7 @@ public class ArrowEmitter extends Entity {
 	@Override
 	public void recalculate() {
 		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
+		reloadFixtures();
 	}
 	
 }

@@ -127,6 +127,15 @@ public class Chain extends Entity{
 	}
 	
 	@Override
+	public void recalculate() {
+		reloadFixtures();
+		for (int i=0; i<chain.length; i++) {
+			chain[i].dispose();
+		}
+		createChain(body.getWorld());
+	}
+	
+	@Override
 	public Property getProp1() {
 		return new Property("Length", chainLen);
 	}

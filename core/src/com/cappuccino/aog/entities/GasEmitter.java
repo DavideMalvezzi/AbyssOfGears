@@ -94,6 +94,7 @@ public class GasEmitter extends Entity {
 	
 	@Override
 	public void recalculate(){
+		reloadFixtures();
 		emissionPoint = new Vector2(getCenter().add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle())));
 	}
 	

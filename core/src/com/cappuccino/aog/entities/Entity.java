@@ -246,4 +246,14 @@ public class Entity implements Disposable {
 			fixtures.get(i).setFilterData(filter);
 		}
 	}
+	
+	public void reloadFixtures(){
+		Array<Fixture> fs = body.getFixtureList();
+		for(Fixture f : fs){
+			body.destroyFixture(f);
+		}
+		fs.clear();
+		
+		initFixtures();
+	}
 }

@@ -167,17 +167,8 @@ public class Press extends Entity{
 		tube.setScaleX(maxLen/tube.getRealWidth());
 		tube.setScaleY(getScaleX());
 		
-		Array<Fixture> f = tube.body.getFixtureList();
-		for(Fixture fix : f){
-			tube.body.destroyFixture(fix);
-		}
-		
-		Array<Fixture> f2 = body.getFixtureList();
-		for(Fixture fix : f2){
-			body.destroyFixture(fix);
-		}
-		
-		initFixtures();
+		tube.reloadFixtures();
+		reloadFixtures();
 		
 	}
 	
