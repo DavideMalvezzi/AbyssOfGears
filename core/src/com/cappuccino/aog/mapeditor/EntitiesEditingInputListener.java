@@ -3,20 +3,14 @@ package com.cappuccino.aog.mapeditor;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Json;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.ArrowEmitter;
 import com.cappuccino.aog.entities.Chain;
@@ -31,10 +25,9 @@ import com.cappuccino.aog.entities.SmokeEmitter;
 import com.cappuccino.aog.entities.Spear;
 import com.cappuccino.aog.entities.SpikedBall;
 import com.cappuccino.aog.entities.ThunderEmitter;
-import com.cappuccino.aog.entities.Wall;
 import com.cappuccino.aog.levels.Level;
 
-public class MapEditingInputListener extends InputAdapter{
+public class EntitiesEditingInputListener extends EditingInputListener{
 	
 	@SuppressWarnings("unchecked")
 	private static Class< ? extends Entity>[] entityTypes = new Class[]{
@@ -49,27 +42,13 @@ public class MapEditingInputListener extends InputAdapter{
 		Spear.class,
 		SpikedBall.class, 
 		ThunderEmitter.class,
-		Wall.class
 	};
 	
 	
-	private enum EntityEditingModes{
-		ROTATE,SCALEXY,SCALEX,SCALEY,EDIT_PROP1,EDIT_PROP2,EDIT_PROP3,WALLEDIT;
-	}
-	
 	private EntityEditingModes entityEditingCurrentMode = EntityEditingModes.ROTATE;
 	
-	private World world;
-	private OrthographicCamera camera;
-	private Level level;
 	private static Entity currentEntity;
 	private static int currentType;
-	
-	private static final Matrix4 projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth(), 0, Gdx.graphics.getHeight(), 0, 10);
-	private static final BitmapFont font = new BitmapFont();
-	
-	private final LevelModel levelModel = new LevelModel();
-	private boolean debug = false;
 	
 	private static final QueryCallback callback = new QueryCallback() {
 		public boolean reportFixture(Fixture fixture) {
@@ -87,7 +66,7 @@ public class MapEditingInputListener extends InputAdapter{
 	};
 	
 	
-	public MapEditingInputListener(Level level, World world, OrthographicCamera camera) {
+	public EntitiesEditingInputListener(Level level, World world, OrthographicCamera camera) {
 		this.level = level;
 		this.world = world;
 		this.camera = camera;
@@ -142,12 +121,10 @@ public class MapEditingInputListener extends InputAdapter{
 		Vector3 mousePoint = new Vector3(screenX, screenY, 0);
 		mousePoint = camera.unproject(mousePoint);
 		
-		
 		if(currentEntity!=null){
 			currentEntity.setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
 			currentEntity.recalculate();
 		}
-		
 		
 		return super.mouseMoved(screenX, screenY);
 	}
@@ -219,9 +196,7 @@ public class MapEditingInputListener extends InputAdapter{
 			case Keys.NUM_7:
 				entityEditingCurrentMode = EntityEditingModes.EDIT_PROP3;
 				break;
-			case Keys.Q:
-				entityEditingCurrentMode = EntityEditingModes.WALLEDIT;
-				break;
+
 			case Keys.N:
 				try {
 					currentEntity =  (Entity) entityTypes[currentType].getConstructor(World.class).newInstance(world);
@@ -290,24 +265,7 @@ public class MapEditingInputListener extends InputAdapter{
 	}
 	
 	
-	private void save() {
-		Json j = new Json();
-		FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
-		
-		levelModel.clear();
-		
-		if(levelFile.exists()){
-			levelFile.delete();
-		}
-		
-		for(Entity e : level.getActiveEntities()){
-			levelModel.addEntity(e);
-		}
-		
-		levelFile.writeString(j.prettyPrint(levelModel), true);
-	}
-
-	public void render(SpriteBatch batch){
+	public void draw(SpriteBatch batch){
 		batch.setProjectionMatrix(projection);
 		batch.begin();
 			if(currentEntity!=null){
@@ -329,34 +287,15 @@ public class MapEditingInputListener extends InputAdapter{
 			}
 			
 			font.setScale(1.75f);
-			font.draw(batch, "Debug: "+ isDebugging(), 10, Gdx.graphics.getHeight()-10);
+			font.draw(batch, "Debug: "+ isDebugging(), 10, Gdx.graphics.getHeight()-40);
 			font.setScale(1);
 		batch.end();
 	}
 	
-	Vector2 lastPos = new Vector2();
+	
 	
 	public void update(){
-		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
-		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
-		
-		if(Gdx.input.isKeyPressed(Keys.A))camera.position.x-=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
-		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
-		
-		Vector3 mousePoint = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		mousePoint = camera.unproject(mousePoint);
-		Vector2 pos = new Vector2(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
-		
-		if(pos.dst(lastPos)>100 && entityEditingCurrentMode == EntityEditingModes.WALLEDIT){
-			float angle = MathUtils.atan2(pos.y-lastPos.y, pos.x-lastPos.x)-90*MathUtils.degRad;
-			Wall e = new Wall(world, pos.x, pos.y, angle, MathUtils.random(0.5f, 1), MathUtils.random(0.5f, 1));
-			
-			level.getActiveEntities().add(e);
-			lastPos.set(pos);
-		}
-		
+		super.update();
 	}
 	
 	public boolean isDebugging(){

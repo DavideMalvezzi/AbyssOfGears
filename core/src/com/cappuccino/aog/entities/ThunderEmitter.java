@@ -29,7 +29,7 @@ public class ThunderEmitter extends Entity{
 		
 		
 		setAngle(angle);
-		setPosition(x, y);
+		setCenter(x, y);
 		
 		emitPoint = new Vector2(getCenter()).add(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle()) );		
 	}

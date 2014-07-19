@@ -4,201 +4,154 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.cappuccino.aog.Assets;
-import com.cappuccino.aog.BatchUtils;
 import com.cappuccino.aog.Scene;
-import com.cappuccino.aog.entities.Thunder.Segment;
 
 
 public class TryScene extends Scene{
 
 	
-	private static final ShapeRenderer shapeRenderer = new ShapeRenderer();
-	private static final Pool<Segment> segmentPool = new Pool<Segment>(){
-			protected Segment newObject() {
-				return new Segment();
-			}
-	};
+	public ShaderProgram normal, bloomExtract, gaussianBlur, bloomCombine;
+	public FrameBuffer sceneRenderTarget, renderTarget1, renderTarget2;
+	public Matrix4 projection;
 	
-	
-	public FrameBuffer light_buf, bloom_buf,temp_buf;
-	private final Array<Segment> thunderPoint = new Array<Segment>();
-	
-	
-	private static final ShaderProgram sp = new ShaderProgram(Gdx.files.internal("data/bloom_shader.vert"), Gdx.files.internal("data/gaussian_blur.frag"));
+	float[] weights;
+	float[] offset;
 	
 	public TryScene() {
 		camera.position.y = camera.viewportHeight/2;
 		
-		light_buf = new FrameBuffer(Format.RGBA8888, 300, 200, false);
-		temp_buf = new FrameBuffer(Format.RGBA8888, 300, 200, false);
-		bloom_buf = new FrameBuffer(Format.RGBA8888, 300, 200, false);
+		sceneRenderTarget = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
+		renderTarget1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
+		renderTarget2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
 		
-		createNew();
-		drawOnBuffer(batch);
-		//System.out.println(sp.getLog());
+		normal = SpriteBatch.createDefaultShader();
+		bloomExtract = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/bloomExtract.frag"));
+		gaussianBlur = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/gaussianBlur.frag"));
+		bloomCombine = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/bloomCombine.frag"));
+		
+		projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth()/2, 0, Gdx.graphics.getHeight()/2, 0, 10);
+		
+		System.out.println(normal.getLog());
+		System.out.println(bloomExtract.getLog());
+		System.out.println(gaussianBlur.getLog());
+		System.out.println(bloomCombine.getLog());
 	}
-	boolean draw = false;
+	
+	
 	
 	@Override
 	public void render(float delta) {
-	//	beginClip();
-		 
-			batch.setProjectionMatrix(camera.combined.scl(BOX_TO_WORLD));
-			batch.begin();
+		Matrix4 temp = batch.getProjectionMatrix().cpy();
+		TextureRegion t = Assets.getTexture("Gear6");
+		batch.setShader(null);
+		batch.begin();
 			batch.draw(Assets.layer0Background, 0, 0);
-			
-			//batch.draw(light_buf.getColorBufferTexture(), 0, 0);
-			//if(!draw){
-			
-			Matrix4 old = batch.getProjectionMatrix().cpy();
-			
-			
-			Texture light = light_buf.getColorBufferTexture();
 			batch.flush();
-				
-			temp_buf.begin();
-				batch.setColor(144f/255f, 208f/255f, 248f/255f, 1);
-				batch.setProjectionMatrix(getBufferProj(temp_buf));
-				batch.setShader(sp);
-				sp.setUniformf("pixelSize", new Vector2(1.0f/light_buf.getWidth(), 0));
-				sp.setUniform1fv("values", BatchUtils.gaussian_values, 0, 9);
-				sp.setUniformf("gloomFactor", 1.65f);
-				batch.draw(light, 0, 0);
-				batch.flush();
-			temp_buf.end();
-				
-			bloom_buf.begin();
-				batch.setProjectionMatrix(getBufferProj(bloom_buf));
-				sp.setUniformf("pixelSize", new Vector2(0, 1.0f/light_buf.getHeight()));
-				sp.setUniform1fv("values", BatchUtils.gaussian_values, 0, 9);
-				sp.setUniformf("gloomFactor", 1.65f);
-				batch.draw(temp_buf.getColorBufferTexture(), 0, 0);
-				batch.flush();
-			bloom_buf.end();
 			
-			batch.setProjectionMatrix(old);
+			batch.setProjectionMatrix(projection);
+			
+			Gdx.gl20.glClearColor(0, 0, 0, 0);
+			sceneRenderTarget.begin();
+				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				batch.draw(t, 0, 0);
+				batch.flush();
+			sceneRenderTarget.end();
+			
+			renderTarget1.begin();
+				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				batch.setShader(bloomExtract);
+				bloomExtract.setUniformf("BloomThreshold", 0.25f);
+				batch.draw(sceneRenderTarget.getColorBufferTexture(), 0, 0);
+				batch.flush();
+			renderTarget1.end();
+			
+			renderTarget2.begin();
+				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				batch.setShader(gaussianBlur);
+				setBlurParam(t, 15, 1, 0);
+				batch.draw(renderTarget1.getColorBufferTexture(), 0, 0);
+				batch.flush();
+			renderTarget2.end();
+			
+			renderTarget1.begin();
+				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				setBlurParam(t, 15, 0, 1);
+				batch.draw(renderTarget2.getColorBufferTexture(), 0, 0);
+				batch.flush();
+			renderTarget1.end();
+			Gdx.gl20.glClearColor(1, 0, 0, 1);
+			
+			batch.setProjectionMatrix(temp);
+			batch.setShader(bloomCombine);
+			batch.setColor(Color.YELLOW);
+			setBloomParams(sceneRenderTarget.getColorBufferTexture(), 1, 1, 2, 1.5f);
+			batch.draw(renderTarget1.getColorBufferTexture(), 0, 0);
 			batch.setColor(Color.WHITE);
-			batch.setShader(null);
-			
-			draw = true;	
-			//}
-			
-			Texture t = bloom_buf.getColorBufferTexture();
-			Pixmap p = new Pixmap(t.getWidth(), t.getHeight(), Format.RGBA8888);
-			Texture t2 = new Texture(p);
-			
-			batch.draw(t2, 0, 0);
-			
-			
-			batch.end();
-			
-	//	endClip();
-	}
-	
-	
-public void drawOnBuffer(SpriteBatch batch){
 		
-		light_buf.begin();
-			Gdx.gl20.glClearColor(0, 0, 0, 0f);
-			Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			Gdx.gl20.glClearColor(1, 0, 0, 1f);
-			shapeRenderer.setColor(Color.WHITE);
-			shapeRenderer.setProjectionMatrix(getBufferProj(light_buf));
-			shapeRenderer.begin(ShapeType.Filled);
-				for(int i=0; i<thunderPoint.size; i++){
-					Segment s = thunderPoint.get(i);
-					shapeRenderer.rectLine(s.start, s.end, 2);
-				}
-		
-			shapeRenderer.end();
-			
-		light_buf.end();
-		
-		
-		
-
-		
+		batch.end();
 		
 	}
 	
-	
-	public void createNew(){
-		float MAX_OFFSET = 100;
-		float dst, angle, off;
-		Vector2 midPoint = new Vector2();
-		Vector2 branch = new Vector2();
+	private void setBloomParams(Texture t, float baseIntensity, float baseSaturation, float bloomIntensity, float bloomSaturation){
+		t.bind(1);
+		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
 		
-		segmentPool.freeAll(thunderPoint);
-		thunderPoint.clear();
-		thunderPoint.add(segmentPool.obtain().set(new Vector2(0, MAX_OFFSET), new Vector2(300, MAX_OFFSET)));
-		for(int i=0; i<0; i++){
-			for(int j=0; j<thunderPoint.size; j++){
-				Segment s = thunderPoint.get(j);
-				
-				midPoint.x = (s.start.x+s.end.x)/2;
-				midPoint.y = (s.start.y+s.end.y)/2;
-				dst = midPoint.dst(s.start);
-				off = MathUtils.random(-MAX_OFFSET, MAX_OFFSET);
-				angle = MathUtils.atan2(off, dst);
-				
-				midPoint.sub(s.start).rotateRad(angle).add(s.start);
-				
-				thunderPoint.removeIndex(j);
-				thunderPoint.insert(j, segmentPool.obtain().set(s.start, midPoint));
-				thunderPoint.insert(j+1,segmentPool.obtain().set(midPoint, s.end));
-				segmentPool.free(s);
-				
-				if(MathUtils.random(-1, 1)==0){
-					branch.set(s.end);
-					angle = (MathUtils.random(-35, 35)+15)*MathUtils.degRad;
-					branch.sub(midPoint).rotateRad(angle).add(midPoint);
-					
-					thunderPoint.insert(j+2, segmentPool.obtain().set(midPoint, branch));
-					j++;
-				}
-				
-				j++;
-				
-			}
-			MAX_OFFSET*=0.5f;
+		bloomCombine.setUniformf("BaseIntensity", baseIntensity);
+		bloomCombine.setUniformf("BaseSaturation", baseSaturation);
+		bloomCombine.setUniformf("BloomIntensity", bloomIntensity);
+		bloomCombine.setUniformf("BloomSaturation", bloomSaturation);
+	}
+	
+	private void setBlurParam(TextureRegion t, int radius, int dirX, int dirY){
+		float sum = 0;
+		
+		weights = new float[radius];
+		offset = new float[radius*2];
+		
+		sum = weights[0] = computeGaussian(0, radius);
+		offset[0] = 0;
+		offset[1] = 0;
+		
+		
+		for(int i=0; i<radius/2; i++){
+			float w = computeGaussian(i+1, radius);
+			weights[i*2+1] = w;
+			weights[i*2+2] = w;
+		
+			sum+=w*2;
+			
+			Vector2 delta = new Vector2(1f/t.getRegionWidth(), 1f/t.getRegionHeight()).scl(i+1).scl(dirX, dirY);
+			
+			offset[i*2+1] = delta.x;
+			offset[i*2+2] = delta.y;
+			
+			offset[i*2+3] = -delta.x;
+			offset[i*2+4] = -delta.y;
 		}
-
+		
+		for(int i=0; i<radius; i++){
+			weights[i]/=sum;
+		}
+		
+		gaussianBlur.setUniformi("samples_count", radius);
+		gaussianBlur.setUniform1fv("weight", weights, 0, radius);
+		gaussianBlur.setUniform2fv("offset", offset, 0, radius*2);
+		
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public Matrix4 getBufferProj(FrameBuffer f){
-		return new Matrix4().setToOrtho(0, f.getWidth(), 0, f.getHeight(), 0, 10);
-	}
+	private float computeGaussian(float n, float theta){
+        return (float)((1.0 / Math.sqrt(2 * Math.PI * theta)) * Math.exp(-(n * n) / (2 * theta * theta)));
+    }
 	
 	
 	@Override

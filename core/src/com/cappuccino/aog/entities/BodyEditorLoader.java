@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.cappuccino.aog.Scene;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +135,7 @@ public class BodyEditorLoader {
 	public Vector2 getOrigin(String name, float scaleX, float scaleY) {
 		RigidBodyModel rbModel = model.rigidBodies.get(name);
 		if (rbModel == null) throw new RuntimeException("Name '" + name + "' was not found.");
-		return vec.set(rbModel.origin).scl(scaleX, scaleY);
+		return vec.set(rbModel.origin).scl(scaleX, scaleY).scl(Scene.WORLD_TO_BOX);
 	}
 
 	/**

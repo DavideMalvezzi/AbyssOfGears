@@ -43,7 +43,7 @@ public class SpikedBall extends Entity {
 		fd.filter.categoryBits = ENTITY;
 		fd.filter.maskBits = ENTITY_MASK;
 		
-		bodyLoader.attachFixture(body, "SpikedBall_ball", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
+		//bodyLoader.attachFixture(body, "SpikedBall_ball", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
 		bodyLoader.attachFixture(body, "SpikedBall_sensor", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
 
 		origin.set(bodyLoader.getOrigin("SpikedBall_ball", getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD));

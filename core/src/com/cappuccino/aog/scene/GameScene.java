@@ -14,7 +14,7 @@ import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.game.ParallaxLayer;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.levels.LevelManager;
-import com.cappuccino.aog.mapeditor.MapEditingInputListener;
+import com.cappuccino.aog.mapeditor.MapEditor;
 
 
 public class GameScene extends Scene{
@@ -25,7 +25,7 @@ public class GameScene extends Scene{
 	private GameSceneHud hud;
 	
 	
-	private MapEditingInputListener mapEditor;
+	private MapEditor mapEditor;
 	
 	public GameScene(){
 		super();
@@ -38,12 +38,12 @@ public class GameScene extends Scene{
 		
 		hud = new GameSceneHud();
 		
-		PointLight l = new PointLight(rayHandler, 32, new Color(1f, 0.45f, 0f, 0.75f), 20, 0, 0);
+		
+		PointLight l = new PointLight(rayHandler, 32, new Color(1f, 1, 0f, 0.75f), 20, 0, 0);
 		l.attachToBody(player.getBody(), 0, -2);
 		PointLight.setContactFilter(Entity.LIGHT, (short) 0, Entity.LIGHT_MASK);
 		
-		mapEditor = new MapEditingInputListener(level, world, camera);
-		Gdx.input.setInputProcessor(mapEditor);
+		mapEditor = new MapEditor(level, world, camera);
 	}
 	
 	public void render(float delta){
@@ -68,7 +68,7 @@ public class GameScene extends Scene{
 			
 			hud.draw();
 			
-			mapEditor.render(batch);
+			mapEditor.draw(batch);
 			
 		endClip();
 		

@@ -3,6 +3,7 @@ package com.cappuccino.aog;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
@@ -44,7 +45,7 @@ public class Assets {
 		parameter.size = 190;
 		font100 = fontGenerator.generateFont(parameter);
 		font100.setScale(0.5f);
-		parameter.size = 240;
+		parameter.size = 230;
 		parameter.characters  = "AbysofGear";
 		font200 = fontGenerator.generateFont(parameter);
 		font200.setScale(0.5f);
@@ -60,6 +61,7 @@ public class Assets {
 		}
 		
 		layer0Background = new Texture("gfx/layer0Bg.png");
+		layer0Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		layer1Background = new Texture("gfx/layer1Bg.png");
 		layer2Background = new Texture("gfx/layer2Bg.png");
 		
@@ -74,7 +76,6 @@ public class Assets {
 		ParticleEffect gasParticle = new ParticleEffect();
 		gasParticle.load(Gdx.files.internal("data/GasEffect"), Gdx.files.internal("gfx/"));
 		gasEffect = gasParticle.getEmitters().first();
-		
 	}
 	
 	public static void dispose(){

@@ -182,7 +182,7 @@ public class Entity implements Disposable {
 	}
 	
 	public Vector2 getOrigin(){
-		return origin.cpy().scl(GameScene.WORLD_TO_BOX);
+		return origin;//.cpy().scl(GameScene.WORLD_TO_BOX);
 	}
 	
 	public void setPosition(Vector2 position){

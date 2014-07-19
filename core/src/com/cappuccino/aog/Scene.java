@@ -42,17 +42,19 @@ public class Scene extends ScreenAdapter {
 		world.setContactListener(new ContactEvent());
 
 		rayHandler = new RayHandler(world);
-		rayHandler.setAmbientLight(0, 0, 0, 0f);
+		rayHandler.setAmbientLight(0, 0, 0, 0.3f);
 		
 		box2dDebug = new Box2DDebugRenderer(true,true,false,true,true,true);
 	}
 	
+	private final Rectangle view = new Rectangle();
+	private final Rectangle scissor = new Rectangle();
+	
 	protected void beginClip(){
-		Rectangle view = new Rectangle(
+		view.set(
 				(camera.position.x-camera.viewportWidth/2f), 
 				(camera.position.y-camera.viewportHeight/2f), 
 				camera.viewportWidth, camera.viewportHeight);
-		Rectangle scissor = new Rectangle();
 		
 		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
 		Scissor.setArea(view, scissor);

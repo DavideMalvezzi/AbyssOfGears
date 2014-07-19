@@ -42,7 +42,7 @@ public class GasEmitter extends Entity {
 	}
 	
 	public GasEmitter(World world, EntityModel model) {
-		this(world, model.position.x, model.position.x, model.angle);
+		this(world, model.position.x, model.position.y, model.angle);
 	}
 	
 	public GasEmitter(World world, float x, float y, float angle) {

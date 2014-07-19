@@ -89,13 +89,16 @@ public class SmokeEmitter extends Entity {
 		
 	}
 	
+	private final Vector2 start = new Vector2();
+	private final Vector2 end = new Vector2(); 
 	
 	@Override
 	public void update(float delta) {
-		Vector2 start = emissionPoint.cpy().scl(GameScene.BOX_TO_WORLD);
-		Vector2 end = emissionPoint.cpy().add(smokeRadius*MathUtils.cos(getAngle()), smokeRadius*MathUtils.sin(getAngle())).scl(GameScene.BOX_TO_WORLD);
+		start.set(emissionPoint).scl(GameScene.BOX_TO_WORLD);
+		end.set(emissionPoint).add(smokeRadius*MathUtils.cos(getAngle()), smokeRadius*MathUtils.sin(getAngle())).scl(GameScene.BOX_TO_WORLD);
 		
 		body.getWorld().rayCast(callback, start, end);
+		
 		
 	}
 	

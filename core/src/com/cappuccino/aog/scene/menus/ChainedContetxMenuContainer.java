@@ -138,6 +138,7 @@ public class ChainedContetxMenuContainer extends Actor {
 		super.moveBy(x, y);
 		c1.setLinearVelocity(velX, velY);
 		c2.setLinearVelocity(velX, velY);
+		menuBg.setLinearVelocity(velX, velY);
 	}
 	
 	

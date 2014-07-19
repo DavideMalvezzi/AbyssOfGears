@@ -11,18 +11,21 @@ public class ParallaxLayer {
 	private float posY, offX;
 	private Texture texture;
 	
+	
 	public ParallaxLayer(Texture texture, float offX){
 		this.texture = texture;
 		this.texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		this.offX = offX;
 	}
+	
+	
 
 	public void render(SpriteBatch batch, OrthographicCamera camera){
 		batch.setProjectionMatrix(camera.projection);
 		
 		
 			batch.draw(texture, offX-camera.viewportWidth/2*Scene.WORLD_TO_BOX, -camera.viewportHeight/2*Scene.WORLD_TO_BOX, 
-					0, (int)posY, 
+					0, (int)(posY), 
 					texture.getWidth(), (int)(camera.viewportHeight*Scene.WORLD_TO_BOX));
 			
 		

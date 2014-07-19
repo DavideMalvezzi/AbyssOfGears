@@ -1,7 +1,7 @@
 package com.cappuccino.aog.scene;
 
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -26,8 +26,9 @@ public class MainMenuScene extends Scene {
 	private MainMenuLevel level;
 	private ParallaxLayer bg0,bg1,bg2;
 	
-	
 	private ChainedContetxMenuContainer contextMenu;
+	
+	//private MapEditor editor;
 	
 	public MainMenuScene() {
 		super();
@@ -97,6 +98,7 @@ public class MainMenuScene extends Scene {
 					}
 				})));
 				*/
+				
 			}
 		});
 		
@@ -129,14 +131,22 @@ public class MainMenuScene extends Scene {
 		back.setPosition(0.005f * stage.getWidth(), -1.15f * stage.getHeight());
 		back.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				level.openPress();
-				stage.addAction(
+				if(!back.isDisabled()){
+					level.openPress();
+					stage.addAction(
 						Actions.sequence(
 								Actions.fadeOut(0.5f),
 								Actions.delay(0.3f),
 								Actions.moveBy(0, -stage.getHeight()*2, 1.5f),
-								Actions.fadeIn(0.5f)
+								Actions.fadeIn(0.5f),
+								Actions.run(new Runnable() {
+									public void run() {
+										back.setDisabled(false);
+									}
+								})
 						));
+				}
+				back.setDisabled(true);
 			}
 		});
 		
@@ -148,6 +158,8 @@ public class MainMenuScene extends Scene {
 		bg0 = new ParallaxLayer(Assets.layer0Background, 160);
 		bg1 = new ParallaxLayer(Assets.layer1Background, 160);
 		bg2 = new ParallaxLayer(Assets.layer2Background, 160);
+		
+		//editor = new MapEditor(level, world, camera);
 		
 	}
 	
@@ -166,32 +178,35 @@ public class MainMenuScene extends Scene {
 			
 			stage.draw();
 		endClip();
+		//rayHandler.setCombinedMatrix(camera.combined.scl(WORLD_TO_BOX));
+		//rayHandler.render();
+		
 		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
-		
+		/*
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
 		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
 		
-		/*
+		
 		if(Gdx.input.isKeyPressed(Keys.A))camera.position.x-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
 		*/
-		
+		/*
 		if(Gdx.input.isKeyPressed(Keys.A))stage.getCamera().position.x-=4f;
 		if(Gdx.input.isKeyPressed(Keys.D))stage.getCamera().position.x+=4f;
 		if(Gdx.input.isKeyPressed(Keys.S))stage.getCamera().position.y-=4f;
 		if(Gdx.input.isKeyPressed(Keys.W))stage.getCamera().position.y+=4f;
-		
+		*/
+		//editor.draw(batch);
 	}
 	
 	
 	public void update(float delta) {
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		
 		
 		level.update(delta);
 		world.step(1f/60f, 8, 3);
@@ -205,6 +220,10 @@ public class MainMenuScene extends Scene {
 			bg1.update(delta, -speedY*2);
 			bg2.update(delta, -speedY);
 		}
+		
+		//rayHandler.update();
+		
+	//	editor.update();
 	}
 	
 	

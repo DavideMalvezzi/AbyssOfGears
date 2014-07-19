@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.cappuccino.aog.entities.Gear;
 import com.cappuccino.aog.entities.Press;
-import com.cappuccino.aog.entities.SmokeEmitter;
-import com.cappuccino.aog.entities.Wall;
 
 public class MainMenuLevel extends Level {
 
@@ -17,18 +14,12 @@ public class MainMenuLevel extends Level {
 	public MainMenuLevel(World world) {
 		init(world, false);
 		
-		Wall wallL = new Wall("lvl0wallLeft", world, -50, 0);
-		Wall wallR = new Wall("lvl0wallRight", world, 556, 0);
-		Wall wallL2 = new Wall("lvl0wallLeft", world, -50, -1000);
-		Wall wallR2 = new Wall("lvl0wallRight", world, 556, -1000);
-		Wall wallL3 = new Wall("lvl0wallLeft", world, -50, -2000);
-		Wall wallR3 = new Wall("lvl0wallRight", world, 556, -2000);
 		
 		p = new Press(world, 0, 250, 75, 300, 30, 0, 0.65f);
 		p2 = new Press(world, 642, 250, 75, 300, 30, 180*MathUtils.degRad, 0.65f);
 		openPress();
 		disactivePress();
-		
+		/*
 		SmokeEmitter smoke1 = new SmokeEmitter(world, 20, 420, 20*MathUtils.degRad);
 		SmokeEmitter smoke2 = new SmokeEmitter(world, 610, 420, 160*MathUtils.degRad);
 		
@@ -36,20 +27,13 @@ public class MainMenuLevel extends Level {
 		Gear gear2 = new Gear(world, 7, 615, 550, 1, 0.75f);
 		Gear gear3 = new Gear(world, 6, 630, 75, -1.3f, 0.55f);
 		
-		active_entities.add(wallL);
-		active_entities.add(wallR);
-		active_entities.add(wallL2);
-		active_entities.add(wallR2);
-		active_entities.add(wallL3);
-		active_entities.add(wallR3);
-		
-		
 		active_entities.add(smoke1);
 		active_entities.add(smoke2);
 		
 		active_entities.add(gear);
 		active_entities.add(gear2);
 		active_entities.add(gear3);
+		*/
 		
 		active_entities.add(p);
 		active_entities.add(p2);
