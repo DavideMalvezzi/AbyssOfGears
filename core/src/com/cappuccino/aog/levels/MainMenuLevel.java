@@ -14,9 +14,8 @@ public class MainMenuLevel extends Level {
 	public MainMenuLevel(World world) {
 		init(world, false);
 		
-		
-		p = new Press(world, 0, 250, 75, 300, 30, 0, 0.65f);
-		p2 = new Press(world, 642, 250, 75, 300, 30, 180*MathUtils.degRad, 0.65f);
+		p = new Press(world, 26, 250, 75, 300, 30, 0, 0.65f);
+		p2 = new Press(world, 668, 250, 75, 300, 30, 180*MathUtils.degRad, 0.65f);
 		openPress();
 		disactivePress();
 		/*

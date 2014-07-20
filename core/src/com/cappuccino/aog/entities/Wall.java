@@ -37,7 +37,6 @@ public class Wall extends Entity{
 		bodyLoader.attachFixture(body, "Wall", fd, getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD);
 	
 		origin.set(bodyLoader.getOrigin("Wall", getRealWidth()*scaleX*GameScene.BOX_TO_WORLD, getRealWidth()*scaleY*GameScene.BOX_TO_WORLD));
-		
 	}
 	
 	@Override

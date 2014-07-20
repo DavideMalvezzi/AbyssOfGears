@@ -101,22 +101,18 @@ public class Chain extends Entity{
 	@Override
 	public void draw(SpriteBatch batch){
 		super.draw(batch);
-		
 		for(int i=0; i<chain.length; i++){
 			chain[i].draw(batch);
 		}
-		
 	}
 	
 	public void setCenter(float x, float y) {
 		super.setCenter(x, y);
-		
 		for(int i=0; i<chain.length; i++){
 			chain[i].setCenter(x+(i+1)*chain[i].getWidth()*MathUtils.cos(getAngle()),y+(i+1)*chain[i].getWidth()*MathUtils.sin(getAngle()));
 		}
 	}
 	
-	@Override
 	public void dispose() {
 		super.dispose();
 		
@@ -125,6 +121,7 @@ public class Chain extends Entity{
 		}
 		
 	}
+	
 	
 	@Override
 	public void recalculate() {

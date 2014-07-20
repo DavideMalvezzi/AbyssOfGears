@@ -6,16 +6,15 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cappuccino.aog.Scene;
 
-public class ParallaxLayer {
+public class VParallaxLayer {
 	
-	private float posY, offX;
+	private float posY;
 	private Texture texture;
 	
 	
-	public ParallaxLayer(Texture texture, float offX){
+	public VParallaxLayer(Texture texture){
 		this.texture = texture;
 		this.texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		this.offX = offX;
 	}
 	
 	
@@ -23,11 +22,9 @@ public class ParallaxLayer {
 	public void render(SpriteBatch batch, OrthographicCamera camera){
 		batch.setProjectionMatrix(camera.projection);
 		
-		
-			batch.draw(texture, offX-camera.viewportWidth/2*Scene.WORLD_TO_BOX, -camera.viewportHeight/2*Scene.WORLD_TO_BOX, 
+		batch.draw(texture, -texture.getWidth()/2, 0, 
 					0, (int)(posY), 
-					texture.getWidth(), (int)(camera.viewportHeight*Scene.WORLD_TO_BOX));
-			
+					texture.getWidth(), (int) Math.round(camera.viewportHeight*Scene.WORLD_TO_BOX));
 		
 		batch.setProjectionMatrix(camera.combined);
 	}

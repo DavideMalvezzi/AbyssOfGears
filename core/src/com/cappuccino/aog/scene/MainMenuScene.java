@@ -2,6 +2,7 @@ package com.cappuccino.aog.scene;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,39 +15,42 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Assets;
+import com.cappuccino.aog.ExtendAndZoomViewport;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.Scissor;
-import com.cappuccino.aog.game.ParallaxLayer;
+import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
+import com.cappuccino.aog.mapeditor.MapEditor;
 import com.cappuccino.aog.scene.menus.ChainedContetxMenuContainer;
 
 public class MainMenuScene extends Scene {
 	
 	private Stage stage;
 	private MainMenuLevel level;
-	private ParallaxLayer bg0,bg1,bg2;
+	private VParallaxLayer bg0,bg1,bg2;
 	
 	private ChainedContetxMenuContainer contextMenu;
 	
-	//private MapEditor editor;
+	private MapEditor editor;
 	
 	public MainMenuScene() {
 		super();
 		OrthographicCamera cam = new OrthographicCamera(Scene.SCENE_W, Scene.SCENE_H);
 		ExtendViewport view = new ExtendViewport(Scene.SCENE_W, Scene.SCENE_H, cam);
-		camera.position.y = camera.viewportHeight/2;
+		view.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		
 		stage = new Stage(view);
 		Gdx.input.setInputProcessor(stage);
-		
 		
 		//Main Menù
 		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
 		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
 		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
 		
-		achive.setPosition(0.3041f * stage.getWidth(), 0.007f * stage.getHeight());
-		shop.setPosition(0.4468f * stage.getWidth(), 0.007f * stage.getHeight());
-		stats.setPosition(0.5885f * stage.getWidth(), 0.007f * stage.getHeight());
+		
+		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 0.007f * stage.getHeight());
+		achive.setPosition(shop.getX()*1.3f, 0.007f * stage.getHeight());
+		stats.setPosition(shop.getX()*0.7f, 0.007f * stage.getHeight());
 		
 		
 		achive.setTransform(true);
@@ -155,9 +159,9 @@ public class MainMenuScene extends Scene {
 		contextMenu = new ChainedContetxMenuContainer(world, stage);
 		level = new MainMenuLevel(world);
 		
-		bg0 = new ParallaxLayer(Assets.layer0Background, 160);
-		bg1 = new ParallaxLayer(Assets.layer1Background, 160);
-		bg2 = new ParallaxLayer(Assets.layer2Background, 160);
+		bg0 = new VParallaxLayer(Assets.layer0Background);
+		bg1 = new VParallaxLayer(Assets.layer1Background);
+		bg2 = new VParallaxLayer(Assets.layer2Background);
 		
 		//editor = new MapEditor(level, world, camera);
 		
@@ -178,22 +182,23 @@ public class MainMenuScene extends Scene {
 			
 			stage.draw();
 		endClip();
+		
 		//rayHandler.setCombinedMatrix(camera.combined.scl(WORLD_TO_BOX));
 		//rayHandler.render();
 		
 		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
 		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
-		/*
-		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
-		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
+		
+		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.01f;
+		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.01f;
 		
 		
 		if(Gdx.input.isKeyPressed(Keys.A))camera.position.x-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.D))camera.position.x+=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.S))camera.position.y-=0.2f;
 		if(Gdx.input.isKeyPressed(Keys.W))camera.position.y+=0.2f;
-		*/
+		
 		/*
 		if(Gdx.input.isKeyPressed(Keys.A))stage.getCamera().position.x-=4f;
 		if(Gdx.input.isKeyPressed(Keys.D))stage.getCamera().position.x+=4f;
@@ -206,7 +211,8 @@ public class MainMenuScene extends Scene {
 	
 	public void update(float delta) {
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		((ExtendViewport)stage.getViewport()).update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		stage.getViewport().setWorldHeight(SCENE_H);
 		
 		level.update(delta);
 		world.step(1f/60f, 8, 3);
@@ -221,16 +227,15 @@ public class MainMenuScene extends Scene {
 			bg2.update(delta, -speedY);
 		}
 		
-		//rayHandler.update();
 		
-	//	editor.update();
+		//editor.update();
 	}
 	
 	
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		((ExtendViewport)stage.getViewport()).update(width, height);
+		stage.getViewport().update(width, height);
 	}
 	
 	public void dispose() {

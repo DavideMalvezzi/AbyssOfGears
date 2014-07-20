@@ -10,7 +10,7 @@ public class Level0 extends Level {
 
 	@Override
 	public void init(World world, boolean usePlayer) {
-		super.init(world, false);
+		super.init(world, usePlayer);
 		
 		/*
 		ThunderEmitter te = new ThunderEmitter(world, 60, 600, 30*MathUtils.degRad);
@@ -50,7 +50,7 @@ public class Level0 extends Level {
 
 	@Override
 	public Vector2 getSpawnPoint() {
-		return new Vector2(Scene.SCENE_H/2, 1024);
+		return new Vector2(Scene.SCENE_H/2, 1280);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import com.cappuccino.aog.entities.ContetxMenuEntity;
 
 public class ChainedContetxMenuContainer extends Actor {
 
-	private Chain c1, c2;
+	private Chain c1, c2, c3;
 	private ContetxMenuEntity menuBg;
 	
 	private Image fade;
@@ -34,13 +34,15 @@ public class ChainedContetxMenuContainer extends Actor {
 	public ChainedContetxMenuContainer(World world, Stage stage) {
 		 this.stage = stage;
 		 menuBg = new ContetxMenuEntity(world);
-		 menuBg.setCenter(stage.getWidth() * 0.5f, 1.75f * stage.getHeight());
-		
+		 menuBg.setCenter(stage.getWidth()*0.5f, 1.65f*stage.getHeight());
+		 
 		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
 		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
+		 c3 = new Chain(world, menuBg.getCenter().x , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
 		
 		 c1.attachEntity(menuBg, new Vector2(-menuBg.getWidth()/2*0.85f, 0));
 		 c2.attachEntity(menuBg, new Vector2(menuBg.getWidth()/2*0.85f, 0));
+		 c3.attachEntity(menuBg, new Vector2());
 		 
 		 
 		 fade = new Image(Assets.hudSkin.getDrawable("Fade"));
@@ -61,9 +63,6 @@ public class ChainedContetxMenuContainer extends Actor {
 				}
 			}
 		 });
-		 
-		 
-		 
 	}
 	
 	
@@ -82,9 +81,8 @@ public class ChainedContetxMenuContainer extends Actor {
 		contextMenu.setRotation(menuBg.getAngle()*MathUtils.radDeg);
 	}
 	
-	public void showMenu(Actor sender, int i){
+	public void showMenu(Actor sender, int contexMenuType){
 		sender.addAction(Actions.repeat(5, Actions.rotateBy(360, 0.2f)));
-		
 		stage.addActor(fade);
 		stage.addActor(this);
 		contextMenu = new AchievementContextMenu(this);
@@ -93,7 +91,7 @@ public class ChainedContetxMenuContainer extends Actor {
 		addAction(
 				Actions.sequence(
 						Actions.moveBy(0, -stage.getHeight()*Scene.BOX_TO_WORLD, 1), 
-						Actions.moveBy(0, 0),
+						Actions.moveBy(0, 0),	//stop
 						Actions.run(new Runnable() {
 							public void run() {
 								stage.addActor(back);
@@ -120,6 +118,7 @@ public class ChainedContetxMenuContainer extends Actor {
 											Actions.run(new Runnable() {
 												public void run() {
 													fade.remove();
+													menuBg.getBody().applyForceToCenter(0, -10000, true);
 												}
 											})
 									));
@@ -138,6 +137,7 @@ public class ChainedContetxMenuContainer extends Actor {
 		super.moveBy(x, y);
 		c1.setLinearVelocity(velX, velY);
 		c2.setLinearVelocity(velX, velY);
+		c3.setLinearVelocity(velX, velY);
 		menuBg.setLinearVelocity(velX, velY);
 	}
 	

@@ -1,4 +1,317 @@
 {
+entitiesModels: [
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 54.222202,
+			y: 1054.5577
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: EmissionDelay,
+			value: 5
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.ArrowEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 64.00001,
+			y: 908.7799
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: EmissionDelay,
+			value: 5
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.ArrowEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 583.99994,
+			y: 977.22437
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {},
+		internalProp2: {},
+		angle: -2.5307271,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.GasEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 50.66666,
+			y: 684.8902
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {},
+		internalProp2: {},
+		angle: -0.5235988,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.GasEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 600.8888,
+			y: 682.22363
+		},
+		scale: {
+			x: 1.1499999,
+			y: 1.1499999
+		},
+		internalProp1: {
+			name: Type,
+			value: 7
+		},
+		internalProp2: {
+			name: Omega,
+			value: 4
+		},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Gear
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 70.22224,
+			y: 388.3334
+		},
+		scale: {
+			x: 1.2999997,
+			y: 1.2999997
+		},
+		internalProp1: {
+			name: Type,
+			value: 6
+		},
+		internalProp2: {
+			name: Omega,
+			value: -4
+		},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Gear
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 87.11109,
+			y: 194.88904
+		},
+		scale: {
+			x: 1.0999999,
+			y: 1.0999999
+		},
+		internalProp1: {
+			name: MaxLength,
+			value: 300
+		},
+		internalProp2: {
+			name: Duration,
+			value: 5
+		},
+		angle: -0.2617994,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.LaserEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 583.99994,
+			y: 273.44446
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {},
+		internalProp2: {},
+		angle: 3.7524576,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.SmokeEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: -378.6664,
+			y: 4.889065
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: MaxLength,
+			value: 300
+		},
+		internalProp2: {
+			name: Velocity,
+			value: 1
+		},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Spear
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 949.4446,
+			y: -205.77757
+		},
+		scale: {
+			x: 0.99999994,
+			y: 0.99999994
+		},
+		internalProp1: {
+			name: MaxLength,
+			value: 300
+		},
+		internalProp2: {
+			name: Velocity,
+			value: 20
+		},
+		angle: 2.7925265,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Spear
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 87.22252,
+			y: -236.7775
+		},
+		scale: {
+			x: 0.99999994,
+			y: 1
+		},
+		internalProp1: {
+			name: Omega,
+			value: 4
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.SpikedBall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 562.778,
+			y: -297.22186
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: Omega,
+			value: -4
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.SpikedBall
+	}
+],
 wallsModels: [
 	{
 		externalEntity1: {
@@ -238,8 +551,8 @@ wallsModels: [
 			value: -1
 		},
 		position: {
-			x: 49.000053,
-			y: 1073.0017
+			x: 13.333344,
+			y: 1081.1141
 		},
 		scale: {
 			x: 0.76016223,
@@ -247,7 +560,7 @@ wallsModels: [
 		},
 		internalProp1: {},
 		internalProp2: {},
-		angle: -0.023805022,
+		angle: 0.32526082,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},

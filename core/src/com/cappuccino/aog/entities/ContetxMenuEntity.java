@@ -17,7 +17,10 @@ public class ContetxMenuEntity extends Entity{
 	@Override
 	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
-		fd.density = 0.05f;
+		fd.density = 0.03f;
+		fd.filter.categoryBits = ENTITY;
+		fd.filter.maskBits = ENTITY_MASK;
+		
 		
 		bodyLoader.attachFixture(body, "ContexMenuBg", fd, getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD);
 		

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.cappuccino.aog.scene.GameScene;
 import com.cappuccino.aog.scene.MainMenuScene;
 import com.cappuccino.aog.scene.TryScene;
+import com.cappuccino.aog.scene.TryScene2;
 
 public class AOGGame extends ApplicationAdapter {
 	
@@ -35,6 +36,11 @@ public class AOGGame extends ApplicationAdapter {
 		
 		currentScene.render(dt);
 		currentScene.update(dt);
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		currentScene.resize(width, height);
 	}
 	
 	@Override
