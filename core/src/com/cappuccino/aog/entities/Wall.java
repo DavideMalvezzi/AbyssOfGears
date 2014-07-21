@@ -28,7 +28,17 @@ public class Wall extends Entity{
 		setAngle(angle);
 	}
 	
-
+	@Override
+	public void disactive() {
+		body.setActive(false);
+	}
+	
+	@Override
+	public void active() {
+		body.setActive(true);
+	}
+	
+	
 	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.filter.categoryBits = WALL;

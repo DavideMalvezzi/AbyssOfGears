@@ -3,7 +3,6 @@ package com.cappuccino.aog.scene;
 
 import box2dLight.PointLight;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.Assets;
@@ -35,7 +34,7 @@ public class GameScene extends Scene{
 		level = LevelManager.load(world, 0);
 		player = Level.getPlayer();
 		
-		hud = new GameSceneHud();
+		hud = new GameSceneHud(level);
 		
 		PointLight l = new PointLight(rayHandler, 32, new Color(1f, 1, 0f, 0.75f), 20, 0, 0);
 		l.attachToBody(player.getBody(), 0, -2);
@@ -59,21 +58,21 @@ public class GameScene extends Scene{
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
 			//if(mapEditor.isDebugging()){
-				//box2dDebug.render(world, camera.combined);
+				box2dDebug.render(world, camera.combined);
 			//}
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			
 			hud.draw();
 			
-		//	mapEditor.draw(batch);
+			//mapEditor.draw(batch);
 			
 		endClip();
 		
 	}
 	
 	public void update(float delta){
-		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+		camera.update();
 		
 		if(!hud.isPaused()){
 			if(player.getState()!=Status.DYING){
@@ -95,16 +94,10 @@ public class GameScene extends Scene{
 		
 		hud.act(delta);
 		
-	//	mapEditor.update();
+		//mapEditor.update();
 	}
 	
 	
-	
-	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
-		((ExtendViewport)hud.getViewport()).update(width, height);
-	}
 	
 	
 	public void dispose(){

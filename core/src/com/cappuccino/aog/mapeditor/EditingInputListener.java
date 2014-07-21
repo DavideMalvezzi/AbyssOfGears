@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.cappuccino.aog.entities.Entity;
 import com.cappuccino.aog.entities.Wall;
@@ -55,6 +56,9 @@ public class EditingInputListener extends InputAdapter {
 			levelFile.delete();
 		}
 		
+		sort(level.getActiveEntities());
+		sort(level.getActiveWalls());
+		
 		for(Entity e : level.getActiveEntities()){
 			levelModel.addEntity(e);
 		}
@@ -64,6 +68,21 @@ public class EditingInputListener extends InputAdapter {
 		}
 		
 		levelFile.writeString(j.prettyPrint(levelModel), true);
+	}
+	
+	private void sort(Array<Entity> entities){
+		int i,j,max;
+		Entity temp;
+		for(i=0; i<entities.size-1; i++){
+			max = i;
+			for(j = i+1; j<entities.size; j++){
+				if(entities.get(j).getCenter().y>entities.get(max).getCenter().y){
+				   max = j;
+				}
+			}
+			entities.swap(i, max);
+		}
+		
 	}
 	
 	

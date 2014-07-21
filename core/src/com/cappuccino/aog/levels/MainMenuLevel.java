@@ -62,6 +62,7 @@ public class MainMenuLevel extends Level {
 	@Override
 	public void render(SpriteBatch batch) {
 		renderEntities(batch);
+		renderWalls(batch);
 		
 	}
 

@@ -31,14 +31,14 @@ public class ChainedContetxMenuContainer extends Actor {
 	private static final Color FADE_COLOR = new Color(0.13f,0.13f,0.13f,0.5f);
 	
 	
-	public ChainedContetxMenuContainer(World world, Stage stage) {
+	public ChainedContetxMenuContainer(World world, Stage stage, float traslX, float traslY) {
 		 this.stage = stage;
 		 menuBg = new ContetxMenuEntity(world);
-		 menuBg.setCenter(stage.getWidth()*0.5f, 1.65f*stage.getHeight());
+		 menuBg.setCenter(stage.getWidth()*0.5f, 1.65f*stage.getHeight()-traslY);
 		 
-		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
-		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
-		 c3 = new Chain(world, menuBg.getCenter().x , 2f * stage.getHeight(), 7, 0.5f, -90*MathUtils.degRad);
+		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		 c3 = new Chain(world, menuBg.getCenter().x , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
 		
 		 c1.attachEntity(menuBg, new Vector2(-menuBg.getWidth()/2*0.85f, 0));
 		 c2.attachEntity(menuBg, new Vector2(menuBg.getWidth()/2*0.85f, 0));
@@ -51,7 +51,7 @@ public class ChainedContetxMenuContainer extends Actor {
 		 fade.setSize(stage.getWidth(), stage.getHeight());
 		 
 		 back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
-		 back.setPosition(0.01f * stage.getWidth(), 0.85f * stage.getHeight());
+		 back.setPosition(0.01f * stage.getWidth()-traslX, 612+traslY);
 		 back.setOrigin(back.getWidth()/2, back.getHeight()/2);
 		 back.setTransform(true);
 		 back.addListener(new ClickListener(){

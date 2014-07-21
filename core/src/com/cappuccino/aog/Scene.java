@@ -6,20 +6,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.game.ContactEvent;
 
 public class Scene extends ScreenAdapter {
 	public static final int SCENE_W = 1280, SCENE_H = 720;
 	public static final int WIN_W = Gdx.graphics.getWidth(), WIN_H =  Gdx.graphics.getHeight();
 	public static final float BOX_TO_WORLD = 0.04f, WORLD_TO_BOX = 25f, ZOOM = 1f; 
-//	public static final float CAM_TRASL_X = -(SCENE_W-SCENE_H/ZOOM)/2*ZOOM;
 	
 	protected OrthographicCamera camera;
-	protected ExtendAndZoomViewport viewport;
+	protected ExtendViewport viewport;
 	protected SpriteBatch batch;
 	protected World world;
 	protected RayHandler rayHandler;
@@ -28,9 +27,11 @@ public class Scene extends ScreenAdapter {
 	public Scene() {
 		camera = new OrthographicCamera(SCENE_W*BOX_TO_WORLD, SCENE_H*BOX_TO_WORLD);
 		camera.position.set(SCENE_W/2*BOX_TO_WORLD, SCENE_H/2*BOX_TO_WORLD, 0);
-		viewport = new ExtendAndZoomViewport(SCENE_W*BOX_TO_WORLD, SCENE_H*BOX_TO_WORLD, camera);
+		viewport = new ExtendViewport(SCENE_W*BOX_TO_WORLD, SCENE_H*BOX_TO_WORLD, camera);
 		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		camera.translate((viewport.getWorldWidth()-640)/2*BOX_TO_WORLD, 0);
+		camera.translate((viewport.getWorldWidth()-SCENE_W/2)/2*BOX_TO_WORLD, 0);
+		camera.zoom = SCENE_H / (viewport.getWorldHeight()*WORLD_TO_BOX);
+		camera.update();
 		
 		batch = new SpriteBatch();
 		
@@ -43,17 +44,8 @@ public class Scene extends ScreenAdapter {
 		box2dDebug = new Box2DDebugRenderer(true,true,false,true,true,true);
 	}
 	
-	private final Rectangle view = new Rectangle();
-	private final Rectangle scissor = new Rectangle();
-	
 	protected void beginClip(){
-		view.set(
-				(camera.position.x-camera.viewportWidth/2f), 
-				(camera.position.y-camera.viewportHeight/2f), 
-				camera.viewportWidth, camera.viewportHeight);
-		
-		Scissor.calculateScissors(camera, batch.getTransformMatrix(), view, scissor);
-		Scissor.setArea(view, scissor);
+		Scissor.setClip(camera, 0, 0, SCENE_W, SCENE_H);
 		
 		camera.combined.scl(BOX_TO_WORLD);
 		camera.projection.translate(0, -camera.viewportHeight/2, 0);
@@ -67,9 +59,6 @@ public class Scene extends ScreenAdapter {
 	
 	
 	public void update(float delta){}
-	public void resize(int width, int height) {
-		viewport.update(width, height);
-	}
 	
 	
 }

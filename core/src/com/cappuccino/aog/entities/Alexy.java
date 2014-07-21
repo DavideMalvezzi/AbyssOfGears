@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,8 +21,7 @@ public class Alexy extends Entity {
 	public static enum Status{
 		UMBRELLA_OPEN,
 		UMBRELLA_CLOSED,
-		FALLING_BACK,
-		RESTART_FALLING,
+		RECOIL,
 		DYING;
 	};
 	
@@ -54,7 +55,7 @@ public class Alexy extends Entity {
 		
 		setMass(6);
 		
-		umbrellaJoint = JointsFactory.createWeldJoint(body.getWorld(), umbrella, this, umbrellaAttachPoint.cpy(), playerAttachPoint.cpy());
+		umbrellaJoint = JointsFactory.createWeldJoint(body.getWorld(), umbrella, this, umbrellaAttachPoint.cpy(), playerAttachPoint.cpy(), 0, true);
 	}
 	
 	
@@ -82,50 +83,55 @@ public class Alexy extends Entity {
 	}
 	
 	public void update(float delta){
-		
+		/*
 		if(Gdx.input.isKeyPressed(Keys.LEFT))setLinearVelocity(-5, 0);
 		if(Gdx.input.isKeyPressed(Keys.RIGHT))setLinearVelocity(5, 0);
 		if(Gdx.input.isKeyPressed(Keys.DOWN))setLinearVelocity(0, -5);
 		if(Gdx.input.isKeyPressed(Keys.UP))setLinearVelocity(0, 5);
-		
+		*/
 		
 		switch (state) {
 		
 			case UMBRELLA_OPEN:
 				move(delta);
 				
-				if(GameSceneHud.useUmbrellaIsChecked()){
+				if(GameSceneHud.useUmbrellaIsChecked() && getLinearVelocity().y<-0.08f){
 					state = Status.UMBRELLA_CLOSED;
 				}
+				
 				break;
 				
 			case UMBRELLA_CLOSED:
 				move(delta);
-				Assets.fallingEffect.setPosition(getX()+getWidth()/2, getY()+getHeight()/2);
-				Assets.fallingEffect.update(delta);
 				
-				getBody().setLinearVelocity(getBody().getLinearVelocity().x*0.8f, -20);
-				umbrella.getBody().setLinearVelocity(getBody().getLinearVelocity().x*0.8f, -20);
+				if(getLinearVelocity().y>=-0.08f){
+					setLinearVelocity(0, 0);
+					umbrella.setLinearVelocity(0, 0);
+					state = Status.UMBRELLA_OPEN;
+					GameSceneHud.setUseUmbrella(false);
+				}else{
+					Assets.fallingEffect.setPosition(getX()+getWidth()/2, getY()+getHeight()/2);
+					Assets.fallingEffect.update(delta);
+					
+					setLinearVelocity(getLinearVelocity().x*0.8f, -20);
+					umbrella.setLinearVelocity(umbrella.getLinearVelocity().x*0.8f, -20);
 				
-				if(!GameSceneHud.useUmbrellaIsChecked()){
-					getBody().setLinearVelocity(getBody().getLinearVelocity().x, 25);
-					umbrella.getBody().setLinearVelocity(getBody().getLinearVelocity().x, 25);
-					state = Status.FALLING_BACK;
-					Assets.fallingEffect.reset();
+					if(!GameSceneHud.useUmbrellaIsChecked()){
+						//stop falling
+						setLinearVelocity(getBody().getLinearVelocity().x, 25);
+						umbrella.setLinearVelocity(getBody().getLinearVelocity().x, 25);
+					
+						Assets.fallingEffect.reset();
+						state = Status.RECOIL;
+					}
 				}
 				break;
 				
-			case FALLING_BACK:
+			case RECOIL:
 				if(getBody().getLinearVelocity().y>0f){
 					getBody().applyForceToCenter(0, -350, true);
 					umbrella.getBody().applyForceToCenter(0, -350, true);
-				}else{
-					state = Status.RESTART_FALLING;
-				}
-				break;
-				
-			case RESTART_FALLING:
-				if(getBody().getLinearVelocity().y>-1.5f){
+				}else if(getBody().getLinearVelocity().y>-1.5f){
 					getBody().applyForceToCenter(0, -250, true);
 					umbrella.getBody().applyForceToCenter(0, -250, true);
 				}else{
@@ -147,8 +153,27 @@ public class Alexy extends Entity {
 		
 	}
 	
+	@Override
+	public void onCollide(Fixture sender, Fixture collided, Contact contact) {
+		String senderName = (String)sender.getUserData();
+		if(senderName.contains("feet")){
+			System.out.println("Alexy.onCollide()");
+			Gdx.app.postRunnable(new Runnable() {
+				public void run() {
+					setLinearVelocity(0, 0);
+					umbrella.setLinearVelocity(0, 0);
+					setAngularVelocity(0);
+					setAngle(0);
+				}
+			});
+		}
+	}
+	
+	
 	private void move(float delta) {
-		umbrella.update(delta);
+		//umbrella.update(delta); 
+		setAngularVelocity(umbrella.getAngularVelocity());
+		
 		if(Gdx.app.getType()==ApplicationType.Desktop){
 				if(Gdx.input.isKeyPressed(Keys.LEFT) && getLinearVelocity().x>-MAX_LIN_VEL){
 					getBody().applyForceToCenter(-LIN_ACCEL, 0, true);
@@ -167,7 +192,7 @@ public class Alexy extends Entity {
 				umbrella.getBody().applyForceToCenter(accel, 0, true);
 			}
 		}
-		setAngularVelocity(umbrella.getAngularVelocity()/10);
+		
 	}
 
 	private void deadAnimation(float delta){

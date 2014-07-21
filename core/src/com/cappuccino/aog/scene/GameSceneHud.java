@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.levels.Level;
 
 public class GameSceneHud extends Stage{
 	
@@ -29,7 +30,7 @@ public class GameSceneHud extends Stage{
 	private boolean isPaused;
 	
 	
-	public GameSceneHud(){
+	public GameSceneHud(final Level level){
 		Gdx.input.setInputProcessor(this);
 		
 		OrthographicCamera cam = new OrthographicCamera(Scene.SCENE_W, Scene.SCENE_H);
@@ -78,6 +79,13 @@ public class GameSceneHud extends Stage{
 		});
 		restart =  new TextButton(" Restart ", textStyle);
 		restart.setPosition(-100, -100);
+		restart.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				level.reset();
+				disposePauseMenu();
+			}
+		});
+		
 		exit =  new TextButton(" Exit ", textStyle);
 		exit.setPosition(-100, -100);
 		exit.addListener(new ClickListener(){
@@ -159,7 +167,9 @@ public class GameSceneHud extends Stage{
 		return isPaused;
 	}
 	
-	
+	public static void setUseUmbrella(boolean checked){
+		useUmbrella.setChecked(checked);
+	}
 	public static boolean useUmbrellaIsChecked(){
 		return useUmbrella.isChecked();
 	}

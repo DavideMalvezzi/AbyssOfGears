@@ -18,9 +18,19 @@ public class ContactEvent implements ContactListener{
 		Entity entityB = dataB.getEntity();
 		
 		if(dataB.getName().equals("Umbrella") || dataB.getName().equals("Player")){
-			entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+			if(entityA.getBody().getType() == BodyType.StaticBody){
+				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+			}else{
+				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+			}
+			
 		}else if(dataA.getName().equals("Umbrella") || dataA.getName().equals("Player")){
-			entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+			if(entityB.getBody().getType() == BodyType.StaticBody){
+				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+			}else{
+				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+			}
+			
 		}else{
 			if(entityA.getBody().getType() == BodyType.DynamicBody){
 				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);

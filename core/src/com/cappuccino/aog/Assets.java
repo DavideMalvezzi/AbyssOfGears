@@ -62,8 +62,15 @@ public class Assets {
 		
 		layer0Background = new Texture("gfx/layer0Bg.png");
 		layer0Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		layer0Background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		layer1Background = new Texture("gfx/layer1Bg.png");
+		layer1Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		layer1Background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		layer2Background = new Texture("gfx/layer2Bg.png");
+		layer2Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		layer2Background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		ParticleEffect fallingParticle = new ParticleEffect();
 		fallingParticle.load(Gdx.files.internal("data/FallingEffect"), Gdx.files.internal("gfx/"));

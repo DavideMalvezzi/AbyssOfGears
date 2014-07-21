@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.cappuccino.aog.scene.GameScene;
 import com.cappuccino.aog.scene.MainMenuScene;
 import com.cappuccino.aog.scene.TryScene;
-import com.cappuccino.aog.scene.TryScene2;
 
 public class AOGGame extends ApplicationAdapter {
 	
@@ -34,8 +33,8 @@ public class AOGGame extends ApplicationAdapter {
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
-		currentScene.render(dt);
 		currentScene.update(dt);
+		currentScene.render(dt);
 	}
 	
 	@Override

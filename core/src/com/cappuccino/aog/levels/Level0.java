@@ -11,36 +11,12 @@ public class Level0 extends Level {
 	@Override
 	public void init(World world, boolean usePlayer) {
 		super.init(world, usePlayer);
-		
-		/*
-		ThunderEmitter te = new ThunderEmitter(world, 60, 600, 30*MathUtils.degRad);
-		ThunderEmitter te2 = new ThunderEmitter(world, 565, 600, 180*MathUtils.degRad);
-		ThunderEmitter te3 = new ThunderEmitter(world, 565, 700, 180*MathUtils.degRad);
-		te.setEnd(te3, 2);
-		te2.setEnd(te, 2);
-		
-		
-		active_entities.add(te2);
-		active_entities.add(te);
-		active_entities.add(te3);
-		*/
-		
-		//TODO: Spear,press,chain
-		
-		/*
-		
-		Wall wallL = new Wall("lvl0wallLeft", world, 0, 0);
-		Wall wallR = new Wall("lvl0wallRight", world, 504, 0);
-		active_entities.add(wallL);
-		active_entities.add(wallR);
-		
-		*/
-		
 	}
 	
 	@Override
 	public void render(SpriteBatch batch) {
 		renderEntities(batch);
+		renderWalls(batch);
 	}
 
 	@Override
