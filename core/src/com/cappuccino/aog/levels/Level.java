@@ -21,7 +21,10 @@ public abstract class Level {
 	protected static Alexy alexy;
 	protected final Array<Entity> active_entities = new Array<Entity>(true, 32);
 	protected final Array<Entity> inactive_entities = new Array<Entity>(true, 32);
+	
+	
 	protected final Array<Entity> active_walls = new Array<Entity>(true, 32);
+	protected int lastWallIndex = 0;
 	protected final Array<Entity> inactive_walls = new Array<Entity>(true, 32);
 	
 	public void init(World world, boolean usePlayer){
@@ -60,16 +63,27 @@ public abstract class Level {
 	
 	protected void renderWalls(SpriteBatch batch){
 		Rectangle area = Scissor.getArea();
+		float bottomY = area.y * Scene.WORLD_TO_BOX, topY = (area.y+area.height) * Scene.WORLD_TO_BOX;
 		int i = 0, rendererd = 0;
 		boolean continueToRender = true;
 		
+		while(inactive_walls.size>0 && continueToRender){
+			Entity e = inactive_walls.peek();
+			if(e.getCenter().y<topY){
+				active_walls.insert(0, inactive_walls.pop());
+			}else{
+				continueToRender = false;
+			}
+		}
+		
+		continueToRender = true;
 		while (i<active_walls.size && continueToRender){
 			Entity e = active_walls.get(i);
-			if(e.getCenter().y*Scene.BOX_TO_WORLD>area.y+area.height){
+			if(e.getCenter().y>topY){
 				e.disactive();
 				inactive_walls.add(e);
 				active_walls.removeIndex(i--);
-			}else if(e.getCenter().y*Scene.BOX_TO_WORLD>area.y){
+			}else if(e.getCenter().y>bottomY){
 				e.draw(batch);
 				rendererd++;
 			}else{
@@ -78,7 +92,8 @@ public abstract class Level {
 			i++;
 		}
 		
-		//System.out.println(active_walls.size + " " + inactive_walls.size + "  " + rendererd + "  " + i);
+		
+		
 	}
 	
 	protected void renderEntities(SpriteBatch batch){

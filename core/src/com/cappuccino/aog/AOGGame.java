@@ -22,7 +22,7 @@ public class AOGGame extends ApplicationAdapter {
 		currentScene = new MainMenuScene();
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0.08f, 0.027f, 0.0032f, 1);
 	}
 	
 	@Override

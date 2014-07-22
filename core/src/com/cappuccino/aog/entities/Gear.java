@@ -10,6 +10,7 @@ import com.cappuccino.aog.mapeditor.EntityModel.Property;
 
 public class Gear extends Entity{
 
+	
 	public Gear(World world) {
 		this(world, 6, 0, 0, 0, 1);
 	}
@@ -43,6 +44,7 @@ public class Gear extends Entity{
 		
 		origin.set(bodyLoader.getOrigin(texture.name, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
 	}
+	
 	
 	@Override
 	public void recalculate() {

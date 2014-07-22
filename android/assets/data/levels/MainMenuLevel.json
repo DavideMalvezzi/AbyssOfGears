@@ -10,23 +10,46 @@ entitiesModels: [
 			value: -1
 		},
 		position: {
-			y: 29.999998
+			x: 77.599945,
+			y: 657.00006
 		},
 		scale: {
-			x: 0.85,
-			y: 0.85
+			x: 1,
+			y: 1
 		},
 		internalProp1: {
 			name: Type,
-			value: 5
+			value: 1
 		},
-		internalProp2: {
-			name: Omega,
-			value: 2
-		},
-		angle: 31.499863,
+		internalProp2: {},
+		angle: 1.5707961,
 		internalProp3: {},
-		type: com.cappuccino.aog.entities.Gear
+		type: com.cappuccino.aog.entities.Pipeline
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 87.599945,
+			y: 642
+		},
+		scale: {
+			x: 1.4999995,
+			y: 1
+		},
+		internalProp1: {
+			name: Type
+		},
+		internalProp2: {},
+		angle: -1.5707961,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Pipeline
 	},
 	{
 		externalEntity1: {
@@ -53,9 +76,80 @@ entitiesModels: [
 			name: Omega,
 			value: 1
 		},
-		angle: 15.749931,
+		angle: 82.40312,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Gear
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 77.600006,
+			y: 529.3333
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {
+			name: Type,
+			value: 1
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Pipeline
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 599.6,
+			y: 467
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {},
+		internalProp2: {},
+		angle: 2.7052603,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.SmokeEmitter
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 88.599945,
+			y: 460.00003
+		},
+		scale: {
+			x: 1,
+			y: 1
+		},
+		internalProp1: {},
+		internalProp2: {},
+		angle: 0.52359873,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.SmokeEmitter
 	},
 	{
 		externalEntity1: {
@@ -82,55 +176,9 @@ entitiesModels: [
 			name: Omega,
 			value: -1.3
 		},
-		angle: -20.475098,
+		angle: -107.12335,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Gear
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 73.59998,
-			y: 479.99997
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.52359873,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.SmokeEmitter
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 602.9332,
-			y: 467.99994
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 2.7052603,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.SmokeEmitter
 	},
 	{
 		externalEntity1: {
@@ -156,1386 +204,12 @@ entitiesModels: [
 			name: Omega,
 			value: 2
 		},
-		angle: 31.499863,
+		angle: 164.80624,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Gear
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 138.9333,
-			y: 786.6666
-		},
-		scale: {
-			x: 1.4999995,
-			y: 1
-		},
-		internalProp1: {
-			name: Type
-		},
-		internalProp2: {},
-		angle: 1.570796,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 129.6,
-			y: 772
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {
-			name: Type,
-			value: 1
-		},
-		internalProp2: {},
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 32.26669,
-			y: 761.33325
-		},
-		scale: {
-			x: 1.2499998,
-			y: 1
-		},
-		internalProp1: {
-			name: Type
-		},
-		internalProp2: {},
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 576.2666,
-			y: 810.66656
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {
-			name: Type,
-			value: 1
-		},
-		internalProp2: {},
-		angle: -1.5707961,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 565.5999,
-			y: 829.3333
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {
-			name: Type
-		},
-		internalProp2: {},
-		angle: 1.5707961,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 78.93331,
-			y: 642.6666
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {
-			name: Type,
-			value: 1
-		},
-		internalProp2: {},
-		angle: 1.5707961,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 88.26666,
-			y: 624
-		},
-		scale: {
-			x: 1.1999998,
-			y: 1
-		},
-		internalProp1: {
-			name: Type
-		},
-		internalProp2: {},
-		angle: -1.5707961,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 77.600006,
-			y: 529.3333
-		},
-		scale: {
-			x: 1,
-			y: 1
-		},
-		internalProp1: {
-			name: Type,
-			value: 1
-		},
-		internalProp2: {},
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Pipeline
 	}
 ],
 wallsModels: [
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 17.00001,
-			y: -121.99974
-		},
-		scale: {
-			x: 0.95075464,
-			y: 0.6571561
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.28349173,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: -20.999983,
-			y: 9.000265
-		},
-		scale: {
-			x: 0.8023046,
-			y: 0.81216455
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.16387153,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 629,
-			y: -200.99976
-		},
-		scale: {
-			x: 0.7605947,
-			y: 0.50803256
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.133719,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 633.99994,
-			y: -67.99977
-		},
-		scale: {
-			x: 0.6999999,
-			y: 0.6999999
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.2288587,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 651,
-			y: -212.99956
-		},
-		scale: {
-			x: 0.52657545,
-			y: 0.9611691
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.0865302,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 639.00006,
-			y: -312.99957
-		},
-		scale: {
-			x: 0.62254834,
-			y: 0.9827219
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.2591584,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 635.00006,
-			y: -412.99957
-		},
-		scale: {
-			x: 0.86900616,
-			y: 0.71610105
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.1809425,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 637.99994,
-			y: -516.9998
-		},
-		scale: {
-			x: 0.6798555,
-			y: 0.72407866
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.117975,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 622,
-			y: -620.0002
-		},
-		scale: {
-			x: 0.6305205,
-			y: 0.97128963
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.2912588,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 637.99994,
-			y: -719.00037
-		},
-		scale: {
-			x: 0.7975625,
-			y: 0.997764
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -2.9853952,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 619.00006,
-			y: -819.00073
-		},
-		scale: {
-			x: 0.84295523,
-			y: 0.7146158
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.3283668,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 652.00006,
-			y: -914.001
-		},
-		scale: {
-			x: 0.60469973,
-			y: 0.8056209
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -2.8080778,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 611.00006,
-			y: -1188.0017
-		},
-		scale: {
-			x: 0.6249769,
-			y: 0.8131354
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.5193596,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 618,
-			y: -1276.0021
-		},
-		scale: {
-			x: 0.72869015,
-			y: 0.87101525
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.1652105,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 649,
-			y: -1169.002
-		},
-		scale: {
-			x: 0.76390207,
-			y: 0.8764548
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.21700096,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 658,
-			y: -1168.002
-		},
-		scale: {
-			x: 0.8829612,
-			y: 0.78488535
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.117975,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 669,
-			y: -1062.002
-		},
-		scale: {
-			x: 0.6814912,
-			y: 0.7983998
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.10200691,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 637.00006,
-			y: -1473.0024
-		},
-		scale: {
-			x: 0.718333,
-			y: 0.8376136
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.125721,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 641.00006,
-			y: -1576.0029
-		},
-		scale: {
-			x: 0.9511751,
-			y: 0.804548
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.110107,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 608.99994,
-			y: -1674.0034
-		},
-		scale: {
-			x: 0.89494395,
-			y: 0.8702837
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.453865,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 612.99994,
-			y: -1776.0037
-		},
-		scale: {
-			x: 0.5996459,
-			y: 0.59201634
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.1098573,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 642,
-			y: -1873.0039
-		},
-		scale: {
-			x: 0.7403065,
-			y: 0.9892657
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -2.858101,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 641.00006,
-			y: -2004.9984
-		},
-		scale: {
-			x: 0.92380035,
-			y: 0.8508104
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -3.3585937,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 622,
-			y: -2125.9983
-		},
-		scale: {
-			x: 0.6179212,
-			y: 0.89888567
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.12532401,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: -6.9999466,
-			y: -2306.9968
-		},
-		scale: {
-			x: 0.7365472,
-			y: 0.5191165
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.14079452,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 9.000016,
-			y: -2204.997
-		},
-		scale: {
-			x: 0.51551056,
-			y: 0.6563108
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.14850497,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 17.00001,
-			y: -2097.997
-		},
-		scale: {
-			x: 0.9208753,
-			y: 0.5905521
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.07074785,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 22.00003,
-			y: -1992.9973
-		},
-		scale: {
-			x: 0.9602033,
-			y: 0.7708795
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.047209024,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 5.00002,
-			y: -1888.9987
-		},
-		scale: {
-			x: 0.8209704,
-			y: 0.5606943
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.15619755,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 4.0000443,
-			y: -1786.9998
-		},
-		scale: {
-			x: 0.61047673,
-			y: 0.52046216
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.007873893,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 49.000053,
-			y: -1696.0007
-		},
-		scale: {
-			x: 0.95799065,
-			y: 0.8579834
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.45415425,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 16.000034,
-			y: -1597.0021
-		},
-		scale: {
-			x: 0.9335652,
-			y: 0.7597642
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.32175064,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 2.0000222,
-			y: -1494.0029
-		},
-		scale: {
-			x: 0.7128662,
-			y: 0.6644052
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.13306725,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 28.000025,
-			y: -1394.0039
-		},
-		scale: {
-			x: 0.5193212,
-			y: 0.7599876
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.2542206,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: -14.99994,
-			y: -1300.0039
-		},
-		scale: {
-			x: 0.8544611,
-			y: 0.90964377
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.42840588,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 20.000032,
-			y: -1205.0038
-		},
-		scale: {
-			x: 0.94248384,
-			y: 0.8263321
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.34750605,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 4.0000443,
-			y: -1102.0032
-		},
-		scale: {
-			x: 0.7477656,
-			y: 0.50597
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.14850497,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 40.000015,
-			y: -1007.00275
-		},
-		scale: {
-			x: 0.5731721,
-			y: 0.6591214
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.36135697,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 18.000032,
-			y: -906.0025
-		},
-		scale: {
-			x: 0.6423666,
-			y: 0.8942032
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.20947957,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 11.000015,
-			y: -805.00214
-		},
-		scale: {
-			x: 0.99511945,
-			y: 0.83367634
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.063406944,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 28.000025,
-			y: -704.00183
-		},
-		scale: {
-			x: 0.7474724,
-			y: 0.63441646
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.16387153,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 20.000032,
-			y: -604.00116
-		},
-		scale: {
-			x: 0.6640321,
-			y: 0.82244587
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.078578115,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 11.000015,
-			y: -502.00067
-		},
-		scale: {
-			x: 0.80425733,
-			y: 0.9271905
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.0863986,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 23.000053,
-			y: -399.00027
-		},
-		scale: {
-			x: 0.8117995,
-			y: 0.74408793
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.10979295,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 35.000042,
-			y: -298.99988
-		},
-		scale: {
-			x: 0.62607455,
-			y: 0.74768734
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.11756563,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 16.266655,
-			y: 123.99998
-		},
-		scale: {
-			x: 0.6390251,
-			y: 0.84258705
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.19436526,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 10.933328,
-			y: 225.33331
-		},
-		scale: {
-			x: 0.65378153,
-			y: 0.83737516
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.047209024,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 20.266676,
-			y: 326.66663
-		},
-		scale: {
-			x: 0.86041903,
-			y: 0.6979192
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.0863986,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: -2.399993,
-			y: 471.99997
-		},
-		scale: {
-			x: 1.13009,
-			y: 0.9627362
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -2.6416113,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 20.266676,
-			y: 532
-		},
-		scale: {
-			x: 0.59726715,
-			y: 0.9385859
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.023617744,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 16.266655,
-			y: 633.3333
-		},
-		scale: {
-			x: 0.820821,
-			y: 0.78478336
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: 0.039349794,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
 	{
 		externalEntity1: {
 			name: Null,
@@ -1553,32 +227,11 @@ wallsModels: [
 			x: 0.91005665,
 			y: 0.7131707
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: 0.06290901,
-		internalProp3: {},
-		type: com.cappuccino.aog.entities.Wall
-	},
-	{
-		externalEntity1: {
-			name: Null,
-			value: -1
-		},
-		externalEntity2: {
-			name: Null,
-			value: -1
-		},
-		position: {
-			x: 13.599992,
-			y: 834.6666
-		},
-		scale: {
-			x: 0.6688895,
-			y: 0.69555765
-		},
-		internalProp1: {},
-		internalProp2: {},
-		angle: -0.039349794,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1599,9 +252,36 @@ wallsModels: [
 			x: 0.7197136,
 			y: 0.67058384
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.334461,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 16.266655,
+			y: 633.3333
+		},
+		scale: {
+			x: 0.820821,
+			y: 0.78478336
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.039349794,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1622,9 +302,36 @@ wallsModels: [
 			x: 0.55928904,
 			y: 0.53355837
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.1415927,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 766.5999,
+			y: 606
+		},
+		scale: {
+			x: 0.6999999,
+			y: 0.6999999
+		},
+		internalProp1: {
+			name: Color,
+			value: 1
+		},
+		internalProp2: {},
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1645,9 +352,61 @@ wallsModels: [
 			x: 0.6401534,
 			y: 0.6003917
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.0786839,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 20.266676,
+			y: 532
+		},
+		scale: {
+			x: 0.59726715,
+			y: 0.9385859
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.023617744,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: -2.399993,
+			y: 471.99997
+		},
+		scale: {
+			x: 1.13009,
+			y: 0.9627362
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -2.6416113,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1668,9 +427,36 @@ wallsModels: [
 			x: 1.0137601,
 			y: 0.831132
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.4985323,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 0.5999565,
+			y: 430.00003
+		},
+		scale: {
+			x: 0.79999995,
+			y: 0.79999995
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.17453292,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1691,9 +477,36 @@ wallsModels: [
 			x: 0.71893054,
 			y: 0.72370315
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.2123406,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 20.266676,
+			y: 326.66663
+		},
+		scale: {
+			x: 0.86041903,
+			y: 0.6979192
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.0863986,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1714,9 +527,36 @@ wallsModels: [
 			x: 0.7155516,
 			y: 0.5847681
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.0943837,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 10.933328,
+			y: 225.33331
+		},
+		scale: {
+			x: 0.65378153,
+			y: 0.83737516
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.047209024,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	},
@@ -1737,7 +577,9 @@ wallsModels: [
 			x: 0.7258256,
 			y: 0.757613
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.4270098,
 		internalProp3: {},
@@ -1753,14 +595,92 @@ wallsModels: [
 			value: -1
 		},
 		position: {
-			x: 685.5999,
-			y: 54.666664
+			x: 16.266655,
+			y: 123.99998
+		},
+		scale: {
+			x: 0.6390251,
+			y: 0.84258705
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.19436526,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 740.6,
+			y: 45
+		},
+		scale: {
+			x: 0.6499999,
+			y: 0.6499999
+		},
+		internalProp1: {
+			name: Color,
+			value: 1
+		},
+		internalProp2: {},
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: -79.399765,
+			y: 44.000202
+		},
+		scale: {
+			x: 0.99999994,
+			y: 0.8999999
+		},
+		internalProp1: {
+			name: Color,
+			value: 1
+		},
+		internalProp2: {},
+		angle: 3.2288587,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 675.6,
+			y: 5.0001917
 		},
 		scale: {
 			x: 0.5660001,
 			y: 0.77064407
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
 		angle: -3.133719,
 		internalProp3: {},
@@ -1776,16 +696,1093 @@ wallsModels: [
 			value: -1
 		},
 		position: {
-			x: 676.2666,
-			y: 843.99994
+			x: 22.59996,
+			y: 1.0002017
 		},
 		scale: {
-			x: 1,
-			y: 1
+			x: 0.8023046,
+			y: 0.81216455
 		},
-		internalProp1: {},
+		internalProp1: {
+			name: Color
+		},
 		internalProp2: {},
-		angle: -3.3161252,
+		angle: 0.07660507,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 633.99994,
+			y: -67.99977
+		},
+		scale: {
+			x: 0.6999999,
+			y: 0.6999999
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.2288587,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 21.599937,
+			y: -117.9998
+		},
+		scale: {
+			x: 1.0007546,
+			y: 0.7071561
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.54529107,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 629,
+			y: -200.99976
+		},
+		scale: {
+			x: 0.7605947,
+			y: 0.50803256
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.133719,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 651,
+			y: -212.99956
+		},
+		scale: {
+			x: 0.52657545,
+			y: 0.9611691
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.0865302,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 35.000042,
+			y: -298.99988
+		},
+		scale: {
+			x: 0.62607455,
+			y: 0.74768734
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.11756563,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 639.00006,
+			y: -312.99957
+		},
+		scale: {
+			x: 0.62254834,
+			y: 0.9827219
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.2591584,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 23.000053,
+			y: -399.00027
+		},
+		scale: {
+			x: 0.8117995,
+			y: 0.74408793
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.10979295,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 635.00006,
+			y: -412.99957
+		},
+		scale: {
+			x: 0.86900616,
+			y: 0.71610105
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.1809425,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 11.000015,
+			y: -502.00067
+		},
+		scale: {
+			x: 0.80425733,
+			y: 0.9271905
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.0863986,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 637.99994,
+			y: -516.9998
+		},
+		scale: {
+			x: 0.6798555,
+			y: 0.72407866
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.117975,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 20.000032,
+			y: -604.00116
+		},
+		scale: {
+			x: 0.6640321,
+			y: 0.82244587
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.078578115,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 622,
+			y: -620.0002
+		},
+		scale: {
+			x: 0.6305205,
+			y: 0.97128963
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.2912588,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 28.000025,
+			y: -704.00183
+		},
+		scale: {
+			x: 0.7474724,
+			y: 0.63441646
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.16387153,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 637.99994,
+			y: -719.00037
+		},
+		scale: {
+			x: 0.7975625,
+			y: 0.997764
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -2.9853952,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 11.000015,
+			y: -805.00214
+		},
+		scale: {
+			x: 0.99511945,
+			y: 0.83367634
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.063406944,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 619.00006,
+			y: -819.00073
+		},
+		scale: {
+			x: 0.84295523,
+			y: 0.7146158
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.3283668,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 18.000032,
+			y: -906.0025
+		},
+		scale: {
+			x: 0.6423666,
+			y: 0.8942032
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.20947957,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 652.00006,
+			y: -914.001
+		},
+		scale: {
+			x: 0.60469973,
+			y: 0.8056209
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -2.8080778,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 40.000015,
+			y: -1007.00275
+		},
+		scale: {
+			x: 0.5731721,
+			y: 0.6591214
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.36135697,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 669,
+			y: -1062.002
+		},
+		scale: {
+			x: 0.6814912,
+			y: 0.7983998
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.10200691,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 4.0000443,
+			y: -1102.0032
+		},
+		scale: {
+			x: 0.7477656,
+			y: 0.50597
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.14850497,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 658,
+			y: -1168.002
+		},
+		scale: {
+			x: 0.8829612,
+			y: 0.78488535
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.117975,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 649,
+			y: -1169.002
+		},
+		scale: {
+			x: 0.76390207,
+			y: 0.8764548
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.21700096,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 611.00006,
+			y: -1188.0017
+		},
+		scale: {
+			x: 0.6249769,
+			y: 0.8131354
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.5193596,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 20.000032,
+			y: -1205.0038
+		},
+		scale: {
+			x: 0.94248384,
+			y: 0.8263321
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.34750605,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 618,
+			y: -1276.0021
+		},
+		scale: {
+			x: 0.72869015,
+			y: 0.87101525
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.1652105,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: -14.99994,
+			y: -1300.0039
+		},
+		scale: {
+			x: 0.8544611,
+			y: 0.90964377
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.42840588,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 28.000025,
+			y: -1394.0039
+		},
+		scale: {
+			x: 0.5193212,
+			y: 0.7599876
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.2542206,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 637.00006,
+			y: -1473.0024
+		},
+		scale: {
+			x: 0.718333,
+			y: 0.8376136
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.125721,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 2.0000222,
+			y: -1494.0029
+		},
+		scale: {
+			x: 0.7128662,
+			y: 0.6644052
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.13306725,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 641.00006,
+			y: -1576.0029
+		},
+		scale: {
+			x: 0.9511751,
+			y: 0.804548
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.110107,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 16.000034,
+			y: -1597.0021
+		},
+		scale: {
+			x: 0.9335652,
+			y: 0.7597642
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.32175064,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 643.5999,
+			y: -1661.0033
+		},
+		scale: {
+			x: 0.89494395,
+			y: 0.8702837
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.453865,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 49.000053,
+			y: -1696.0007
+		},
+		scale: {
+			x: 0.95799065,
+			y: 0.8579834
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.45415425,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 612.99994,
+			y: -1776.0037
+		},
+		scale: {
+			x: 0.5996459,
+			y: 0.59201634
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.1098573,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 4.0000443,
+			y: -1786.9998
+		},
+		scale: {
+			x: 0.61047673,
+			y: 0.52046216
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.007873893,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 648.6,
+			y: -1802.9999
+		},
+		scale: {
+			x: 0.7403065,
+			y: 0.9892657
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.0326338,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 33.59995,
+			y: -1850.9999
+		},
+		scale: {
+			x: 0.8209704,
+			y: 0.5606943
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.15619755,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 22.00003,
+			y: -1992.9973
+		},
+		scale: {
+			x: 0.9602033,
+			y: 0.7708795
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.047209024,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 641.00006,
+			y: -2004.9984
+		},
+		scale: {
+			x: 0.92380035,
+			y: 0.8508104
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -3.3585937,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 17.00001,
+			y: -2097.997
+		},
+		scale: {
+			x: 0.9208753,
+			y: 0.5905521
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.07074785,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 657.6,
+			y: -2149.9966
+		},
+		scale: {
+			x: 0.6179212,
+			y: 0.89888567
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: 0.29985693,
+		internalProp3: {},
+		type: com.cappuccino.aog.entities.Wall
+	},
+	{
+		externalEntity1: {
+			name: Null,
+			value: -1
+		},
+		externalEntity2: {
+			name: Null,
+			value: -1
+		},
+		position: {
+			x: 9.000016,
+			y: -2204.997
+		},
+		scale: {
+			x: 0.51551056,
+			y: 0.6563108
+		},
+		internalProp1: {
+			name: Color
+		},
+		internalProp2: {},
+		angle: -0.14850497,
 		internalProp3: {},
 		type: com.cappuccino.aog.entities.Wall
 	}

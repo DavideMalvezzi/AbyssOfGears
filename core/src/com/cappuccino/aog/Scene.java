@@ -39,7 +39,7 @@ public class Scene extends ScreenAdapter {
 		world.setContactListener(new ContactEvent());
 
 		rayHandler = new RayHandler(world);
-		rayHandler.setAmbientLight(0, 0, 0, 0.3f);
+		rayHandler.setAmbientLight(0, 0, 0, 0f);
 		
 		box2dDebug = new Box2DDebugRenderer(true,true,false,true,true,true);
 	}

@@ -22,7 +22,6 @@ public class Assets {
 	
 	public static Texture layer0Background;
 	public static Texture layer1Background;
-	public static Texture layer2Background;
 	
 	public static ParticleEmitter fallingEffect, smokeEffect, gasEffect;
 	
@@ -68,27 +67,22 @@ public class Assets {
 		layer1Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		layer1Background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		layer2Background = new Texture("gfx/layer2Bg.png");
-		layer2Background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		layer2Background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
 		ParticleEffect fallingParticle = new ParticleEffect();
-		fallingParticle.load(Gdx.files.internal("data/FallingEffect"), Gdx.files.internal("gfx/"));
+		fallingParticle.load(Gdx.files.internal("data/particle/FallingEffect"), Gdx.files.internal("gfx/"));
 		fallingEffect = fallingParticle.getEmitters().first();
 		
 		ParticleEffect smokeParticle = new ParticleEffect();
-		smokeParticle.load(Gdx.files.internal("data/SmokeEffect"), Gdx.files.internal("gfx/"));
+		smokeParticle.load(Gdx.files.internal("data/particle/SmokeEffect"), Gdx.files.internal("gfx/"));
 		smokeEffect = smokeParticle.getEmitters().first();
 		
 		ParticleEffect gasParticle = new ParticleEffect();
-		gasParticle.load(Gdx.files.internal("data/GasEffect"), Gdx.files.internal("gfx/"));
+		gasParticle.load(Gdx.files.internal("data/particle/GasEffect"), Gdx.files.internal("gfx/"));
 		gasEffect = gasParticle.getEmitters().first();
 	}
 	
 	public static void dispose(){
 		layer0Background.dispose();
 		layer1Background.dispose();
-		layer2Background.dispose();
 		
 		font64.dispose();
 		font100.dispose();

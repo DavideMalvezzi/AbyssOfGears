@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -26,11 +27,13 @@ public class MainMenuScene extends Scene {
 	
 	private Stage stage;
 	private MainMenuLevel level;
-	private VParallaxLayer bg0,bg1,bg2;
+	private VParallaxLayer bg0,bg1;
 	
 	private ChainedContetxMenuContainer contextMenu;
 	
 	private MapEditor editor;
+	
+	private static final ShaderProgram colorMixer = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/shader/color_mixer.frag"));
 	
 	public MainMenuScene() {
 		super();
@@ -86,8 +89,8 @@ public class MainMenuScene extends Scene {
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 200+traslY);//0.27f * view.getWorldHeight());
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				AOGGame.changeScene(new GameScene());
-				/*
+				//AOGGame.changeScene(new GameScene());
+				
 				level.activePress();
 				play.addAction(Actions.forever(Actions.run(new Runnable() {
 					boolean isStarted = false;
@@ -105,16 +108,16 @@ public class MainMenuScene extends Scene {
 						}
 					}
 				})));
-				*/
+				
 				
 			}
 		});
 		
 		LabelStyle titleStyle = new LabelStyle(Assets.font200, Color.BLACK);
 		Label titlep1 = new Label("Abyss of", titleStyle);
-		titlep1.setPosition((stage.getWidth()-titlep1.getWidth())/2, 555+traslY);
+		titlep1.setPosition((stage.getWidth()-titlep1.getWidth())/2, 545+traslY);
 		Label titlep2 = new Label("Gears", titleStyle);
-		titlep2.setPosition((stage.getWidth()-titlep2.getWidth())/2, 440+traslY);
+		titlep2.setPosition((stage.getWidth()-titlep2.getWidth())/2, 430+traslY);
 		
 		LabelStyle infoStyle = new LabelStyle(Assets.font64, Color.WHITE);
 		Label info = new Label("?", infoStyle);
@@ -165,21 +168,26 @@ public class MainMenuScene extends Scene {
 		
 		bg0 = new VParallaxLayer(Assets.layer0Background);
 		bg1 = new VParallaxLayer(Assets.layer1Background);
-		bg2 = new VParallaxLayer(Assets.layer2Background);
 		
 		//editor = new MapEditor(level, world, camera);
 		
+		
+		System.err.println(colorMixer.getLog());
 	}
 	
 	
 	
 	public void render(float delta) {
+		
+		
+		
 		beginClip();
 			batch.setProjectionMatrix(camera.combined);
+			batch.setShader(colorMixer);
 			batch.begin();
+				colorMixer.setUniformf("mixColor", 0.8f, 0.27f, 0.0039f);
 				bg0.render(batch, camera);
 				bg1.render(batch, camera);
-				bg2.render(batch, camera);
 				
 				level.render(batch);
 			batch.end();
@@ -229,8 +237,8 @@ public class MainMenuScene extends Scene {
 		float speedY = (camera.position.y-camera.viewportHeight/2)-Scissor.getArea().y;
 		
 		if(speedY!=0){
-			bg1.update(delta, -speedY*2);
-			bg2.update(delta, -speedY);
+			bg0.update(delta, -speedY*2);
+			bg1.update(delta, -speedY);
 		}
 		
 		

@@ -176,7 +176,7 @@ public class WallsEditingInputListener extends EditingInputListener{
 			case Keys.N:
 				try {
 					currentEntity =  new Wall(world);
-					level.getActiveWalls().add(currentEntity);
+					level.getActiveWalls().insert(0,currentEntity);
 					currentEntity.setCenter(mousePoint.x*Scene.WORLD_TO_BOX, mousePoint.y*Scene.WORLD_TO_BOX);
 					currentEntity.recalculate();
 				} catch (Exception e) {
@@ -255,7 +255,7 @@ public class WallsEditingInputListener extends EditingInputListener{
 		
 		if(lastPos != null && pos.dst(lastPos)>100){
 			float angle = MathUtils.atan2(pos.y-lastPos.y, pos.x-lastPos.x)-90*MathUtils.degRad;
-			Wall e = new Wall(world, pos.x, pos.y, angle, MathUtils.random(0.5f, 1), MathUtils.random(0.5f, 1));
+			Wall e = new Wall(world, pos.x, pos.y, angle, MathUtils.random(0.5f, 1), MathUtils.random(0.5f, 1), 0);
 			
 			level.getActiveWalls().add(e);
 			lastPos.set(pos);

@@ -1,24 +1,34 @@
 package com.cappuccino.aog.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.mapeditor.EntityModel;
+import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
 public class Wall extends Entity{
 	
+	private static final Color[] color = new Color[]{
+		new Color(0.08f,0.08f,0.08f,1f),
+		new Color(0.04f,0.04f,0.04f,1f)
+	};
 
+	int colorIndex;
+	
 	public Wall(World world) {
-		this(world, 0, 0, 0, 1, 1);
+		this(world, 0, 0, 0, 1, 1, 0);
 	}
 	
 	public Wall(World world, EntityModel model) {
-		this(world, model.position.x, model.position.y, model.angle, model.scale.x, model.scale.y);
+		this(world, model.position.x, model.position.y, model.angle, model.scale.x, model.scale.y, (int)model.internalProp1.value);
 	}
 	
-	public Wall(World world, float x, float y, float angle, float scaleX, float scaleY) {
+	public Wall(World world, float x, float y, float angle, float scaleX, float scaleY, int colorIndex) {
 		super("Wall", world);
+		this.colorIndex = colorIndex;
 		initBody(world, BodyType.StaticBody);
 		setScaleX(scaleX);
 		setScaleY(scaleY);
@@ -38,6 +48,13 @@ public class Wall extends Entity{
 		body.setActive(true);
 	}
 	
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.setColor(color[colorIndex]);
+		super.draw(batch);
+		batch.setColor(Color.WHITE);
+	}
+	
 	
 	public void initFixtures() {
 		FixtureDef fd = new FixtureDef();
@@ -52,6 +69,18 @@ public class Wall extends Entity{
 	@Override
 	public void recalculate() {
 		reloadFixtures();
+	}
+	
+	@Override
+	public Property getProp1() {
+		return new Property("Color", colorIndex);
+	}
+	
+	@Override
+	public void setProp1(float value) {
+		if(value>=0 && value<color.length){
+			colorIndex = (int)value;
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.cappuccino.aog.Scissor;
 import com.cappuccino.aog.entities.Press;
 
 public class MainMenuLevel extends Level {

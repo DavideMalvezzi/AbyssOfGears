@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BatchUtils {
 
-	private static final ShaderProgram bloom_shader = new ShaderProgram(Gdx.files.internal("data/bloom_shader.vert"), Gdx.files.internal("data/gaussian_blur.frag"));
+	private static final ShaderProgram bloom_shader = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/shader/gaussian_blur.frag"));
 	private static  FrameBuffer blur_buffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
 	private static final SpriteBatch buffer_batch = new SpriteBatch(1);
 	
