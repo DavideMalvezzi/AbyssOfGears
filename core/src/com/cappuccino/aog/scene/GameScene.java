@@ -4,9 +4,9 @@ package com.cappuccino.aog.scene;
 import box2dLight.PointLight;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.entities.Alexy;
 import com.cappuccino.aog.entities.Entity;
 import com.cappuccino.aog.entities.Alexy.Status;
@@ -49,7 +49,7 @@ public class GameScene extends Scene{
 		beginClip();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-		
+				ShaderLibrary.softLight.setUniformf("mixColor", level.getColor());
 				parallaxbg0.render(batch, camera);
 				parallaxbg1.render(batch, camera);
 				level.render(batch);
@@ -58,9 +58,9 @@ public class GameScene extends Scene{
 		
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
-			//if(mapEditor.isDebugging()){
-			//	box2dDebug.render(world, camera.combined);
-			//}
+			if(mapEditor.isDebugging()){
+				//box2dDebug.render(world, camera.combined);
+			}
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			

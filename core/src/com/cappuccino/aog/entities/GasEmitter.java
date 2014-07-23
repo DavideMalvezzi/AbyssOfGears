@@ -2,6 +2,7 @@ package com.cappuccino.aog.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.Assets;
+import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
@@ -72,6 +74,8 @@ public class GasEmitter extends Entity {
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		
+		batch.setShader(null);
+		
 		Assets.gasEffect.setPosition(emissionPoint.x, emissionPoint.y);
 		
 		Assets.gasEffect.getAngle().setLow(getAngle()*MathUtils.radDeg-80, getAngle()*MathUtils.radDeg+80);
@@ -79,6 +83,8 @@ public class GasEmitter extends Entity {
 		
 		Assets.gasEffect.update(2*Gdx.graphics.getDeltaTime()/emittersNumber);
 		Assets.gasEffect.draw(batch);
+		
+		batch.setShader(ShaderLibrary.softLight);
 		
 	}
 	

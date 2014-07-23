@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -18,6 +17,7 @@ import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.Scissor;
+import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
 import com.cappuccino.aog.mapeditor.MapEditor;
@@ -32,8 +32,6 @@ public class MainMenuScene extends Scene {
 	private ChainedContetxMenuContainer contextMenu;
 	
 	private MapEditor editor;
-	
-	private static final ShaderProgram colorMixer = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/shader/color_mixer.frag"));
 	
 	public MainMenuScene() {
 		super();
@@ -55,7 +53,7 @@ public class MainMenuScene extends Scene {
 		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
 		
 		
-		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 5+traslY );
+		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 5+traslY);
 		achive.setPosition(shop.getX()*1.3f, 5+traslY);
 		stats.setPosition(shop.getX()*0.7f, 5+traslY);
 		
@@ -89,8 +87,8 @@ public class MainMenuScene extends Scene {
 		play.setPosition((stage.getWidth()-play.getWidth())/2, 200+traslY);//0.27f * view.getWorldHeight());
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				//AOGGame.changeScene(new GameScene());
-				
+				AOGGame.changeScene(new GameScene());
+				/*
 				level.activePress();
 				play.addAction(Actions.forever(Actions.run(new Runnable() {
 					boolean isStarted = false;
@@ -102,14 +100,14 @@ public class MainMenuScene extends Scene {
 									Actions.sequence(
 											Actions.fadeOut(0.5f),
 											Actions.delay(0.3f),
-											Actions.moveBy(0, SCENE_H*2, 1.5f),
+											Actions.moveBy(0, SCENE_H*2, 1.2f),
 											Actions.fadeIn(0.5f)
 									));
 						}
 					}
 				})));
 				
-				
+				*/
 			}
 		});
 		
@@ -139,16 +137,19 @@ public class MainMenuScene extends Scene {
 		
 		//Menù play
 		final ImageButton back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
-		back.setPosition(5-traslX, -815+traslY);
+		back.setPosition(5-traslX, -825+traslY);
+		back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+		back.setTransform(true); 
 		back.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
 				if(!back.isDisabled()){
+					back.addAction(Actions.repeat(5, Actions.rotateBy(360, 0.2f)));
 					level.openPress();
 					stage.addAction(
 						Actions.sequence(
 								Actions.fadeOut(0.5f),
 								Actions.delay(0.3f),
-								Actions.moveBy(0, -SCENE_H*2, 1.5f),
+								Actions.moveBy(0, -SCENE_H*2, 1.2f),
 								Actions.fadeIn(0.5f),
 								Actions.run(new Runnable() {
 									public void run() {
@@ -171,24 +172,17 @@ public class MainMenuScene extends Scene {
 		
 		//editor = new MapEditor(level, world, camera);
 		
-		
-		System.err.println(colorMixer.getLog());
 	}
 	
 	
 	
 	public void render(float delta) {
-		
-		
-		
 		beginClip();
 			batch.setProjectionMatrix(camera.combined);
-			batch.setShader(colorMixer);
 			batch.begin();
-				colorMixer.setUniformf("mixColor", 0.8f, 0.27f, 0.0039f);
+				ShaderLibrary.softLight.setUniformf("mixColor", level.getColor());
 				bg0.render(batch, camera);
 				bg1.render(batch, camera);
-				
 				level.render(batch);
 			batch.end();
 			
@@ -237,8 +231,8 @@ public class MainMenuScene extends Scene {
 		float speedY = (camera.position.y-camera.viewportHeight/2)-Scissor.getArea().y;
 		
 		if(speedY!=0){
-			bg0.update(delta, -speedY*2);
-			bg1.update(delta, -speedY);
+			bg0.update(delta, -speedY);
+			bg1.update(delta, -speedY*2);
 		}
 		
 		

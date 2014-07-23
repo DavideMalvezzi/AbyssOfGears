@@ -3,6 +3,7 @@ package com.cappuccino.aog.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -22,19 +23,35 @@ public abstract class Level {
 	protected final Array<Entity> active_entities = new Array<Entity>(true, 32);
 	protected final Array<Entity> inactive_entities = new Array<Entity>(true, 32);
 	
-	
 	protected final Array<Entity> active_walls = new Array<Entity>(true, 32);
-	protected int lastWallIndex = 0;
 	protected final Array<Entity> inactive_walls = new Array<Entity>(true, 32);
 	
+	protected Color levelColor;
+	protected boolean usePlayer;
+	
 	public void init(World world, boolean usePlayer){
+		this.usePlayer = usePlayer;
 		alexy = new Alexy(world);
 		alexy.setCenter(getSpawnPoint());
-		if(usePlayer){
-			active_entities.add(alexy);
-		}
 		
+		/*
+		Gdx.gl20.glClearColor(
+				(1.0f-2.0f*levelColor.r)*0.0016f + 2.0f*levelColor.r*0.04f, 
+				(1.0f-2.0f*levelColor.g)*0.0016f + 2.0f*levelColor.g*0.04f, 
+				(1.0f-2.0f*levelColor.b)*0.0016f + 2.0f*levelColor.b*0.04f, 
+				1f
+			);
+		*/
+		 
+		 Gdx.gl20.glClearColor(
+				 2.0f*0.04f*(1.0f-levelColor.r) + (float)(Math.sqrt(0.04f)*(2.0f*levelColor.r-1.0f)),
+				 2.0f*0.04f*(1.0f-levelColor.g) + (float)(Math.sqrt(0.04f)*(2.0f*levelColor.g-1.0f)),
+				 2.0f*0.04f*(1.0f-levelColor.b) + (float)(Math.sqrt(0.04f)*(2.0f*levelColor.b-1.0f)),
+				 1f
+				);
+		 
 		loadLevelFromFile(world);
+		
 	}
 	
 	public void reset(){
@@ -63,13 +80,14 @@ public abstract class Level {
 	
 	protected void renderWalls(SpriteBatch batch){
 		Rectangle area = Scissor.getArea();
-		float bottomY = area.y * Scene.WORLD_TO_BOX, topY = (area.y+area.height) * Scene.WORLD_TO_BOX;
-		int i = 0, rendererd = 0;
+		float bottomY = (area.y-area.height*0.5f) * Scene.WORLD_TO_BOX, topY = (area.y+area.height*1.5f) * Scene.WORLD_TO_BOX;
+		int i = 0;
 		boolean continueToRender = true;
 		
 		while(inactive_walls.size>0 && continueToRender){
 			Entity e = inactive_walls.peek();
 			if(e.getCenter().y<topY){
+				e.active();
 				active_walls.insert(0, inactive_walls.pop());
 			}else{
 				continueToRender = false;
@@ -85,7 +103,65 @@ public abstract class Level {
 				active_walls.removeIndex(i--);
 			}else if(e.getCenter().y>bottomY){
 				e.draw(batch);
-				rendererd++;
+			}else{
+				continueToRender = false;
+			}
+			i++;
+		}
+		
+	}
+	
+	protected void renderEntities(SpriteBatch batch){
+		Rectangle area = Scissor.getArea();
+		float bottomY = (area.y-area.height*0.5f) * Scene.WORLD_TO_BOX;
+		int i = 0, rendered = 0;
+		boolean continueToRender = true;
+		
+		while (i<active_entities.size && continueToRender){
+			Entity e = active_entities.get(i);
+			 if(e.getCenter().y>bottomY){
+				e.draw(batch);
+				rendered++;
+			}else{
+				continueToRender = false;
+			}
+			i++;
+		}
+		
+		System.out.println("Rendered Entities " + rendered + " " + " Incative ents " + inactive_entities.size);
+		
+		if(usePlayer){
+			alexy.draw(batch);
+		}
+	}
+	
+	
+	protected void updateEntities(float delta){
+		Rectangle area = Scissor.getArea();
+		float bottomY = (area.y-area.height*0.5f) * Scene.WORLD_TO_BOX, topY = (area.y+area.height*1.5f) * Scene.WORLD_TO_BOX;
+		int i = 0, updated = 0;
+		boolean continueToRender = true;
+		
+		while(inactive_entities.size>0 && continueToRender){
+			Entity e = inactive_entities.peek();
+			if(e.getCenter().y<topY){
+				e.active();
+				active_entities.insert(0, inactive_entities.pop());
+			}else{
+				continueToRender = false;
+			}
+		}
+		
+		continueToRender = true;
+		while (i<active_entities.size && continueToRender){
+			Entity e = active_entities.get(i);
+			if(e.getCenter().y>topY){
+				e.disactive();
+				inactive_entities.add(e);
+				active_entities.removeIndex(i--);
+			}else if(e.getCenter().y>bottomY){
+				e.update(delta);
+				updated++;
 			}else{
 				continueToRender = false;
 			}
@@ -93,23 +169,9 @@ public abstract class Level {
 		}
 		
 		
-		
-	}
-	
-	protected void renderEntities(SpriteBatch batch){
-		int i = 0;
-		while (i<active_entities.size) {
-			active_entities.get(i++).draw(batch);
+		if(usePlayer){
+			alexy.update(delta);
 		}
-	}
-	
-	
-	protected void updateEntities(float delta){
-		int i = 0;
-		while(i < active_entities.size){
-			active_entities.get(i++).update(delta);
-		}
-		
 	}
 	
 	
@@ -131,6 +193,8 @@ public abstract class Level {
 		inactive_walls.clear();
 	}
 
+	
+	
 	public static Alexy getPlayer(){
 		return alexy;
 	}
@@ -142,10 +206,14 @@ public abstract class Level {
 	public Array<Entity> getActiveWalls(){
 		return active_walls;
 	}
+	
+	public Color getColor() {
+		return levelColor;
+	}
 
 	private void loadLevelFromFile(World world){
 		Json j = new Json();
-		FileHandle levelFile = Gdx.files.internal("data/levels/"+getLevelName()+".json");
+		FileHandle levelFile = Gdx.files.external("Desktop/levels/"+getLevelName()+".json");
 		LevelModel model = j.fromJson(LevelModel.class, levelFile);
 		model.loadOnLevel(world, this);
 	}

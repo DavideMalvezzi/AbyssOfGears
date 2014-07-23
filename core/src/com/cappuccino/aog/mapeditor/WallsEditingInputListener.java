@@ -212,11 +212,6 @@ public class WallsEditingInputListener extends EditingInputListener{
 	
 	
 	
-	
-	
-	
-	
-	
 	public void draw(SpriteBatch batch){
 		batch.setProjectionMatrix(projection);
 		batch.begin();

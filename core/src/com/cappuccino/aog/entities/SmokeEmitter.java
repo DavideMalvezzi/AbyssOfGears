@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.Assets;
+import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.scene.GameScene;
@@ -79,6 +80,8 @@ public class SmokeEmitter extends Entity {
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		
+		batch.setShader(null);
+		
 		Assets.smokeEffect.setPosition(emissionPoint.x, emissionPoint.y);
 		
 		Assets.smokeEffect.getAngle().setLow(getAngle()*MathUtils.radDeg-45, getAngle()*MathUtils.radDeg+45);
@@ -86,6 +89,8 @@ public class SmokeEmitter extends Entity {
 		
 		Assets.smokeEffect.update(Gdx.graphics.getDeltaTime()/emittersNumber);
 		Assets.smokeEffect.draw(batch);
+		
+		batch.setShader(ShaderLibrary.softLight);
 		
 	}
 	

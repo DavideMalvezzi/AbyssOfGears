@@ -1,5 +1,6 @@
 package com.cappuccino.aog.levels;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,6 +11,7 @@ public class Level0 extends Level {
 
 	@Override
 	public void init(World world, boolean usePlayer) {
+		levelColor = new Color(0xff9600ff);
 		super.init(world, usePlayer);
 	}
 	

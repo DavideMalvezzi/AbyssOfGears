@@ -24,38 +24,39 @@ public class TryScene extends Scene{
 	public Matrix4 projection;
 	
 	float[] weights;
-	float[] offset;
 	
 	public TryScene() {
 		camera.position.y = camera.viewportHeight/2;
 		
-		sceneRenderTarget = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
-		renderTarget1 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
-		renderTarget2 = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, false);
+		sceneRenderTarget = new FrameBuffer(Format.RGBA8888, SCENE_W/2, SCENE_H/2, false);
+		renderTarget1 = new FrameBuffer(Format.RGBA8888, SCENE_W/2, SCENE_H/2, false);
+		renderTarget2 = new FrameBuffer(Format.RGBA8888, SCENE_W/2, SCENE_H/2, false);
 		
 		normal = SpriteBatch.createDefaultShader();
-		bloomExtract = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/bloomExtract.frag"));
-		gaussianBlur = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/gaussianBlur.frag"));
-		bloomCombine = new ShaderProgram(Gdx.files.internal("data/default.vert"), Gdx.files.internal("data/bloomCombine.frag"));
+		bloomExtract = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/bloomExtract.frag"));
+		gaussianBlur = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/gaussianBlur.frag"));
+		bloomCombine = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/bloomCombine.frag"));
 		
-		projection = new Matrix4().setToOrtho(0, Gdx.graphics.getWidth()/2, 0, Gdx.graphics.getHeight()/2, 0, 10);
+		projection = new Matrix4().setToOrtho(0, SCENE_W/2, 0, SCENE_H/2, 0, 10);
 		
 		System.out.println(normal.getLog());
 		System.out.println(bloomExtract.getLog());
 		System.out.println(gaussianBlur.getLog());
 		System.out.println(bloomCombine.getLog());
+		
 	}
 	
 	
 	
 	@Override
 	public void render(float delta) {
+		beginClip();
+		batch.setProjectionMatrix(camera.combined);
 		Matrix4 temp = batch.getProjectionMatrix().cpy();
 		TextureRegion t = Assets.getTexture("Gear6");
+		
 		batch.setShader(null);
 		batch.begin();
-			batch.draw(Assets.layer0Background, 0, 0);
-			batch.flush();
 			
 			batch.setProjectionMatrix(projection);
 			
@@ -66,40 +67,36 @@ public class TryScene extends Scene{
 				batch.flush();
 			sceneRenderTarget.end();
 			
-			renderTarget1.begin();
-				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				batch.setShader(bloomExtract);
-				bloomExtract.setUniformf("BloomThreshold", 0.25f);
-				batch.draw(sceneRenderTarget.getColorBufferTexture(), 0, 0);
-				batch.flush();
-			renderTarget1.end();
-			
+			batch.setColor(Color.YELLOW);
 			renderTarget2.begin();
 				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 				batch.setShader(gaussianBlur);
-				setBlurParam(t, 15, 1, 0);
-				batch.draw(renderTarget1.getColorBufferTexture(), 0, 0);
+				setBlurParam(sceneRenderTarget.getColorBufferTexture(), 9, 1, 0);
+				batch.draw(sceneRenderTarget.getColorBufferTexture(), 0, 0);
 				batch.flush();
 			renderTarget2.end();
 			
 			renderTarget1.begin();
 				Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				setBlurParam(t, 15, 0, 1);
+				batch.setShader(gaussianBlur);
+				setBlurParam(renderTarget2.getColorBufferTexture(), 9, 0, 1);
 				batch.draw(renderTarget2.getColorBufferTexture(), 0, 0);
 				batch.flush();
 			renderTarget1.end();
-			Gdx.gl20.glClearColor(1, 0, 0, 1);
+			batch.setColor(Color.WHITE);
 			
 			batch.setProjectionMatrix(temp);
+			batch.setShader(null);
 			batch.setShader(bloomCombine);
-			batch.setColor(Color.YELLOW);
-			setBloomParams(sceneRenderTarget.getColorBufferTexture(), 1, 1, 2, 1.5f);
+			setBloomParams(sceneRenderTarget.getColorBufferTexture(), 1, 1, 20, 1f);
+			
 			batch.draw(renderTarget1.getColorBufferTexture(), 0, 0);
-			batch.setColor(Color.WHITE);
-		
+			
 		batch.end();
-		
+		endClip();
 	}
+	
+	
 	
 	private void setBloomParams(Texture t, float baseIntensity, float baseSaturation, float bloomIntensity, float bloomSaturation){
 		t.bind(1);
@@ -111,40 +108,28 @@ public class TryScene extends Scene{
 		bloomCombine.setUniformf("BloomSaturation", bloomSaturation);
 	}
 	
-	private void setBlurParam(TextureRegion t, int radius, int dirX, int dirY){
+	private void setBlurParam(Texture t, int radius, int dirX, int dirY){
 		float sum = 0;
 		
-		weights = new float[radius];
-		offset = new float[radius*2];
+		weights = new float[radius/2+1];
 		
-		sum = weights[0] = computeGaussian(0, radius);
-		offset[0] = 0;
-		offset[1] = 0;
+		sum = weights[0] = computeGaussian(0, radius/3);
 		
 		
-		for(int i=0; i<radius/2; i++){
-			float w = computeGaussian(i+1, radius);
-			weights[i*2+1] = w;
-			weights[i*2+2] = w;
+		for(int i=1; i<radius/2; i++){
+			float w = computeGaussian(i, radius/3);
+			weights[i] = w;
 		
 			sum+=w*2;
-			
-			Vector2 delta = new Vector2(1f/t.getRegionWidth(), 1f/t.getRegionHeight()).scl(i+1).scl(dirX, dirY);
-			
-			offset[i*2+1] = delta.x;
-			offset[i*2+2] = delta.y;
-			
-			offset[i*2+3] = -delta.x;
-			offset[i*2+4] = -delta.y;
 		}
 		
-		for(int i=0; i<radius; i++){
+		for(int i=0; i<radius/2; i++){
 			weights[i]/=sum;
 		}
 		
 		gaussianBlur.setUniformi("samples_count", radius);
-		gaussianBlur.setUniform1fv("weight", weights, 0, radius);
-		gaussianBlur.setUniform2fv("offset", offset, 0, radius*2);
+		gaussianBlur.setUniform1fv("weight", weights, 0, radius/2);
+		gaussianBlur.setUniformf("pixelSize", new Vector2(1f/t.getWidth()*dirX, 1f/t.getHeight()*dirY));
 		
 	}
 	
@@ -156,10 +141,7 @@ public class TryScene extends Scene{
 	
 	@Override
 	public void update(float delta) {
-		viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-		
-		
-
+		camera.update();
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.1f;
 		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.1f;
 		

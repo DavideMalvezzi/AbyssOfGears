@@ -18,11 +18,11 @@ uniform float BaseIntensity;
 uniform float BloomSaturation;
 uniform float BaseSaturation;
 
-vec4 adjustSaturation(vec4 color, float sat){
+vec3 adjustSaturation(vec4 color, float sat){
  	float g = dot(color.rgb, vec3(0.3, 0.59, 0.11));
  	
- 	vec4 grey = vec4(g,g,g,1.0);
- 	return mix(grey, color, vec4(sat));
+ 	vec3 grey = vec3(g);
+ 	return mix(grey, color.rgb, vec3(sat));
  }
 
 void main(){
@@ -32,14 +32,14 @@ void main(){
     vec4 base = texture2D(u_base, v_texCoords);
  
     // Adjust color saturation and intensity.
-    bloom = adjustSaturation(bloom, BloomSaturation) * BloomIntensity;
-    base = adjustSaturation(base, BaseSaturation) * BaseIntensity;
+    bloom.rgb = adjustSaturation(bloom, BloomSaturation) * BloomIntensity;
+    base.rgb = adjustSaturation(base, BaseSaturation) * BaseIntensity;
  
     // Darken down the base image in areas where there is a lot of bloom,
     // to prevent things looking excessively burned-out.
     base *= (1.0 - clamp(bloom, vec4(0.0), vec4(1.0)));
  
-	gl_FragColor = v_color * (base+bloom);
+	gl_FragColor =  base+bloom;
 	
 	
 }

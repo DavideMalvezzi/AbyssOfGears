@@ -12,8 +12,8 @@ import com.cappuccino.aog.scene.GameScene;
 public class Wall extends Entity{
 	
 	private static final Color[] color = new Color[]{
-		new Color(0.08f,0.08f,0.08f,1f),
-		new Color(0.04f,0.04f,0.04f,1f)
+		new Color(0x151515ff),
+		new Color(0x0a0a0aff)
 	};
 
 	int colorIndex;

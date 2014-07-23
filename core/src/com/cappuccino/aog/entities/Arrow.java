@@ -21,7 +21,7 @@ public class Arrow extends Entity implements Poolable {
 	private Joint attached;
 	private float timer;
 	private boolean isRunnablePosted = false;
-	public static final float DESPAWN_TIME = 1, MAX_SPEED = 50;
+	public static final float DESPAWN_TIME = 5, MAX_SPEED = 50;
 	
 	
 	public Arrow() {

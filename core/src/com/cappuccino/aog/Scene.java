@@ -34,6 +34,7 @@ public class Scene extends ScreenAdapter {
 		camera.update();
 		
 		batch = new SpriteBatch();
+		batch.setShader(ShaderLibrary.softLight);
 		
 		world = new World(new Vector2(0, -1f), true);
 		world.setContactListener(new ContactEvent());

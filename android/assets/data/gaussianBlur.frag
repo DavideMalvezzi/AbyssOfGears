@@ -5,7 +5,7 @@
 	#define LOWP 
 #endif
 
-#define MAX_RADIUS  25
+#define MAX_RADIUS 25
 
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
@@ -13,15 +13,16 @@ varying vec2 v_texCoords;
 uniform sampler2D u_texture;
 uniform int samples_count;
 uniform float weight[MAX_RADIUS];
-uniform vec2 offset[MAX_RADIUS];
+uniform vec2 pixelSize;
 
 
 void main(){
 
-	vec4 color = vec4(0.0);
+	vec4 color = texture2D(u_texture, v_texCoords) * weight[0];
 	
-	for(int i=0; i<samples_count; i++){
-		color+= texture2D(u_texture, v_texCoords + offset[i]) * weight[i];
+	for(int i=1; i<samples_count/2; i++){
+		color+= texture2D(u_texture, v_texCoords + pixelSize*i) * weight[i];
+		color+= texture2D(u_texture, v_texCoords + pixelSize*-i) * weight[i];
 	}
 	
 	
