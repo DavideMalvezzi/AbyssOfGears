@@ -38,8 +38,10 @@ void main(){
     // Darken down the base image in areas where there is a lot of bloom,
     // to prevent things looking excessively burned-out.
     base *= (1.0 - clamp(bloom, vec4(0.0), vec4(1.0)));
+ 	
+ 	vec4 final = base+bloom;
  
-	gl_FragColor =  base+bloom;
+	gl_FragColor =  final*v_color;
 	
 	
 }

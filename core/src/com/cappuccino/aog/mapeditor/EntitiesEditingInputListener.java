@@ -246,7 +246,9 @@ public class EntitiesEditingInputListener extends EditingInputListener{
 				if(currentEntity==null){
 					debug = !debug;
 					if(!debug){
+						System.err.println("Level Disposed");
 						level.dispose();
+						System.err.println("Reload");
 						levelModel.loadOnLevel(world, level);
 					}else{
 						save();

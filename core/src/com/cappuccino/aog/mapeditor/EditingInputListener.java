@@ -50,15 +50,21 @@ public class EditingInputListener extends InputAdapter {
 		Json j = new Json();
 		FileHandle levelFile = Gdx.files.external("/Desktop/levels/"+level.getLevelName()+".json");
 		
+		System.err.println("Cancello");
 		levelModel.clear();
 		
 		if(levelFile.exists()){
 			levelFile.delete();
 		}
 		
-		sort(level.getActiveEntities());
-		sort(level.getActiveWalls());
+		Array<Entity> allEnts = level.getAllEntities();
+		Array<Entity> allWalls = level.getAllWalls();
 		
+		System.err.println("Ordinamento");
+		sort(allEnts);
+		sort(allWalls);
+		
+		System.err.println("Salvo");
 		for(Entity e : level.getActiveEntities()){
 			levelModel.addEntity(e);
 		}
@@ -67,12 +73,12 @@ public class EditingInputListener extends InputAdapter {
 			levelModel.addWall((Wall) e);
 		}
 		
+		System.err.println("Scrivo su file");
 		levelFile.writeString(j.prettyPrint(levelModel), true);
 	}
 	
 	private void sort(Array<Entity> entities){
 		int i,j,max;
-		Entity temp;
 		for(i=0; i<entities.size-1; i++){
 			max = i;
 			for(j = i+1; j<entities.size; j++){

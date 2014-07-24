@@ -55,6 +55,7 @@ public class MainMenuLevel extends Level {
 	@Override
 	public void update(float delta) {
 		updateEntities(delta);
+		updateWalls(delta);
 	}
 
 	@Override

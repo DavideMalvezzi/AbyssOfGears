@@ -17,24 +17,28 @@ public class ContactEvent implements ContactListener{
 		EntityData dataB = (EntityData) contact.getFixtureB().getBody().getUserData();
 		Entity entityB = dataB.getEntity();
 		
+		BodyType entABodyType = contact.getFixtureA().getBody().getType();
+		BodyType entBBodyType = contact.getFixtureB().getBody().getType();
+		
+		
 		if(dataB.getName().equals("Umbrella") || dataB.getName().equals("Player")){
-			if(entityA.getBody().getType() == BodyType.StaticBody){
+			if(entABodyType == BodyType.StaticBody){
 				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}else{
 				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 			}
 			
 		}else if(dataA.getName().equals("Umbrella") || dataA.getName().equals("Player")){
-			if(entityB.getBody().getType() == BodyType.StaticBody){
+			if(entBBodyType == BodyType.StaticBody){
 				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 			}else{
 				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}
 			
 		}else{
-			if(entityA.getBody().getType() == BodyType.DynamicBody){
+			if(entABodyType == BodyType.DynamicBody){
 				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
-			}else if(entityB.getBody().getType() == BodyType.DynamicBody){
+			}else if(entBBodyType == BodyType.DynamicBody){
 				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}
 		}

@@ -9,17 +9,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Assets;
+import com.cappuccino.aog.BatchUtils;
 import com.cappuccino.aog.Scene;
 
 
 public class TryScene extends Scene{
-
+	private static final ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
-	public ShaderProgram normal, bloomExtract, gaussianBlur, bloomCombine;
+	public ShaderProgram normal, bloomExtract, gaussianBlur, bloomCombine,neonLine;
 	public FrameBuffer sceneRenderTarget, renderTarget1, renderTarget2;
 	public Matrix4 projection;
 	
@@ -33,17 +38,13 @@ public class TryScene extends Scene{
 		renderTarget2 = new FrameBuffer(Format.RGBA8888, SCENE_W/2, SCENE_H/2, false);
 		
 		normal = SpriteBatch.createDefaultShader();
-		bloomExtract = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/bloomExtract.frag"));
-		gaussianBlur = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/gaussianBlur.frag"));
+		//bloomExtract = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/bloomExtract.frag"));
+		//gaussianBlur = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/gaussianBlur.frag"));
 		bloomCombine = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/bloomCombine.frag"));
 		
 		projection = new Matrix4().setToOrtho(0, SCENE_W/2, 0, SCENE_H/2, 0, 10);
-		
-		System.out.println(normal.getLog());
-		System.out.println(bloomExtract.getLog());
-		System.out.println(gaussianBlur.getLog());
-		System.out.println(bloomCombine.getLog());
-		
+		neonLine = new ShaderProgram(Gdx.files.internal("data/shader/default_shape.vert"), Gdx.files.internal("data/shader/neon_line.frag"));
+		System.out.println(neonLine.getLog());
 	}
 	
 	
@@ -51,6 +52,8 @@ public class TryScene extends Scene{
 	@Override
 	public void render(float delta) {
 		beginClip();
+		/*
+		
 		batch.setProjectionMatrix(camera.combined);
 		Matrix4 temp = batch.getProjectionMatrix().cpy();
 		TextureRegion t = Assets.getTexture("Gear6");
@@ -93,6 +96,20 @@ public class TryScene extends Scene{
 			batch.draw(renderTarget1.getColorBufferTexture(), 0, 0);
 			
 		batch.end();
+		endClip();
+		*/
+		AOGGame.setClearColor(1, 0, 1, 1);
+		neonLine.begin();
+		((ImmediateModeRenderer20)shapeRenderer.getRenderer()).setShader(neonLine);
+		neonLine.setUniformf("position", new Vector2(100, 100));
+		neonLine.setUniformf("dimension", new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.begin(ShapeType.Filled);
+		
+		shapeRenderer.rect(100, 100, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		shapeRenderer.end();
 		endClip();
 	}
 	

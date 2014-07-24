@@ -2,7 +2,6 @@ package com.cappuccino.aog.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -20,7 +19,7 @@ import com.cappuccino.aog.scene.GameScene;
 
 public class GasEmitter extends Entity {
 
-	private static final float smokeRadius = 75;
+	private static final float smokeRadius = 100;
 	private static int emittersNumber = 0;
 	
 	private Vector2 emissionPoint;

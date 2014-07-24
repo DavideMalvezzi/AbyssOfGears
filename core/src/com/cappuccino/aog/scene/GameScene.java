@@ -52,15 +52,18 @@ public class GameScene extends Scene{
 				ShaderLibrary.softLight.setUniformf("mixColor", level.getColor());
 				parallaxbg0.render(batch, camera);
 				parallaxbg1.render(batch, camera);
-				level.render(batch);
+				if(mapEditor==null){
+					level.render(batch);
+				}else{
+					level.debugRender(batch);
+				}
 				
 			batch.end();
 		
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
-			if(mapEditor.isDebugging()){
-				//box2dDebug.render(world, camera.combined);
-			}
+				
+			//box2dDebug.render(world, camera.combined);
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			
@@ -84,9 +87,15 @@ public class GameScene extends Scene{
 				hud.showGameOverMenu();
 			}
 			
+			
+			
 			if(mapEditor.isDebugging()){
-				level.update(delta);
 				world.step(1/60f, 8, 3);
+				if(mapEditor==null){
+					level.update(delta);
+				}else{
+					level.debugUpdate(delta);
+				}
 			}
 			
 			rayHandler.update();

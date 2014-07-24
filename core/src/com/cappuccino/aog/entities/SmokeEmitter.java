@@ -18,7 +18,7 @@ import com.cappuccino.aog.scene.GameScene;
 public class SmokeEmitter extends Entity {
 
 	private static final float smokeRadius = 250;
-	private static final float maxForce = 500;
+	private static final float maxForce = 250;
 	private static int emittersNumber = 0;
 	
 	private Vector2 emissionPoint;

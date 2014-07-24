@@ -5,36 +5,29 @@
 	#define LOWP 
 #endif
 
+#define MAX_RADIUS 250
+
 varying LOWP vec4 v_color;
 varying vec2 v_texCoords;
+
 uniform sampler2D u_texture;
-uniform float gloomFactor;
+uniform int samples_count;
+uniform float weight[MAX_RADIUS];
 uniform vec2 pixelSize;
-uniform float values[9];
+
 
 void main(){
 
-	vec2 pos = v_texCoords;
-	vec4 result = vec4(0);
-	vec4 color = vec4(0);
-	vec4 bg_color = vec4(1.0);
-	vec4 sum_color = vec4(0);
+	vec4 color = texture2D(u_texture, v_texCoords) * weight[0];
 	
-	vec2 curSamplePos=vec2(pos.x-4.0*pixelSize.x, pos.y-4.0*pixelSize.y);
-	
-	for(int i=0;i<9;i++){
-		color = texture2D(u_texture,curSamplePos);
-			
-		sum_color.rgb = mix(bg_color.rgb, color.rgb, color.a);
-		sum_color.a = mix(color.a, bg_color.a, color.a);
-			
-		result+=  sum_color * values[i];
-			
-		curSamplePos+=pixelSize;
-		
+	for(int i=1; i<samples_count/2; i++){
+		color+= texture2D(u_texture,  v_texCoords + pixelSize*i) * weight[i];
+		color+= texture2D(u_texture,  v_texCoords - pixelSize*i) * weight[i];
 	}
 	
-	gl_FragColor = v_color * vec4(result.rgb, result.a*gloomFactor) ;
+	
+	gl_FragColor =  color;
 	
 	
 }
+

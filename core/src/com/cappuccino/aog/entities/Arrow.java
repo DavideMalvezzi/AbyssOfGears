@@ -81,8 +81,10 @@ public class Arrow extends Entity implements Poolable {
 					Entity collidedEntity = ((EntityData)collided.getBody().getUserData()).getEntity();
 					
 					Vector2 contactPoint = contact.getWorldManifold().getPoints()[0].scl(GameScene.WORLD_TO_BOX);
+					
 					Vector2 arrowAttach = new Vector2(getWidth()*MathUtils.cos(getAngle()), getWidth()*MathUtils.sin(getAngle()));
 					arrowAttach.rotateRad(-getAngle());
+					
 					Vector2 collidedAttach = new Vector2(contactPoint).sub(collidedEntity.getCenter()).scl(0.6f);
 					collidedAttach.rotateRad(-collidedEntity.getAngle());
 					
