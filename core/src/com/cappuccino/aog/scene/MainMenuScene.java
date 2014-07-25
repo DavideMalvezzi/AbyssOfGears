@@ -89,24 +89,31 @@ public class MainMenuScene extends Scene {
 			public void clicked(InputEvent event, float x, float y) {
 				AOGGame.changeScene(new GameScene());
 				/*
-				level.activePress();
-				play.addAction(Actions.forever(Actions.run(new Runnable() {
-					boolean isStarted = false;
-					public void run() {
-						if(level.pressFinish() && !isStarted){
-							isStarted = true;
-							level.disactivePress();
-							stage.addAction(
+				if(play.getActions().size<=0){
+					level.activePress();
+					play.addAction(Actions.forever(Actions.run(new Runnable() {
+						boolean isStarted = false;
+						public void run() {
+							if(level.pressFinish() && !isStarted){
+								level.disactivePress();
+								isStarted = true;
+								stage.addAction(
 									Actions.sequence(
 											Actions.fadeOut(0.5f),
 											Actions.delay(0.3f),
 											Actions.moveBy(0, SCENE_H*2, 1.2f),
-											Actions.fadeIn(0.5f)
-									));
+											Actions.fadeIn(0.5f),
+											Actions.run(new Runnable() {
+												public void run() {
+													play.getActions().clear();													
+												}
+											})
+										));
+								
+							}
 						}
-					}
-				})));
-				
+					})));
+				}
 				*/
 			}
 		});
@@ -159,6 +166,7 @@ public class MainMenuScene extends Scene {
 						));
 				}
 				back.setDisabled(true);
+				
 			}
 		});
 		
@@ -215,7 +223,9 @@ public class MainMenuScene extends Scene {
 		if(Gdx.input.isKeyPressed(Keys.S))stage.getCamera().position.y-=4f;
 		if(Gdx.input.isKeyPressed(Keys.W))stage.getCamera().position.y+=4f;
 		
-		//editor.draw(batch);
+		if(editor!=null){
+			editor.draw(batch);
+		}
 	}
 	
 	
@@ -236,7 +246,9 @@ public class MainMenuScene extends Scene {
 		}
 		
 		
-		//editor.update();
+		if(editor!=null){
+			editor.update();
+		}
 	}
 	
 	

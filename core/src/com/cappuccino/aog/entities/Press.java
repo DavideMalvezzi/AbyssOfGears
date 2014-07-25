@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.cappuccino.aog.entities.Alexy.DeadType;
 import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
@@ -19,7 +18,7 @@ import com.cappuccino.aog.scene.GameScene;
 public class Press extends Entity{
 
 	private int dir;
-	private float minLen = 10, maxLen = 100, vel = 0;
+	private float minLen, maxLen, vel;
 	private final Vector2 startPos = new Vector2();
 	private Entity tube, otherPress, wall;
 	
@@ -151,6 +150,9 @@ public class Press extends Entity{
 		}
 	}
 
+	public void setVelocity(float vel){
+		this.vel = vel;
+	}
 	
 	@Override
 	public void dispose() {

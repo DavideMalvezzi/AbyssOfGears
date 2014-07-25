@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.cappuccino.aog.scene.MainMenuScene;
-import com.cappuccino.aog.scene.TryScene;
 
 public class AOGGame extends ApplicationAdapter {
 	
@@ -18,11 +17,8 @@ public class AOGGame extends ApplicationAdapter {
 	@Override
 	public void create() {
 		Assets.load();
-		
 		fpsLogger = new FPSLogger();
-		currentScene = new TryScene();
-		
-		Gdx.gl.glDisable(GL20.GL_BLEND);
+		currentScene = new MainMenuScene();
 	}
 	
 	@Override
@@ -31,7 +27,7 @@ public class AOGGame extends ApplicationAdapter {
 		
 		fpsLogger.log();
 		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		currentScene.update(dt);
 		currentScene.render(dt);

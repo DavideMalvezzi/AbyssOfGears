@@ -29,16 +29,22 @@ public class MainMenuLevel extends Level {
 	public void activePress(){
 		p.active();
 		p2.active();
+		p.setVelocity(30);
+		p2.setVelocity(30);
 	}
 	
 	public void disactivePress(){
 		p.disactive();
 		p2.disactive();
+		p.setVelocity(0);
+		p2.setVelocity(0);
 	}
 	
 	public void openPress(){
 		p.open();
 		p2.open();
+		p.setVelocity(0);
+		p2.setVelocity(0);
 	}
 	
 	public boolean pressFinish(){

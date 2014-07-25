@@ -29,7 +29,7 @@ public class Level0 extends Level {
 
 	@Override
 	public Vector2 getSpawnPoint() {
-		return new Vector2(Scene.SCENE_H/2, 1280);
+		return new Vector2(Scene.SCENE_H/2, 800);
 	}
 
 	@Override

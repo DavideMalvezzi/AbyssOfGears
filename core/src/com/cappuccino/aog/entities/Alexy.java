@@ -157,7 +157,6 @@ public class Alexy extends Entity {
 	public void onCollide(Fixture sender, Fixture collided, Contact contact) {
 		String senderName = (String)sender.getUserData();
 		if(senderName.contains("feet")){
-			System.out.println("Alexy.onCollide()");
 			Gdx.app.postRunnable(new Runnable() {
 				public void run() {
 					setLinearVelocity(0, 0);
@@ -171,7 +170,7 @@ public class Alexy extends Entity {
 	
 	
 	private void move(float delta) {
-		//umbrella.update(delta); 
+		umbrella.update(delta); 
 		setAngularVelocity(umbrella.getAngularVelocity());
 		
 		if(Gdx.app.getType()==ApplicationType.Desktop){

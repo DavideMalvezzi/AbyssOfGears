@@ -65,11 +65,11 @@ public class EditingInputListener extends InputAdapter {
 		sort(allWalls);
 		
 		System.err.println("Salvo");
-		for(Entity e : level.getActiveEntities()){
+		for(Entity e : allEnts){
 			levelModel.addEntity(e);
 		}
 		
-		for(Entity e : level.getActiveWalls()){
+		for(Entity e : allWalls){
 			levelModel.addWall((Wall) e);
 		}
 		

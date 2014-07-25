@@ -23,7 +23,7 @@ public class GameScene extends Scene{
 	private Alexy player;
 	private GameSceneHud hud;
 	
-	private MapEditor mapEditor;
+	private MapEditor editor;
 	
 	public GameScene(){
 		super();
@@ -42,7 +42,7 @@ public class GameScene extends Scene{
 		l.attachToBody(player.getBody(), 0, -2);
 		PointLight.setContactFilter(Entity.LIGHT, (short) 0, Entity.LIGHT_MASK);
 		
-		mapEditor = new MapEditor(level, world, camera);
+		//editor = new MapEditor(level, world, camera);
 	}
 	
 	public void render(float delta){
@@ -52,7 +52,7 @@ public class GameScene extends Scene{
 				ShaderLibrary.softLight.setUniformf("mixColor", level.getColor());
 				parallaxbg0.render(batch, camera);
 				parallaxbg1.render(batch, camera);
-				if(mapEditor==null){
+				if(editor == null){
 					level.render(batch);
 				}else{
 					level.debugRender(batch);
@@ -69,7 +69,9 @@ public class GameScene extends Scene{
 			
 			hud.draw();
 			
-			mapEditor.draw(batch);
+			if(editor!=null){
+				editor.draw(batch);
+			}
 			
 		endClip();
 		
@@ -80,30 +82,28 @@ public class GameScene extends Scene{
 		
 		if(!hud.isPaused()){
 			if(player.getState()!=Status.DYING){
-				//camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
+				if(editor==null)camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
 				parallaxbg0.update(delta, -player.getBody().getLinearVelocity().y*0.15f*BOX_TO_WORLD);
 				parallaxbg1.update(delta, -player.getBody().getLinearVelocity().y*0.3f*BOX_TO_WORLD);
 			}else{
 				hud.showGameOverMenu();
 			}
 			
-			
-			
-			if(mapEditor.isDebugging()){
+			if(editor==null){
 				world.step(1/60f, 8, 3);
-				if(mapEditor==null){
-					level.update(delta);
-				}else{
-					level.debugUpdate(delta);
-				}
+				level.update(delta);
+			}else if(editor!=null && editor.isDebugging()){
+				world.step(1/60f, 8, 3);
+				level.debugUpdate(delta);
 			}
 			
 			rayHandler.update();
 		}
 		
 		hud.act(delta);
-		
-		mapEditor.update();
+		if(editor!=null){
+			editor.update();
+		}
 	}
 	
 	

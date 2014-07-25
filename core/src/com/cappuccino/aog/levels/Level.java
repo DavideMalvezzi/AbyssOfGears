@@ -86,6 +86,7 @@ public abstract class Level {
 			i++;
 		}
 		
+		
 	}
 	
 	protected void updateWalls(float delta){
@@ -136,13 +137,10 @@ public abstract class Level {
 			i++;
 		}
 		
-		//System.out.println("Rendered Entities " + rendered + " " + " Inactive ents " + inactive_entities.size);
-		
 		if(usePlayer){
 			alexy.draw(batch);
 		}
 	}
-	
 	
 	protected void updateEntities(float delta){
 		Rectangle area = Scissor.getArea();
@@ -238,6 +236,10 @@ public abstract class Level {
 		FileHandle levelFile = Gdx.files.external("Desktop/levels/"+getLevelName()+".json");
 		LevelModel model = j.fromJson(LevelModel.class, levelFile);
 		model.loadOnLevel(world, this);
+		
+		for(int i=0; i<active_walls.size; i++){
+			System.out.println(active_walls.get(i).getCenter().y);
+		}
 	}
 	
 	
