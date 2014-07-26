@@ -26,7 +26,7 @@ public class Assets {
 	public static ParticleEmitter fallingEffect, smokeEffect, gasEffect;
 	
 	public static Skin hudSkin;
-	public static BitmapFont font64,font100,font200;
+	public static BitmapFont font64,font100;
 	
 	
 	public static void load(){
@@ -41,13 +41,11 @@ public class Assets {
 		parameter.size = 128;
 		font64 = fontGenerator.generateFont(parameter);
 		font64.setScale(0.5f);
-		parameter.size = 190;
+		parameter.size = 150;
+		parameter.characters  = "Play";
 		font100 = fontGenerator.generateFont(parameter);
 		font100.setScale(0.5f);
-		parameter.size = 230;
-		parameter.characters  = "AbysofGear";
-		font200 = fontGenerator.generateFont(parameter);
-		font200.setScale(0.5f);
+		
 		
 		fontGenerator.dispose();
 		
@@ -86,7 +84,6 @@ public class Assets {
 		
 		font64.dispose();
 		font100.dispose();
-		font200.dispose();
 		
 		hudSkin.dispose();
 		textures.clear();

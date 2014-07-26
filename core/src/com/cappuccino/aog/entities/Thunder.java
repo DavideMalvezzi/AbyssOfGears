@@ -24,7 +24,6 @@ import com.cappuccino.aog.BatchUtils;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 
 public class Thunder extends Entity {
@@ -198,9 +197,9 @@ public class Thunder extends Entity {
 	public void onCollide(Fixture sender, Fixture collided, Contact contact){
 		Alexy alexy = Level.getPlayer();
 		String collidedName = (String) collided.getUserData();
-		if(alexy.getState() != Status.DYING){
+		if(alexy.getState() != AlexyStatus.DYING){
 			if(collidedName.contains("Umbrella") || collidedName.contains("Player")){
-				alexy.setState(Status.DYING);
+				alexy.setState(AlexyStatus.DYING);
 				alexy.setDeadType(DeadType.FULMINATED);
 			}
 		}

@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.scene.GameScene;
@@ -30,7 +29,7 @@ public class GasEmitter extends Entity {
 			Alexy alexy = Level.getPlayer();
 			
 			if(fixName.contains("Player")){
-				alexy.setState(Status.DYING);
+				alexy.setState(AlexyStatus.DYING);
 				alexy.setDeadType(DeadType.POISONED);
 				return 0;
 			}

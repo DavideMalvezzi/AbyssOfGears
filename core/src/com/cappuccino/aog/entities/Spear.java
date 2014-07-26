@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
@@ -100,7 +99,7 @@ public class Spear extends Entity{
 		final String collidedFixName = (String)collided.getUserData();
 		final Vector2 contactPoint = contact.getWorldManifold().getPoints()[0].scl(GameScene.WORLD_TO_BOX);
 		
-		if(attacched == null && !senderFixName.contains("pole") && alexy.getState()!=Status.DYING){
+		if(attacched == null && !senderFixName.contains("pole") && alexy.getState()!=AlexyStatus.DYING){
 			
 			if(collidedFixName.contains("Player") ||collidedFixName.equals("Umbrella_sensor")){
 			
@@ -127,7 +126,7 @@ public class Spear extends Entity{
 						collidedEntity.getBody().setAngularVelocity(body.getAngularVelocity());
 					}
 				});
-				alexy.setState(Status.DYING);
+				alexy.setState(AlexyStatus.DYING);
 				alexy.setDeadType(DeadType.PIERCED);
 			}
 		}

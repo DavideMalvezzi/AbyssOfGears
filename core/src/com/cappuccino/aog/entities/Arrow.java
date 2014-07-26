@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.scene.GameScene;
 
@@ -90,7 +89,7 @@ public class Arrow extends Entity implements Poolable {
 					
 					
 					if(collidedName.contains("Player") || collidedName.contains("Umbrella")){
-						alexy.setState(Status.DYING);
+						alexy.setState(AlexyStatus.DYING);
 						alexy.setDeadType(DeadType.ARROWED);
 					}else{
 						body.setActive(false);

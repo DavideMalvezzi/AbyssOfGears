@@ -34,10 +34,10 @@ public class Chain extends Entity{
 		setScaleY(scale);
 		initFixtures();
 		
-		createChain(world);
-		
 		setAngle(angle);
+		createChain(world);
 		setCenter(x, y);
+	
 	}
 	
 	
@@ -93,9 +93,9 @@ public class Chain extends Entity{
 	
 	
 	public void attachEntity(Entity e, Vector2 anchor){
-		JointsFactory.createRevoluteJoint(body.getWorld(), 
+		JointsFactory.createRopeJoint(body.getWorld(), 
 				chain[chain.length-1], e, 
-				new Vector2(chain[chain.length-1].getWidth(), 0), anchor, true);
+				new Vector2(chain[chain.length-1].getWidth(), 0), anchor, 0, true);
 	}
 
 	@Override

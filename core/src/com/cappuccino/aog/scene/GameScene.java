@@ -8,8 +8,8 @@ import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.entities.Alexy;
+import com.cappuccino.aog.entities.AlexyStatus;
 import com.cappuccino.aog.entities.Entity;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.levels.LevelManager;
@@ -63,7 +63,7 @@ public class GameScene extends Scene{
 			camera.combined.scl(WORLD_TO_BOX);
 			camera.projection.scl(WORLD_TO_BOX);
 				
-			//box2dDebug.render(world, camera.combined);
+			box2dDebug.render(world, camera.combined);
 			rayHandler.setCombinedMatrix(camera.combined);
 			//rayHandler.render();
 			
@@ -81,7 +81,7 @@ public class GameScene extends Scene{
 		camera.update();
 		
 		if(!hud.isPaused()){
-			if(player.getState()!=Status.DYING){
+			if(player.getState()!=AlexyStatus.DYING){
 				if(editor==null)camera.position.y = player.getCenter().y*GameScene.BOX_TO_WORLD;
 				parallaxbg0.update(delta, -player.getBody().getLinearVelocity().y*0.15f*BOX_TO_WORLD);
 				parallaxbg1.update(delta, -player.getBody().getLinearVelocity().y*0.3f*BOX_TO_WORLD);

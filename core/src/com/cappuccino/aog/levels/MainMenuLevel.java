@@ -13,7 +13,7 @@ public class MainMenuLevel extends Level {
 	
 	
 	public MainMenuLevel(World world) {
-		levelColor = new Color(0xff9600ff);
+		levelColor = new Color(0x007d92ff);
 		init(world, false);
 		
 		p = new Press(world, 26, 250, 75, 300, 30, 0, 0.65f);

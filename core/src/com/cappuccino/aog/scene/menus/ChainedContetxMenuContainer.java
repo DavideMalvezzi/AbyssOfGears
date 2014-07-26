@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
+import com.cappuccino.aog.entities.ActorEntities.ContetxMenuEntity;
 import com.cappuccino.aog.entities.Chain;
-import com.cappuccino.aog.entities.ContetxMenuEntity;
 
 public class ChainedContetxMenuContainer extends Actor {
 
@@ -43,7 +43,6 @@ public class ChainedContetxMenuContainer extends Actor {
 		 c1.attachEntity(menuBg, new Vector2(-menuBg.getWidth()/2*0.85f, 0));
 		 c2.attachEntity(menuBg, new Vector2(menuBg.getWidth()/2*0.85f, 0));
 		 c3.attachEntity(menuBg, new Vector2());
-		 
 		 
 		 fade = new Image(Assets.hudSkin.getDrawable("Fade"));
 		 fade.setColor(0, 0, 0, 0);

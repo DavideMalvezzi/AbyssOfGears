@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
@@ -142,7 +141,7 @@ public class Press extends Entity{
 
 			if(plateDst<=alexy.getWidth() && dir == 1){
 				if(collidedName.contains("Player") || collidedName.contains("Umbrella")){
-					alexy.setState(Status.DYING);
+					alexy.setState(AlexyStatus.DYING);
 					alexy.setDeadType(DeadType.PRESSED);
 				}
 			}

@@ -14,7 +14,7 @@ import com.cappuccino.aog.AOGGame;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.Scissor;
 import com.cappuccino.aog.entities.Alexy;
-import com.cappuccino.aog.entities.Alexy.Status;
+import com.cappuccino.aog.entities.AlexyStatus;
 import com.cappuccino.aog.entities.Entity;
 import com.cappuccino.aog.mapeditor.LevelModel;
 
@@ -61,7 +61,7 @@ public abstract class Level {
 		
 		alexy.setCenter(getSpawnPoint());
 		alexy.setLinearVelocity(0, 0);
-		alexy.setState(Status.UMBRELLA_OPEN);
+		alexy.setState(AlexyStatus.FALLING_UMBRELLA_OPEN);
 	}
 	
 	public abstract void render(SpriteBatch batch);
@@ -236,10 +236,6 @@ public abstract class Level {
 		FileHandle levelFile = Gdx.files.external("Desktop/levels/"+getLevelName()+".json");
 		LevelModel model = j.fromJson(LevelModel.class, levelFile);
 		model.loadOnLevel(world, this);
-		
-		for(int i=0; i<active_walls.size; i++){
-			System.out.println(active_walls.get(i).getCenter().y);
-		}
 	}
 	
 	

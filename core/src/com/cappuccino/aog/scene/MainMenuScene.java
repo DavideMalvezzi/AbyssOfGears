@@ -22,6 +22,7 @@ import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
 import com.cappuccino.aog.mapeditor.MapEditor;
 import com.cappuccino.aog.scene.menus.ChainedContetxMenuContainer;
+import com.cappuccino.aog.scene.menus.MainMenuTitle;
 
 public class MainMenuScene extends Scene {
 	
@@ -29,6 +30,7 @@ public class MainMenuScene extends Scene {
 	private MainMenuLevel level;
 	private VParallaxLayer bg0,bg1;
 	
+	private MainMenuTitle menuTitle;
 	private ChainedContetxMenuContainer contextMenu;
 	
 	private MapEditor editor;
@@ -38,6 +40,8 @@ public class MainMenuScene extends Scene {
 		OrthographicCamera cam = new OrthographicCamera();
 		ExtendViewport view = new ExtendViewport(SCENE_W, SCENE_H, cam);
 		stage = new Stage(view);
+		stage.getBatch().setShader(ShaderLibrary.softLight);
+		Gdx.input.setInputProcessor(stage);
 		
 		cam.zoom = SCENE_H/view.getWorldHeight();
 		cam.position.set(view.getWorldWidth()/2, view.getWorldHeight()/2, 0);
@@ -45,50 +49,17 @@ public class MainMenuScene extends Scene {
 		float traslX = (view.getWorldWidth()*cam.zoom-SCENE_W)/2;
 		float traslY = (view.getWorldHeight()-SCENE_H)/2;
 		
-		Gdx.input.setInputProcessor(stage);
+		level = new MainMenuLevel(world);
 		
-		//Main Menù
-		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
-		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
-		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
+		loadMainMenu(traslX, traslY);
+		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
+		menuTitle = new MainMenuTitle(world, stage, traslX, traslY);
 		
-		
-		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 5+traslY);
-		achive.setPosition(shop.getX()*1.3f, 5+traslY);
-		stats.setPosition(shop.getX()*0.7f, 5+traslY);
-		
-		
-		achive.setTransform(true);
-		achive.setOrigin(achive.getWidth()/2, achive.getHeight()/2);
-		achive.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				contextMenu.showMenu(achive, 0);
-			}
-		});
-		
-		shop.setTransform(true);
-		shop.setOrigin(shop.getWidth()/2, shop.getHeight()/2);
-		shop.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				contextMenu.showMenu(shop, 1);
-			}
-		});
-		
-		stats.setTransform(true);
-		stats.setOrigin(stats.getWidth()/2, stats.getHeight()/2);
-		stats.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				contextMenu.showMenu(stats, 2);
-			}
-		});
-		
-		LabelStyle playStyle = new LabelStyle(Assets.font100, Color.BLACK);
-		final Label play = new Label("Play", playStyle);
-		play.setPosition((stage.getWidth()-play.getWidth())/2, 200+traslY);//0.27f * view.getWorldHeight());
+		final Label play = menuTitle.getPlayLabel();
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				AOGGame.changeScene(new GameScene());
-				/*
+				//AOGGame.changeScene(new GameScene());
+				
 				if(play.getActions().size<=0){
 					level.activePress();
 					play.addAction(Actions.forever(Actions.run(new Runnable() {
@@ -114,35 +85,25 @@ public class MainMenuScene extends Scene {
 						}
 					})));
 				}
-				*/
-			}
-		});
-		
-		LabelStyle titleStyle = new LabelStyle(Assets.font200, Color.BLACK);
-		Label titlep1 = new Label("Abyss of", titleStyle);
-		titlep1.setPosition((stage.getWidth()-titlep1.getWidth())/2, 545+traslY);
-		Label titlep2 = new Label("Gears", titleStyle);
-		titlep2.setPosition((stage.getWidth()-titlep2.getWidth())/2, 430+traslY);
-		
-		LabelStyle infoStyle = new LabelStyle(Assets.font64, Color.WHITE);
-		Label info = new Label("?", infoStyle);
-		info.setPosition(0.95f*stage.getWidth()+traslX, traslY);
-		info.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
 				
 			}
 		});
 		
-		stage.addActor(achive);
-		stage.addActor(shop);
-		stage.addActor(stats);
-		stage.addActor(info);
-		
-		stage.addActor(play);
-		stage.addActor(titlep1);
-		stage.addActor(titlep2);
 		
 		//Menù play
+		loadSelectLevelMenu(traslX, traslY);
+		
+	
+		bg0 = new VParallaxLayer(Assets.layer0Background);
+		bg1 = new VParallaxLayer(Assets.layer1Background);
+		
+		//editor = new MapEditor(level, world, camera);
+		
+	}
+	
+	
+	
+	private void loadSelectLevelMenu(float traslX, float traslY) {
 		final ImageButton back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
 		back.setPosition(5-traslX, -825+traslY);
 		back.setOrigin(back.getWidth()/2, back.getHeight()/2);
@@ -172,29 +133,84 @@ public class MainMenuScene extends Scene {
 		
 		stage.addActor(back);
 		
-		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
-		level = new MainMenuLevel(world);
-		
-		bg0 = new VParallaxLayer(Assets.layer0Background);
-		bg1 = new VParallaxLayer(Assets.layer1Background);
-		
-		//editor = new MapEditor(level, world, camera);
-		
 	}
-	
-	
-	
+
+	private void loadMainMenu(float traslX, float traslY) {
+		//Main Menù
+		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
+		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
+		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
+				
+				
+		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 5+traslY);
+		achive.setPosition(shop.getX()*0.7f, 5+traslY);
+		stats.setPosition(shop.getX()*1.3f, 5+traslY);
+				
+		achive.setTransform(true);
+		achive.setOrigin(achive.getWidth()/2, achive.getHeight()/2);
+		achive.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				//contextMenu.showMenu(achive, 0);
+				menuTitle.addAction(
+						Actions.sequence(
+								Actions.moveBy(-stage.getWidth()*Scene.BOX_TO_WORLD, 0, 3),
+								Actions.moveBy(0, 0)
+						));
+			}
+		});
+				
+		shop.setTransform(true);
+		shop.setOrigin(shop.getWidth()/2, shop.getHeight()/2);
+		shop.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				contextMenu.showMenu(shop, 1);
+			}
+		});
+				
+		stats.setTransform(true);
+		stats.setOrigin(stats.getWidth()/2, stats.getHeight()/2);
+		stats.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				contextMenu.showMenu(stats, 2);
+			}
+		});	
+		
+		
+		stage.addActor(achive);
+		stage.addActor(shop);
+		stage.addActor(stats);
+		
+		
+		LabelStyle infoStyle = new LabelStyle(Assets.font64, Color.WHITE);
+		Label info = new Label("?", infoStyle);
+		info.setPosition(0.95f*stage.getWidth()+traslX, traslY);
+		info.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				
+			}
+		});
+		
+		stage.addActor(info);
+	}
+
+
+
 	public void render(float delta) {
 		beginClip();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-				ShaderLibrary.softLight.setUniformf("mixColor", level.getColor());
+				ShaderLibrary.setSoftLightParams(level.getColor());
 				bg0.render(batch, camera);
 				bg1.render(batch, camera);
 				level.render(batch);
+				
 			batch.end();
 			
+			ShaderLibrary.softLight.begin();
+			ShaderLibrary.setSoftLightParams(level.getColor());
 			stage.draw();
+			
+			
 		endClip();
 		
 		//rayHandler.setCombinedMatrix(camera.combined.scl(WORLD_TO_BOX));

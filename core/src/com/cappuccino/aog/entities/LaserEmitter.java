@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
@@ -126,7 +125,7 @@ public class LaserEmitter extends Entity {
 		String collidedName = (String) collided.getUserData();
 		Alexy alexy = Level.getPlayer();
 		if((collidedName.contains("Player") || collidedName.contains("Umbrella"))){
-			alexy.setState(Status.DYING);
+			alexy.setState(AlexyStatus.DYING);
 			alexy.setDeadType(DeadType.LASERED);
 		}
 	}

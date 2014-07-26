@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cappuccino.aog.entities.Alexy.DeadType;
-import com.cappuccino.aog.entities.Alexy.Status;
 import com.cappuccino.aog.levels.Level;
 import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
@@ -57,7 +56,7 @@ public class SpikedBall extends Entity {
 		
 		if(collidedName.contains("Umbrella")){
 			
-		}else if(attacched == null && alexy.getState()!=Status.DYING ){
+		}else if(attacched == null && alexy.getState()!=AlexyStatus.DYING ){
 			Gdx.app.postRunnable(new Runnable() {
 				public void run() {
 					while(getBody().getWorld().isLocked());
@@ -78,7 +77,7 @@ public class SpikedBall extends Entity {
 			});
 			
 		}
-		alexy.setState(Status.DYING);
+		alexy.setState(AlexyStatus.DYING);
 		alexy.setDeadType(DeadType.PIERCED);
 	}
 	

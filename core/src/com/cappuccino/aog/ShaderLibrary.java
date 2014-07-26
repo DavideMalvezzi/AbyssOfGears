@@ -1,6 +1,7 @@
 package com.cappuccino.aog;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,6 +11,10 @@ public class ShaderLibrary {
 	public static final ShaderProgram gaussianBlur = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/shader/gaussian_blur.frag"));
 	public static final ShaderProgram bloom = new ShaderProgram(Gdx.files.internal("data/shader/default.vert"), Gdx.files.internal("data/shader/bloom.frag"));
 	
+	
+	public static void setSoftLightParams(Color color){
+		softLight.setUniformf("mixColor", color);
+	}
 	
 	public static void setBloomParams(float pixelSizeX, float pixelSizeY, float[] values, float gloomFactor){
 		bloom.setUniformf("pixelSize", new Vector2(pixelSizeX, pixelSizeY));
