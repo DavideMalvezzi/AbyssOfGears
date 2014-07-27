@@ -1,18 +1,14 @@
 package com.cappuccino.aog.scene.menus;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.Scene;
 import com.cappuccino.aog.entities.ActorEntities.ContetxMenuEntity;
@@ -23,51 +19,32 @@ public class ChainedContetxMenuContainer extends Actor {
 	private Chain c1, c2, c3;
 	private ContetxMenuEntity menuBg;
 	
-	private Image fade;
 	private ImageButton back;
 	private Stage stage;
 	private ContextMenu contextMenu;
-	
-	private static final Color FADE_COLOR = new Color(0.13f,0.13f,0.13f,0.5f);
-	
 	
 	public ChainedContetxMenuContainer(World world, Stage stage, float traslX, float traslY) {
 		 this.stage = stage;
 		 menuBg = new ContetxMenuEntity(world);
 		 menuBg.setCenter(stage.getWidth()*0.5f, 1.65f*stage.getHeight()-traslY);
 		 
-		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
-		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
-		 c3 = new Chain(world, menuBg.getCenter().x , 2f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		 c1 = new Chain(world, menuBg.getCenter().x-menuBg.getWidth()/2*0.85f , 2*stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		 c2 = new Chain(world, menuBg.getCenter().x+menuBg.getWidth()/2*0.85f , 2*stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		 c3 = new Chain(world, menuBg.getCenter().x , 2*stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
 		
 		 c1.attachEntity(menuBg, new Vector2(-menuBg.getWidth()/2*0.85f, 0));
 		 c2.attachEntity(menuBg, new Vector2(menuBg.getWidth()/2*0.85f, 0));
 		 c3.attachEntity(menuBg, new Vector2());
 		 
-		 fade = new Image(Assets.hudSkin.getDrawable("Fade"));
-		 fade.setColor(0, 0, 0, 0);
-		 fade.setPosition(0, 0);
-		 fade.setSize(stage.getWidth(), stage.getHeight());
-		 
 		 back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
-		 back.setPosition(0.01f * stage.getWidth()-traslX, 612+traslY);
+		 back.setPosition(0.01f * stage.getWidth()-traslX, stage.getHeight()-back.getHeight()+traslY);
 		 back.setOrigin(back.getWidth()/2, back.getHeight()/2);
 		 back.setTransform(true);
-		 back.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				if(!back.isDisabled()){
-					back.addAction(Actions.repeat(5, Actions.rotateBy(360, 0.2f)));
-					back.setDisabled(true);
-					hideMenu();
-				}
-			}
-		 });
 	}
 	
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.setColor(Color.WHITE);
 		c1.draw((SpriteBatch) batch);
 		c2.draw((SpriteBatch) batch);
 		menuBg.draw((SpriteBatch) batch);
@@ -76,20 +53,21 @@ public class ChainedContetxMenuContainer extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		contextMenu.setPosition(menuBg.getX(), menuBg.getY());
-		contextMenu.setRotation(menuBg.getAngle()*MathUtils.radDeg);
+		//contextMenu.setPosition(menuBg.getX(), menuBg.getY());
+		//contextMenu.setRotation(menuBg.getAngle()*MathUtils.radDeg);
+		
 	}
 	
 	public void showMenu(Actor sender, int contexMenuType){
 		sender.addAction(Actions.repeat(5, Actions.rotateBy(360, 0.2f)));
-		stage.addActor(fade);
 		stage.addActor(this);
 		contextMenu = new AchievementContextMenu(this);
 		
-		fade.addAction(Actions.color(FADE_COLOR, 0.5f));
 		addAction(
 				Actions.sequence(
-						Actions.moveBy(0, -stage.getHeight()*Scene.BOX_TO_WORLD, 1), 
+						Actions.moveBy(stage.getWidth()*Scene.BOX_TO_WORLD, 0, 1f), 
+						Actions.moveBy(-stage.getWidth()*Scene.BOX_TO_WORLD, 0, 0.5f), 
+						Actions.moveBy(0, -stage.getHeight()*Scene.BOX_TO_WORLD, 1f), 
 						Actions.moveBy(0, 0),	//stop
 						Actions.run(new Runnable() {
 							public void run() {
@@ -97,7 +75,6 @@ public class ChainedContetxMenuContainer extends Actor {
 							}
 						})
 				));
-		
 	}
 	
 	public void hideMenu(){
@@ -107,20 +84,9 @@ public class ChainedContetxMenuContainer extends Actor {
 						Actions.moveBy(0, 0),
 						Actions.run(new Runnable() {
 							public void run() {
-								back.remove();
 								back.setDisabled(false);
 								contextMenu.remove();
 								remove();
-								fade.addAction(
-									Actions.sequence(
-											Actions.fadeOut(0.5f),
-											Actions.run(new Runnable() {
-												public void run() {
-													fade.remove();
-													menuBg.getBody().applyForceToCenter(0, -10000, true);
-												}
-											})
-									));
 							}
 						})
 				));
@@ -140,18 +106,10 @@ public class ChainedContetxMenuContainer extends Actor {
 		menuBg.setLinearVelocity(velX, velY);
 	}
 	
-	
-	
-	public Stage getStage(){
-		return stage;
+	public ImageButton getBackButton(){
+		return back;
 	}
 	
-	public float getWidth(){
-		return menuBg.getWidth();
-	}
 	
-	public float getHeight(){
-		return menuBg.getHeight();
-	}
 	
 }

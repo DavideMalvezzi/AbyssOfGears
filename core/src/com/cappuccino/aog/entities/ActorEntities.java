@@ -21,8 +21,8 @@ public static class ContetxMenuEntity extends Entity{
 		protected void initFixtures() {
 			FixtureDef fd = new FixtureDef();
 			fd.density = 0.03f;
-			fd.filter.categoryBits = ENTITY;
-			fd.filter.maskBits = ENTITY_MASK;
+			fd.filter.categoryBits = ACTOR;
+			fd.filter.maskBits = ACTOR_MASK;
 			
 			bodyLoader.attachFixture(body, "ContexMenuBg", fd, getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD);
 			origin.set(bodyLoader.getOrigin("ContexMenuBg", getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD));
@@ -43,8 +43,8 @@ public static class ContetxMenuEntity extends Entity{
 		protected void initFixtures() {
 			FixtureDef fd = new FixtureDef();
 			fd.density = 0.015f;
-			fd.filter.categoryBits = ENTITY;
-			fd.filter.maskBits = ENTITY_MASK;
+			fd.filter.categoryBits = ACTOR;
+			fd.filter.maskBits = ACTOR_MASK;
 			
 			bodyLoader.attachFixture(body, "Title", fd, getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD);
 			origin.set(bodyLoader.getOrigin("Title", getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD));
@@ -65,8 +65,8 @@ public static class ContetxMenuEntity extends Entity{
 		protected void initFixtures() {
 			FixtureDef fd = new FixtureDef();
 			fd.density = 0.015f;
-			fd.filter.categoryBits = ENTITY;
-			fd.filter.maskBits = ENTITY_MASK;
+			fd.filter.categoryBits = ACTOR;
+			fd.filter.maskBits = ACTOR_MASK;
 			
 			bodyLoader.attachFixture(body, "Play", fd, getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD);
 			origin.set(bodyLoader.getOrigin("Play", getRealWidth()*Scene.BOX_TO_WORLD, getRealWidth()*Scene.BOX_TO_WORLD));

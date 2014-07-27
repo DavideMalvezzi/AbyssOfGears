@@ -27,12 +27,14 @@ public class Entity implements Disposable {
 	public static final short ENTITY = 0x0008;
 	public static final short LIGHT = 0x0010;
 	public static final short BULLET = 0x0020;
+	public static final short ACTOR = 0x0040;
 	
 	public static final short PLAYER_MASK = PLAYER | WALL | ENTITY | BULLET;
 	public static final short WALL_MASK = PLAYER | LIGHT | BULLET;
 	public static final short ENTITY_MASK = PLAYER | LIGHT | BULLET;
 	public static final short LIGHT_MASK = LIGHT | ENTITY | WALL | BULLET | PLAYER;
 	public static final short BULLET_MASK = LIGHT | ENTITY | WALL | PLAYER;
+	public static final short ACTOR_MASK = ACTOR;
 	
 	protected static final BodyEditorLoader bodyLoader = new BodyEditorLoader(Gdx.files.internal("data/Bodies"));
 	

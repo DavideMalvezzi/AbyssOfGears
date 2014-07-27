@@ -83,9 +83,6 @@ public class JointsFactory {
 		
 		jointDef.collideConnected = collide;
 		
-		jointDef.enableLimit = true;
-		
-		
 		return world.createJoint(jointDef);
 	
 	}

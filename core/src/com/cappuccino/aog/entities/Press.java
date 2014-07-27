@@ -97,6 +97,10 @@ public class Press extends Entity{
 		float velY = vel*dir*MathUtils.sin(getAngle());
 		velX = MathUtils.isZero(velX, 0.00001f)? 0 : velX;
 		velY = MathUtils.isZero(velY, 0.00001f)? 0 : velY;
+		if(dir==-1){
+			velX*=0.3f;
+			velY*=0.3f;
+		}
 		tube.setLinearVelocity(velX, velY);
 		
 	}

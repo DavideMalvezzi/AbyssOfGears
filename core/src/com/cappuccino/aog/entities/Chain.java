@@ -37,7 +37,6 @@ public class Chain extends Entity{
 		setAngle(angle);
 		createChain(world);
 		setCenter(x, y);
-	
 	}
 	
 	
@@ -72,8 +71,8 @@ public class Chain extends Entity{
 	protected void initFixtures() {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
-		fd.filter.categoryBits = WALL;
-		fd.filter.maskBits = WALL_MASK;
+		fd.filter.categoryBits = ACTOR;
+		fd.filter.maskBits = ACTOR_MASK;
 		
 		bodyLoader.attachFixture(getBody(), "Chain", fd, getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD);
 		origin.set(bodyLoader.getOrigin("Chain", getRealWidth()*scaleX*Scene.BOX_TO_WORLD, getRealWidth()*scaleY*Scene.BOX_TO_WORLD));
@@ -83,8 +82,9 @@ public class Chain extends Entity{
 	protected void initFixtures(Entity e) {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 2;
-		fd.filter.categoryBits = ENTITY;
-		fd.filter.maskBits = 0;
+		fd.filter.categoryBits = ACTOR;
+		fd.filter.maskBits = ACTOR_MASK;
+		fd.isSensor = true;
 		
 		bodyLoader.attachFixture(e.getBody(), "Chain", fd, getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD);
 		e.origin.set(bodyLoader.getOrigin("Chain", getRealWidth()*e.scaleX*Scene.BOX_TO_WORLD, getRealWidth()*e.scaleY*Scene.BOX_TO_WORLD));
@@ -93,9 +93,15 @@ public class Chain extends Entity{
 	
 	
 	public void attachEntity(Entity e, Vector2 anchor){
+		/*
 		JointsFactory.createRopeJoint(body.getWorld(), 
 				chain[chain.length-1], e, 
 				new Vector2(chain[chain.length-1].getWidth(), 0), anchor, 0, true);
+		*/
+		JointsFactory.createRevoluteJoint(body.getWorld(), 
+				chain[chain.length-1], e, 
+				new Vector2(getWidth(), 0), anchor, true);
+		
 	}
 
 	@Override
@@ -109,14 +115,15 @@ public class Chain extends Entity{
 	public void setCenter(float x, float y) {
 		super.setCenter(x, y);
 		for(int i=0; i<chain.length; i++){
-			chain[i].setCenter(x+(i+1)*chain[i].getWidth()*MathUtils.cos(getAngle()),y+(i+1)*chain[i].getWidth()*MathUtils.sin(getAngle()));
+			chain[i].setCenter(
+					x+(i+1)*chain[i].getWidth()*MathUtils.cos(getAngle()),
+					y+(i+1)*chain[i].getWidth()*MathUtils.sin(getAngle()));
 		}
 	}
 	
 	public void dispose() {
 		super.dispose();
-		
-		for (int i=0; i<chain.length; i++) {
+		for(int i=0; i<chain.length; i++) {
 			chain[i].dispose();
 		}
 		

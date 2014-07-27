@@ -42,7 +42,7 @@ public class Scene extends ScreenAdapter {
 		rayHandler = new RayHandler(world);
 		rayHandler.setAmbientLight(0, 0, 0, 0f);
 		
-		box2dDebug = new Box2DDebugRenderer(true,true,false,false,false,false);
+		box2dDebug = new Box2DDebugRenderer(true,true,false,false,true,false);
 	}
 	
 	protected void beginClip(){

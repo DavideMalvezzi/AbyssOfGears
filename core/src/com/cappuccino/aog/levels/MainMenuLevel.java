@@ -16,10 +16,10 @@ public class MainMenuLevel extends Level {
 		levelColor = new Color(0x007d92ff);
 		init(world, false);
 		
-		p = new Press(world, 26, 250, 75, 300, 30, 0, 0.65f);
-		p2 = new Press(world, 668, 250, 75, 300, 30, 180*MathUtils.degRad, 0.65f);
-		openPress();
-		disactivePress();
+		p = new Press(world, 26, 250, 50, 300, 30, 0, 0.65f);
+		p2 = new Press(world, 668, 250, 50, 300, 30, 180*MathUtils.degRad, 0.65f);
+		//openPress();
+		//disactivePress();
 		
 		active_entities.add(p);
 		active_entities.add(p2);

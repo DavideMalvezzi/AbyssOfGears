@@ -3,14 +3,13 @@ package com.cappuccino.aog.scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.cappuccino.aog.AOGGame;
@@ -51,22 +50,16 @@ public class MainMenuScene extends Scene {
 		
 		level = new MainMenuLevel(world);
 		
-		loadMainMenu(traslX, traslY);
-		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
 		menuTitle = new MainMenuTitle(world, stage, traslX, traslY);
-		
 		final Label play = menuTitle.getPlayLabel();
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
 				//AOGGame.changeScene(new GameScene());
-				
 				if(play.getActions().size<=0){
-					level.activePress();
 					play.addAction(Actions.forever(Actions.run(new Runnable() {
 						boolean isStarted = false;
 						public void run() {
-							if(level.pressFinish() && !isStarted){
-								level.disactivePress();
+							if(!isStarted){
 								isStarted = true;
 								stage.addAction(
 									Actions.sequence(
@@ -80,7 +73,6 @@ public class MainMenuScene extends Scene {
 												}
 											})
 										));
-								
 							}
 						}
 					})));
@@ -89,6 +81,8 @@ public class MainMenuScene extends Scene {
 			}
 		});
 		
+		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
+		loadMainMenu(traslX, traslY);
 		
 		//Menù play
 		loadSelectLevelMenu(traslX, traslY);
@@ -112,7 +106,6 @@ public class MainMenuScene extends Scene {
 			public void clicked(InputEvent event, float x, float y) {
 				if(!back.isDisabled()){
 					back.addAction(Actions.repeat(5, Actions.rotateBy(360, 0.2f)));
-					level.openPress();
 					stage.addAction(
 						Actions.sequence(
 								Actions.fadeOut(0.5f),
@@ -137,62 +130,89 @@ public class MainMenuScene extends Scene {
 
 	private void loadMainMenu(float traslX, float traslY) {
 		//Main Menù
-		final ImageButton achive = new ImageButton(Assets.hudSkin.getDrawable("AchievementButton"));
-		final ImageButton shop = new ImageButton(Assets.hudSkin.getDrawable("ShopButton"));
-		final ImageButton stats = new ImageButton(Assets.hudSkin.getDrawable("StatsButton"));
-				
+		final Button achive = new Button(Assets.hudSkin.getDrawable("AchievementButton"));
+		final Button shop = new Button(Assets.hudSkin.getDrawable("ShopButton"));
+		final Button stats = new Button(Assets.hudSkin.getDrawable("StatsButton"));
+		final Button info = new Button(Assets.hudSkin.getDrawable("InfoButton"));
+		final ClickListener onClick = new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				Button sender = (Button) event.getTarget();
+				if(!sender.isDisabled()){
+					menuTitle.hide();
+					contextMenu.showMenu(sender, (Integer)sender.getUserObject());
+					
+					disableAndFadeOut(stats);
+					disableAndFadeOut(achive);
+					disableAndFadeOut(shop);
+					disableAndFadeOut(info);
+				}
+			}
+		};
 				
 		shop.setPosition((stage.getWidth()-shop.getWidth())/2, 5+traslY);
-		achive.setPosition(shop.getX()*0.7f, 5+traslY);
-		stats.setPosition(shop.getX()*1.3f, 5+traslY);
-				
-		achive.setTransform(true);
-		achive.setOrigin(achive.getWidth()/2, achive.getHeight()/2);
-		achive.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				//contextMenu.showMenu(achive, 0);
-				menuTitle.addAction(
-						Actions.sequence(
-								Actions.moveBy(-stage.getWidth()*Scene.BOX_TO_WORLD, 0, 3),
-								Actions.moveBy(0, 0)
-						));
-			}
-		});
-				
 		shop.setTransform(true);
 		shop.setOrigin(shop.getWidth()/2, shop.getHeight()/2);
-		shop.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				contextMenu.showMenu(shop, 1);
-			}
-		});
-				
+		shop.addListener(onClick);
+		shop.setUserObject(1);
+		
+		achive.setPosition(shop.getX()*0.7f, 5+traslY);
+		achive.setTransform(true);
+		achive.setOrigin(achive.getWidth()/2, achive.getHeight()/2);
+		achive.addListener(onClick);
+		achive.setUserObject(0);
+		
+		stats.setPosition(shop.getX()*1.3f, 5+traslY);
 		stats.setTransform(true);
 		stats.setOrigin(stats.getWidth()/2, stats.getHeight()/2);
-		stats.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y) {
-				contextMenu.showMenu(stats, 2);
-			}
-		});	
-		
+		stats.addListener(onClick);	
+		stats.setUserObject(2);
+	
+		info.setPosition(0.93f*stage.getWidth()+traslX, traslY);
+		info.setTransform(true);
+		info.setOrigin(info.getWidth()/2, info.getHeight()/2);
+		info.addListener(onClick);
+		info.setUserObject(3);
 		
 		stage.addActor(achive);
 		stage.addActor(shop);
 		stage.addActor(stats);
-		
-		
-		LabelStyle infoStyle = new LabelStyle(Assets.font64, Color.WHITE);
-		Label info = new Label("?", infoStyle);
-		info.setPosition(0.95f*stage.getWidth()+traslX, traslY);
-		info.addListener(new ClickListener(){
-			public void clicked(InputEvent event, float x, float y){
-				
-			}
-		});
-		
 		stage.addActor(info);
+		
+		
+		final ImageButton contextBackButton = contextMenu.getBackButton();
+		contextBackButton.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				if(!contextBackButton.isDisabled()){
+					contextMenu.hideMenu();
+					menuTitle.show();
+					contextBackButton.addAction(Actions.sequence(
+							Actions.repeat(5, Actions.rotateBy(360, 0.2f)),
+							Actions.delay(1f),
+							Actions.run(new Runnable() {
+								public void run() {
+									enableAndFadeIn(stats);
+									enableAndFadeIn(achive);
+									enableAndFadeIn(shop);
+									enableAndFadeIn(info);
+									contextBackButton.remove();
+								}
+							})
+					));
+					contextBackButton.setDisabled(true);
+				}
+			}
+		 });
 	}
 
+	private void disableAndFadeOut(Button a){
+		a.setDisabled(true);
+		a.addAction(Actions.fadeOut(0.5f));
+	}
+
+	private void enableAndFadeIn(Button a){
+		a.setDisabled(false);
+		a.addAction(Actions.fadeIn(0.5f));
+	}
 
 
 	public void render(float delta) {
@@ -211,13 +231,14 @@ public class MainMenuScene extends Scene {
 			stage.draw();
 			
 			
+			
 		endClip();
 		
 		//rayHandler.setCombinedMatrix(camera.combined.scl(WORLD_TO_BOX));
 		//rayHandler.render();
 		
 		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
-		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
+		box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
 		
 		

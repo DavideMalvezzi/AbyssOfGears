@@ -260,30 +260,37 @@ PressTube
   orig: 148, 250
   offset: 0, 0
   index: -1
-ShopButton
+InfoButton
   rotate: false
   xy: 512, 409
   size: 102, 103
   orig: 102, 103
   offset: 0, 0
   index: -1
-StatsButton
+ShopButton
   rotate: false
   xy: 404, 154
   size: 102, 103
   orig: 102, 103
   offset: 0, 0
   index: -1
+StatsButton
+  rotate: false
+  xy: 512, 306
+  size: 102, 103
+  orig: 102, 103
+  offset: 0, 0
+  index: -1
 umbrellaOn
   rotate: false
-  xy: 512, 345
+  xy: 614, 448
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Player2
   rotate: false
-  xy: 614, 440
+  xy: 404, 82
   size: 42, 72
   orig: 42, 72
   offset: 0, 0
