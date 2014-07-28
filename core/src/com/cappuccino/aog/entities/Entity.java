@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.cappuccino.aog.Assets;
 import com.cappuccino.aog.BodyEditorLoader;
+import com.cappuccino.aog.mapeditor.EntityModel;
 import com.cappuccino.aog.mapeditor.EntityModel.Property;
 import com.cappuccino.aog.scene.GameScene;
 
@@ -154,6 +155,10 @@ public class Entity implements Disposable {
 	public Property getProp3(){return new Property();}
 	public Property getExternalBody1(){return new Property("null",-1);}
 	public Property getExternalBody2(){return new Property("null",-1);}
+	
+	public EntityModel getModel(){
+		return new EntityModel(this);
+	}
 
 	//Body properties
 	public Body getBody(){

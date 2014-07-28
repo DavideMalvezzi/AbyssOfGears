@@ -37,7 +37,7 @@ public class ChainedContetxMenuContainer extends Actor {
 		 c3.attachEntity(menuBg, new Vector2());
 		 
 		 back = new ImageButton(Assets.hudSkin.getDrawable("BackButton"));
-		 back.setPosition(0.01f * stage.getWidth()-traslX, stage.getHeight()-back.getHeight()+traslY);
+		 back.setPosition(0.01f * stage.getWidth()-traslX, stage.getHeight()-back.getHeight()-traslY);
 		 back.setOrigin(back.getWidth()/2, back.getHeight()/2);
 		 back.setTransform(true);
 	}
@@ -53,9 +53,8 @@ public class ChainedContetxMenuContainer extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		//contextMenu.setPosition(menuBg.getX(), menuBg.getY());
-		//contextMenu.setRotation(menuBg.getAngle()*MathUtils.radDeg);
-		
+		contextMenu.setPosition(menuBg.getX(), menuBg.getY());
+		contextMenu.setRotation(menuBg.getAngle()*MathUtils.radDeg);
 	}
 	
 	public void showMenu(Actor sender, int contexMenuType){
@@ -72,6 +71,7 @@ public class ChainedContetxMenuContainer extends Actor {
 						Actions.run(new Runnable() {
 							public void run() {
 								stage.addActor(back);
+								back.addAction(Actions.fadeIn(0.5f));
 							}
 						})
 				));
@@ -111,5 +111,15 @@ public class ChainedContetxMenuContainer extends Actor {
 	}
 	
 	
+	//Per dimensione contexMenu
+	@Override
+	public float getWidth() {
+		return menuBg.getWidth();
+	}
+	
+	@Override
+	public float getHeight() {
+		return menuBg.getHeight();
+	}
 	
 }

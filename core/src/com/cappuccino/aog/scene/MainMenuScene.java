@@ -4,6 +4,8 @@ package com.cappuccino.aog.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -20,7 +22,9 @@ import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
 import com.cappuccino.aog.mapeditor.MapEditor;
+import com.cappuccino.aog.scene.menus.AchievementContextMenu;
 import com.cappuccino.aog.scene.menus.ChainedContetxMenuContainer;
+import com.cappuccino.aog.scene.menus.ContextMenu;
 import com.cappuccino.aog.scene.menus.MainMenuTitle;
 
 public class MainMenuScene extends Scene {
@@ -49,6 +53,9 @@ public class MainMenuScene extends Scene {
 		float traslY = (view.getWorldHeight()-SCENE_H)/2;
 		
 		level = new MainMenuLevel(world);
+		
+		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
+		loadMainMenu(traslX, traslY);
 		
 		menuTitle = new MainMenuTitle(world, stage, traslX, traslY);
 		final Label play = menuTitle.getPlayLabel();
@@ -81,8 +88,6 @@ public class MainMenuScene extends Scene {
 			}
 		});
 		
-		contextMenu = new ChainedContetxMenuContainer(world, stage, traslX, traslY);
-		loadMainMenu(traslX, traslY);
 		
 		//Menù play
 		loadSelectLevelMenu(traslX, traslY);
@@ -90,7 +95,7 @@ public class MainMenuScene extends Scene {
 	
 		bg0 = new VParallaxLayer(Assets.layer0Background);
 		bg1 = new VParallaxLayer(Assets.layer1Background);
-		
+	
 		//editor = new MapEditor(level, world, camera);
 		
 	}
@@ -198,7 +203,7 @@ public class MainMenuScene extends Scene {
 								}
 							})
 					));
-					contextBackButton.setDisabled(true);
+					disableAndFadeOut(contextBackButton);
 				}
 			}
 		 });
@@ -234,13 +239,8 @@ public class MainMenuScene extends Scene {
 			
 		endClip();
 		
-		//rayHandler.setCombinedMatrix(camera.combined.scl(WORLD_TO_BOX));
-		//rayHandler.render();
-		
 		//box2dDebug.render(world, camera.combined.scl(WORLD_TO_BOX));
-		box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
-		
-		
+		//box2dDebug.render(world, stage.getCamera().combined.scl(WORLD_TO_BOX));
 		
 		if(Gdx.input.isKeyPressed(Keys.SPACE))camera.zoom+=0.01f;
 		if(Gdx.input.isKeyPressed(Keys.BACKSPACE))camera.zoom-=0.01f;
@@ -263,6 +263,13 @@ public class MainMenuScene extends Scene {
 		if(editor!=null){
 			editor.draw(batch);
 		}
+		
+		/*
+		for(Actor a : stage.getActors()){
+			System.out.println(a.getClass().getName());
+		}
+		System.out.println("------------------");
+		*/
 	}
 	
 	

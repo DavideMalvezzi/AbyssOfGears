@@ -53,17 +53,17 @@ public class Chain extends Entity{
 			chain[i].setCenter(getCenter().x+chain[i].getWidth()*(i+1), getCenter().y);
 		}
 		
-		JointsFactory.createRopeJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, chain[0].getWidth(), true);
+		JointsFactory.createRopeJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, chain[0].getWidth()*0.9f, true);
 		JointsFactory.createRevoluteJoint(world, this, chain[0], new Vector2(getWidth(), 0), Vector2.Zero, true);
 		
 		for(int i=0; i<chainLen-1; i++){
 			JointsFactory.createRopeJoint(world, 
 					chain[i], chain[i+1], 
-					new Vector2(chain[i].getWidth(), 0), Vector2.Zero, 
-					chain[i].getWidth(), true);
+					new Vector2(chain[i].getWidth()*0.9f, 0), Vector2.Zero, 
+					chain[i].getWidth()*0.9f, true);
 			JointsFactory.createRevoluteJoint(world, 
 					chain[i], chain[i+1], 
-					new Vector2(chain[i].getWidth(), 0), Vector2.Zero, true);
+					new Vector2(chain[i].getWidth()*0.9f, 0), Vector2.Zero, true);
 		}
 	}
 	

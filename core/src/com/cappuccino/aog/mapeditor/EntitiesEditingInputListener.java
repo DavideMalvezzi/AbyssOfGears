@@ -53,15 +53,16 @@ public class EntitiesEditingInputListener extends EditingInputListener{
 	private static final QueryCallback callback = new QueryCallback() {
 		public boolean reportFixture(Fixture fixture) {
 			currentEntity = ((EntityData)fixture.getBody().getUserData()).getEntity();
-			
+			System.out.println(fixture.getUserData());
 			int i=0;
 			while(i<entityTypes.length && currentEntity.getClass() != entityTypes[i])i++;
 			if(i<entityTypes.length){
 				currentType = i;
+				return false;
 			}else{
 				currentEntity = null;
 			}
-			return false;
+			return true;
 		}
 	};
 	

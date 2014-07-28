@@ -14,13 +14,11 @@ public class LevelModel {
 	private Array<EntityModel> wallsModels = new Array<EntityModel>();
 	
 	public void addEntity(Entity e){
-		EntityModel model = new EntityModel(e);
-		entitiesModels.add(model);
+		entitiesModels.add(e.getModel());
 	}
 	
 	public void addWall(Wall e){
-		EntityModel model = new EntityModel(e);
-		wallsModels.add(model);
+		wallsModels.add(e.getModel());
 	}
 	
 

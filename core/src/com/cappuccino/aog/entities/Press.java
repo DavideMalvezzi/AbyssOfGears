@@ -98,8 +98,8 @@ public class Press extends Entity{
 		velX = MathUtils.isZero(velX, 0.00001f)? 0 : velX;
 		velY = MathUtils.isZero(velY, 0.00001f)? 0 : velY;
 		if(dir==-1){
-			velX*=0.3f;
-			velY*=0.3f;
+			velX*=0.2f;
+			velY*=0.2f;
 		}
 		tube.setLinearVelocity(velX, velY);
 		
@@ -136,6 +136,12 @@ public class Press extends Entity{
 	}
 	
 	@Override
+	public void setCenter(float x, float y) {
+		super.setCenter(x, y);
+		startPos.set(x, y);
+	}
+	
+	@Override
 	public void onCollide(Fixture sender, Fixture collided, Contact contact){
 		String collidedName = (String)collided.getUserData();
 		Alexy alexy = Level.getPlayer();
@@ -166,15 +172,19 @@ public class Press extends Entity{
 	
 	@Override
 	public void recalculate() {
-		startPos.set(getCenter().cpy());
 		tube.setAngle(getAngle());
-		tube.setCenter(startPos.cpy());
 		tube.setScaleX(maxLen/tube.getRealWidth());
 		tube.setScaleY(getScaleX());
 		
 		tube.reloadFixtures();
 		reloadFixtures();
-		
+	}
+	
+	@Override
+	public EntityModel getModel() {
+		EntityModel m = new EntityModel(this);
+		m.position = startPos;
+		return m;
 	}
 	
 	@Override

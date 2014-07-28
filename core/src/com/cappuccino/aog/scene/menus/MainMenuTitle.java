@@ -29,20 +29,20 @@ public class MainMenuTitle extends Actor{
 	
 	public MainMenuTitle(World world, Stage stage, float traslX, float traslY) {
 		this.stage = stage;
-		LabelStyle titleStyle = new LabelStyle(Assets.font100, Color.WHITE);
+		LabelStyle titleStyle = new LabelStyle(Assets.font100, new Color(0xedeadaff));
 		play = new Label("Play", titleStyle);
 		
 		titleEntity = new TitleEntity(world);
-		titleEntity.setCenter(stage.getWidth()/2, stage.getHeight()*0.83f-traslY);
+		titleEntity.setCenter(stage.getWidth()/2, stage.getHeight()*0.85f-traslY);
 		
 		playEntity = new PlayEntity(world);
-		playEntity.setCenter(stage.getWidth()/2, stage.getHeight()*0.45f-traslY);
+		playEntity.setCenter(stage.getWidth()/2, stage.getHeight()*0.47f+traslY);
 		
-		c1 = new Chain(world, titleEntity.getCenter().x-titleEntity.getWidth()/2*0.8f, 1.123f*stage.getHeight()-traslY, 6, 0.5f, -90*MathUtils.degRad);
-		c2 = new Chain(world, titleEntity.getCenter().x+titleEntity.getWidth()/2*0.8f, 1.123f*stage.getHeight()-traslY, 6, 0.5f, -90*MathUtils.degRad);
-		c3 = new Chain(world, titleEntity.getCenter().x , 1.123f * stage.getHeight()-traslY, 6, 0.5f, -90*MathUtils.degRad);
+		c1 = new Chain(world, titleEntity.getCenter().x-titleEntity.getWidth()/2*0.8f, 1.15f*stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		c2 = new Chain(world, titleEntity.getCenter().x+titleEntity.getWidth()/2*0.8f, 1.15f*stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
+		c3 = new Chain(world, titleEntity.getCenter().x , 1.15f * stage.getHeight()-traslY, 7, 0.5f, -90*MathUtils.degRad);
 		
-		c4 = new Chain(world, titleEntity.getCenter().x, titleEntity.getCenter().y-titleEntity.getHeight()/2-traslY, 5, 0.5f, -90*MathUtils.degRad);
+		c4 = new Chain(world, titleEntity.getCenter().x, stage.getHeight()*0.62f, 4, 0.5f, -90*MathUtils.degRad);
 	//	c5 = new Chain(world, titleEntity.getCenter().x+playEntity.getWidth()/2*0.6f,titleEntity.getCenter().y-titleEntity.getHeight()/2-traslY, 5, 0.5f, -90*MathUtils.degRad);
 	//	c6 = new Chain(world, titleEntity.getCenter().x-playEntity.getWidth()/2*0.6f, titleEntity.getCenter().y-titleEntity.getHeight()/2-traslY, 5, 0.5f, -90*MathUtils.degRad);
 		
@@ -64,7 +64,7 @@ public class MainMenuTitle extends Actor{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//batch.setColor(stage.getRoot().getColor()); //Risolve errore fade
+		batch.setColor(stage.getRoot().getColor()); //Risolve errore fade
 		c1.draw((SpriteBatch) batch);
 		c2.draw((SpriteBatch) batch);
 		c4.draw((SpriteBatch) batch);
@@ -75,14 +75,14 @@ public class MainMenuTitle extends Actor{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		play.setPosition(playEntity.getCenter().x-play.getWidth()/2, playEntity.getCenter().y-play.getHeight());
+		play.setPosition(playEntity.getCenter().x-play.getWidth()/2, playEntity.getCenter().y-play.getHeight()*0.87f);
 	}
 	
 	public void show(){
 		addAction(
 				Actions.sequence(
-						Actions.moveBy(0, -stage.getHeight()*Scene.BOX_TO_WORLD, 1f),
-						Actions.moveBy(stage.getWidth()*Scene.BOX_TO_WORLD, 0, 1.5f),
+						Actions.moveBy(0, -stage.getHeight()*Scene.BOX_TO_WORLD, 0.5f),
+						Actions.moveBy(stage.getWidth()*Scene.BOX_TO_WORLD, 0, 2f),
 						Actions.moveBy(0, 0)
 				));
 	}

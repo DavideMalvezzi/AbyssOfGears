@@ -1,63 +1,52 @@
 package com.cappuccino.aog.scene.menus;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.cappuccino.aog.Assets;
 
-public class ContextMenu extends Actor{
+public class ContextMenu extends ScrollPane{
 
+	private static final ScrollPaneStyle scrollStyle = new ScrollPaneStyle(null, null, null, Assets.hudSkin.getDrawable("vScrollBar"), Assets.hudSkin.getDrawable("vScrollKnob"));
+	
 	protected ChainedContetxMenuContainer parent;
 	
-	protected ScrollPane scroll;
 	protected Group group;
 	
 	public ContextMenu(ChainedContetxMenuContainer parent) {
+		super(new Group(), scrollStyle);
 		this.parent = parent;
 		
-		group = new Group();
+		group = (Group) getWidget();
 		group.setTransform(true);
+		group.setSize(parent.getWidth(), parent.getHeight()*2);
 		
-		ScrollPaneStyle scrollStyle = new ScrollPaneStyle();
-		scrollStyle.vScroll = Assets.hudSkin.getDrawable("vScrollBar");
-		scrollStyle.vScrollKnob = Assets.hudSkin.getDrawable("vScrollKnob");
+		setScrollingDisabled(true, false);
+		setVariableSizeKnobs(false);
+		setSize(parent.getWidth(), parent.getHeight());
+		setOrigin(getWidth()/2, getHeight());
+		setTransform(true);
 		
-		scroll = new ScrollPane(group, scrollStyle);
-		scroll.setScrollingDisabled(true, false);
-		scroll.setVariableSizeKnobs(false);
-		scroll.setSize(parent.getWidth(), parent.getHeight());
-		scroll.setOrigin(scroll.getWidth()/2, scroll.getHeight());
-		scroll.setPosition(0, -100);
-		scroll.setTransform(true);
 		
-		parent.getStage().addActor(scroll);
+		parent.getStage().addActor(this);
 	}
 	
-	
-	@Override
-	public void setPosition(float x, float y) {
-		scroll.setPosition(x, y);
+	public ContextMenu(Stage parent ) {
+		super(new Group(), scrollStyle);
+		
+		group = (Group) getWidget();
+		group.setTransform(true);
+		group.setSize(parent.getWidth(), parent.getHeight()*2);
+		
+		setScrollingDisabled(true, false);
+		setVariableSizeKnobs(false);
+		setSize(parent.getWidth(), parent.getHeight());
+		setOrigin(getWidth()/2, getHeight());
+		setTransform(true);
+		
+		
+		parent.addActor(this);
 	}
 	
-	@Override
-	public float getX() {
-		return scroll.getX();
-	}
-	
-	@Override
-	public float getY() {
-		return scroll.getY();
-	}
-	
-	@Override
-	public void setRotation(float degrees) {
-		scroll.setRotation(degrees);
-	}
-	
-	@Override
-	public boolean remove() {
-		return scroll.remove();
-	}
 	
 }
