@@ -69,7 +69,7 @@ public class Arrow extends Entity implements Poolable {
 	}
 	
 	@Override
-	public void onCollide(Fixture sender, final Fixture collided, final Contact contact) {
+	public void onStartCollide(Fixture sender, final Fixture collided, final Contact contact) {
 		String senderName = (String)sender.getUserData();
 		final String collidedName = (String)collided.getUserData();
 		final Alexy alexy = Level.getPlayer();

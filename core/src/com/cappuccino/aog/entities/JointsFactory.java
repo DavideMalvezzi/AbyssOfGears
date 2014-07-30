@@ -1,10 +1,8 @@
 package com.cappuccino.aog.entities;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
@@ -65,7 +63,6 @@ public class JointsFactory {
 		
 		jointDef.localAnchorA.set(anchorE1.scl(GameScene.BOX_TO_WORLD));
 		jointDef.localAnchorB.set(anchorE2.scl(GameScene.BOX_TO_WORLD));
-		
 		jointDef.length = len*GameScene.BOX_TO_WORLD;
 		jointDef.collideConnected = collide;
 		

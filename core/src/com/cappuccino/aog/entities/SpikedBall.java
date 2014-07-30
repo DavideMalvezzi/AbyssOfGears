@@ -49,7 +49,7 @@ public class SpikedBall extends Entity {
 	}
 
 	@Override
-	public void onCollide(final Fixture sender, final Fixture collided, final Contact contact) {
+	public void onStartCollide(final Fixture sender, final Fixture collided, final Contact contact) {
 		final String collidedName = (String)collided.getUserData();
 		final Entity collidedEntity = ((EntityData)collided.getBody().getUserData()).getEntity();
 		final Alexy alexy = Level.getPlayer();

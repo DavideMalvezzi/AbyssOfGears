@@ -121,7 +121,7 @@ public class LaserEmitter extends Entity {
 
 	
 	@Override
-	public void onCollide(Fixture sender, Fixture collided, Contact contact){
+	public void onStartCollide(Fixture sender, Fixture collided, Contact contact){
 		String collidedName = (String) collided.getUserData();
 		Alexy alexy = Level.getPlayer();
 		if((collidedName.contains("Player") || collidedName.contains("Umbrella"))){

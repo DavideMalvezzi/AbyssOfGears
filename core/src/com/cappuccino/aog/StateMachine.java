@@ -7,10 +7,11 @@ public class StateMachine<A extends Entity> {
 	private State<A> currentState;
 	private Entity entity;
 	
+	@SuppressWarnings("unchecked")
 	public StateMachine(Entity entity, State<A> state){
 		this.entity = entity;
 		this.currentState = state;
-		this.currentState.onEnter();
+		this.currentState.onEnter((A)entity);
 	}
 	
 	
@@ -19,10 +20,11 @@ public class StateMachine<A extends Entity> {
     	currentState.update(dt, (A) entity);
     }
     
+    @SuppressWarnings("unchecked")
     public void changeState(State<A> newState){
-    	currentState.onExit();
+    	currentState.onExit((A)entity);
     	currentState = newState;
-    	currentState.onEnter();
+    	currentState.onEnter((A)entity);
     }
     
     public State<A> getCurrentState(){

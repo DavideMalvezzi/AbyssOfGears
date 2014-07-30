@@ -4,8 +4,6 @@ package com.cappuccino.aog.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -22,9 +20,7 @@ import com.cappuccino.aog.ShaderLibrary;
 import com.cappuccino.aog.game.VParallaxLayer;
 import com.cappuccino.aog.levels.MainMenuLevel;
 import com.cappuccino.aog.mapeditor.MapEditor;
-import com.cappuccino.aog.scene.menus.AchievementContextMenu;
 import com.cappuccino.aog.scene.menus.ChainedContetxMenuContainer;
-import com.cappuccino.aog.scene.menus.ContextMenu;
 import com.cappuccino.aog.scene.menus.MainMenuTitle;
 
 public class MainMenuScene extends Scene {
@@ -61,7 +57,8 @@ public class MainMenuScene extends Scene {
 		final Label play = menuTitle.getPlayLabel();
 		play.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				//AOGGame.changeScene(new GameScene());
+				AOGGame.changeScene(new GameScene());
+				/*
 				if(play.getActions().size<=0){
 					play.addAction(Actions.forever(Actions.run(new Runnable() {
 						boolean isStarted = false;
@@ -84,7 +81,7 @@ public class MainMenuScene extends Scene {
 						}
 					})));
 				}
-				
+				*/
 			}
 		});
 		

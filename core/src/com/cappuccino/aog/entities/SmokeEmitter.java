@@ -34,8 +34,8 @@ public class SmokeEmitter extends Entity {
 				alexy.getBody().applyForceToCenter(maxForce*MathUtils.cos(getAngle())*dstPercent, maxForce*MathUtils.sin(getAngle())*dstPercent, true);
 				return 0;
 			}else if(fixName.contains("Umbrella")){
-				dstPercent = 1-(alexy.umbrella.getCenter().dst(emissionPoint)/smokeRadius);
-				alexy.umbrella.getBody().applyForceToCenter(maxForce*MathUtils.cos(getAngle())*dstPercent, maxForce*MathUtils.sin(getAngle())*dstPercent, true);
+				dstPercent = 1-(alexy.getUmbrella().getCenter().dst(emissionPoint)/smokeRadius);
+				alexy.getUmbrella().getBody().applyForceToCenter(maxForce*MathUtils.cos(getAngle())*dstPercent, maxForce*MathUtils.sin(getAngle())*dstPercent, true);
 				return 0;
 			}
 			return 1;

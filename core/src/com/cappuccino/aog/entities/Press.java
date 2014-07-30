@@ -102,7 +102,6 @@ public class Press extends Entity{
 			velY*=0.2f;
 		}
 		tube.setLinearVelocity(velX, velY);
-		
 	}
 
 	public boolean isClosed(){
@@ -142,7 +141,7 @@ public class Press extends Entity{
 	}
 	
 	@Override
-	public void onCollide(Fixture sender, Fixture collided, Contact contact){
+	public void onStartCollide(Fixture sender, Fixture collided, Contact contact){
 		String collidedName = (String)collided.getUserData();
 		Alexy alexy = Level.getPlayer();
 		

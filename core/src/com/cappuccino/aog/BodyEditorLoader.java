@@ -3,6 +3,7 @@ package com.cappuccino.aog;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.JsonReader;
@@ -28,7 +29,7 @@ public class BodyEditorLoader {
 	// Reusable stuff
 	private final List<Vector2> vectorPool = new ArrayList<Vector2>();
 	private final PolygonShape polygonShape = new PolygonShape();
-	//private final CircleShape circleShape = new CircleShape();
+	private final CircleShape circleShape = new CircleShape();
 	private final Vector2 vec = new Vector2();
 
 	// -------------------------------------------------------------------------
@@ -99,20 +100,20 @@ public class BodyEditorLoader {
 			}
 		}
 
-		/*
+		
 		for (int i=0, n=rbModel.circles.size(); i<n; i++) {
 			CircleModel circle = rbModel.circles.get(i);
-			Vector2 center = newVec().set(circle.center).scl(scaleX, scaleY);
+			Vector2 center = newVec().set(circle.center).scl(scaleX, scaleY).sub(origin);
 			float radius = circle.radius * scaleX;
 
 			circleShape.setPosition(center);
 			circleShape.setRadius(radius);
 			fd.shape = circleShape;
-			body.createFixture(fd);
+			body.createFixture(fd).setUserData(name);
 
 			free(center);
 		}
-		*/
+		
 	}
 
 	/**

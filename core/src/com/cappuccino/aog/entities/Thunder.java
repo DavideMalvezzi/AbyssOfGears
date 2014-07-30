@@ -194,7 +194,7 @@ public class Thunder extends Entity {
 	}
 	
 	@Override
-	public void onCollide(Fixture sender, Fixture collided, Contact contact){
+	public void onStartCollide(Fixture sender, Fixture collided, Contact contact){
 		Alexy alexy = Level.getPlayer();
 		String collidedName = (String) collided.getUserData();
 		if(alexy.getState() != AlexyStatus.DYING){

@@ -76,14 +76,16 @@ public class Entity implements Disposable {
 				getWidth(), getHeight(), 
 				1, 1, MathUtils.radiansToDegrees*getAngle(), 
 				texture.getRegionX(), texture.getRegionY(), 
-				(int)texture.getRegionWidth(), (int)texture.getRegionHeight(), 
+				texture.getRegionWidth(), texture.getRegionHeight(), 
 				flipX, flipY
 			);
 	}
 
 	
 	public void update(float delta){}
-	public void onCollide(Fixture sender, Fixture collided, Contact contact){}
+	public void onStartCollide(Fixture sender, Fixture collided, Contact contact){}
+	public void onEndCollide(Fixture sender, Fixture collided, Contact contact){}
+	
 	public void active(){}
 	public void disactive(){}
 	

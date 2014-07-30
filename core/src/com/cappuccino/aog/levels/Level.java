@@ -174,7 +174,6 @@ public abstract class Level {
 			i++;
 		}
 		
-		
 		if(usePlayer){
 			alexy.update(delta);
 		}

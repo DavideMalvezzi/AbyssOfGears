@@ -92,7 +92,7 @@ public class Spear extends Entity{
 	}
 	
 	@Override
-	public void onCollide(final Fixture sender, final Fixture collided, final Contact contact) {
+	public void onStartCollide(final Fixture sender, final Fixture collided, final Contact contact) {
 		final Alexy alexy = Level.getPlayer();
 		final Entity collidedEntity = ((EntityData)collided.getBody().getUserData()).getEntity();
 		final String senderFixName = (String)sender.getUserData();

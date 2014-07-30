@@ -5,8 +5,8 @@ import com.cappuccino.aog.entities.Entity;
 
 public interface State<A extends Entity> {
 
-	public void onEnter();
+	public void onEnter(A entity);
 	public void update(float dt, A entity);
-	public void onExit();
+	public void onExit(A entity);
 	
 }

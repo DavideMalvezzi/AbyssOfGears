@@ -21,11 +21,12 @@ public class Umbrella extends Entity{
 	public void update(float delta) {
 		//energia potenziale pendolo mgL(1-cos(angle))
 		
-		if((getAngle()>0.085f && dir == 1) || (getAngle()<-0.085f && dir == -1)){
+		if((getAngle()>0.1 && dir == 1) || (getAngle()<-0.1 && dir == -1)){
 			dir*=-1;
 		}	
 		
-		setAngularVelocity(getAngularVelocity()+getMass()*9.8f*(1-MathUtils.cos(getAngle()))*dir*delta);
+		setAngularVelocity(0.1f*dir);
+		
 	}
 
 

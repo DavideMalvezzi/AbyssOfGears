@@ -23,23 +23,23 @@ public class ContactEvent implements ContactListener{
 		
 		if(dataB.getName().equals("Umbrella") || dataB.getName().equals("Player")){
 			if(entABodyType == BodyType.StaticBody){
-				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+				entityB.onStartCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}else{
-				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+				entityA.onStartCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 			}
 			
 		}else if(dataA.getName().equals("Umbrella") || dataA.getName().equals("Player")){
 			if(entBBodyType == BodyType.StaticBody){
-				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+				entityA.onStartCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 			}else{
-				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+				entityB.onStartCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}
 			
 		}else{
 			if(entABodyType == BodyType.DynamicBody){
-				entityA.onCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+				entityA.onStartCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
 			}else if(entBBodyType == BodyType.DynamicBody){
-				entityB.onCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+				entityB.onStartCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
 			}
 		}
 		
@@ -47,7 +47,25 @@ public class ContactEvent implements ContactListener{
 
 	@Override
 	public void endContact(Contact contact) {
+		EntityData dataA = (EntityData) contact.getFixtureA().getBody().getUserData();
+		Entity entityA = dataA.getEntity();
+		EntityData dataB = (EntityData) contact.getFixtureB().getBody().getUserData();
+		Entity entityB = dataB.getEntity();
 		
+		BodyType entABodyType = contact.getFixtureA().getBody().getType();
+		BodyType entBBodyType = contact.getFixtureB().getBody().getType();
+		
+		
+		if(dataB.getName().equals("Umbrella") || dataB.getName().equals("Player")){
+			if(entABodyType == BodyType.StaticBody){
+				entityB.onEndCollide(contact.getFixtureB(), contact.getFixtureA(), contact);
+			}
+			
+		}else if(dataA.getName().equals("Umbrella") || dataA.getName().equals("Player")){
+			if(entBBodyType == BodyType.StaticBody){
+				entityA.onEndCollide(contact.getFixtureA(), contact.getFixtureB(), contact);
+			}
+		}
 	}
 
 	@Override
